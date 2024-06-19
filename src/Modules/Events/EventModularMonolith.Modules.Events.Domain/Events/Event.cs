@@ -17,8 +17,13 @@ public sealed class Event : Entity
    public DateTime? EndsAtUtc { get; private set; }
    public EventStatus Status { get; private set; }
 
-   public static Event Create(string title, string description, string location, DateTime startsAtUtc, DateTime? endsAtUtc)
+   public static Result<Event> Create(string title, string description, string location, DateTime startsAtUtc, DateTime? endsAtUtc)
    {
+      if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
+      {
+         return Result.Failure<Event>(EventErrors.EndDatePrecedesStartDate);
+      }
+
       var @event = new Event()
       {
          Title = title,

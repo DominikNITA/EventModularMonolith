@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Messaging;
+using FluentValidation;
 using MediatR;
 
 namespace EventModularMonolith.Modules.Events.Application.Events.CreateEvent;
@@ -8,7 +9,7 @@ public sealed record CreateEventCommand(
    string Description,
    string Location,
    DateTime StartsAtUtc,
-   DateTime? EndsAtUtc) : IRequest<Guid>;
+   DateTime? EndsAtUtc) : ICommand<Guid>;
 
 
 internal sealed class CreateEventCommandValidator : AbstractValidator<CreateEventCommand>

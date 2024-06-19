@@ -1,7 +1,9 @@
 ﻿using EventModularMonolith.Modules.Events.Application;
+using EventModularMonolith.Modules.Events.Application.Abstractions.Clock;
 using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Application.Events;
 using EventModularMonolith.Modules.Events.Domain.Events;
+using EventModularMonolith.Modules.Events.Infrastructure.Clock;
 using EventModularMonolith.Modules.Events.Infrastructure.Database;
 using EventModularMonolith.Modules.Events.Infrastructure.Events;
 using EventModularMonolith.Modules.Events.Presentation.Events;
@@ -45,6 +47,8 @@ public static class EventsModule
       services.TryAddSingleton(npgsqlDataSource);
 
       services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+
+      services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
 
       services.AddDbContext<EventsDbContext>(options =>
          options.UseNpgsql(databaseConnectionString,

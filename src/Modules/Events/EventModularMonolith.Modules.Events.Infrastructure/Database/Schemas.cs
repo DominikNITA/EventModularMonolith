@@ -1,4 +1,4 @@
-﻿namespace EventModularMonolith.Modules.Events.Api.Database;
+﻿namespace EventModularMonolith.Modules.Events.Infrastructure.Database;
 
 internal static class Schemas
 {

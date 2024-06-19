@@ -1,5 +1,5 @@
 using EventModularMonolith.Api.Extensions;
-using EventModularMonolith.Modules.Events.Api;
+using EventModularMonolith.Modules.Events.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

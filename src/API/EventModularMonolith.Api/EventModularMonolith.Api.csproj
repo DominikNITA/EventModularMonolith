@@ -21,11 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Modules\Events\EventModularMonolith.Modules.Events.Api\EventModularMonolith.Modules.Events.Api.csproj" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\..\Modules\Events\EventModularMonolith.Modules.Events.Infrastructure\EventModularMonolith.Modules.Events.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

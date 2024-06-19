@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.3.0" />
+  </ItemGroup>
+	
+
+  <ItemGroup>
+    <ProjectReference Include="..\EventModularMonolith.Modules.Events.Domain\EventModularMonolith.Modules.Events.Domain.csproj" />
+  </ItemGroup>
+	
+
+  <ItemGroup>
+    <Folder Include="Abstractions\NewFolder\" />
+  </ItemGroup>
+
+</Project>

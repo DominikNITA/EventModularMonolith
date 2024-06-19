@@ -1,4 +1,4 @@
-﻿namespace EventModularMonolith.Modules.Events.Api;
+﻿namespace EventModularMonolith.Modules.Events.Presentation;
 
 internal static class Tags
 {

@@ -1,9 +1,10 @@
-﻿using EventModularMonolith.Modules.Events.Api.Events;
+﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
+using EventModularMonolith.Modules.Events.Domain.Events;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventModularMonolith.Modules.Events.Api.Database;
+namespace EventModularMonolith.Modules.Events.Infrastructure.Database;
 
-public sealed class EventsDbContext : DbContext
+public sealed class EventsDbContext : DbContext, IUnitOfWork
 {
    public EventsDbContext(DbContextOptions<EventsDbContext> options) : base(options) { }
 

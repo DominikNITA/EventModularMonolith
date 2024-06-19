@@ -1,4 +1,4 @@
-﻿namespace EventModularMonolith.Modules.Events.Api.Events;
+﻿namespace EventModularMonolith.Modules.Events.Domain.Events;
 
 public enum EventStatus
 {

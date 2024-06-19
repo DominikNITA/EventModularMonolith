@@ -1,4 +1,4 @@
-﻿namespace EventModularMonolith.Modules.Events.Api.Events;
+﻿namespace EventModularMonolith.Modules.Events.Application.Events;
 
 public sealed record EventResponse(
    Guid Id,

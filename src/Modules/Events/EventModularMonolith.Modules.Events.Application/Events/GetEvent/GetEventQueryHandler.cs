@@ -4,9 +4,7 @@ using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Domain.Events;
 using MediatR;
 
-namespace EventModularMonolith.Modules.Events.Application.Events;
-
-public sealed record GetEventQuery(Guid eventId) : IRequest<EventResponse?>;
+namespace EventModularMonolith.Modules.Events.Application.Events.GetEvent;
 
 internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFactory) : IRequestHandler<GetEventQuery, EventResponse?>
 {

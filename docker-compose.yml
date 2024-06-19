@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  eventmodularmonolith.api:
+    image: ${DOCKER_REGISTRY-}eventmodularmonolithapi
+    container_name: EMM.Api
+    build:
+      context: .
+      dockerfile: src/API/EventModularMonolith.Api/Dockerfile
+    ports:
+        - 5000:8080
+        - 5001:8081
+
+  eventmodularmonolith.database:
+      image: postgres:latest
+      container_name: EMM.Database
+      environment:
+        - POSTGRES_DB=emm
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+      volumes:
+        - ./.containers/db:/var/lib/postgresql/data
+      ports:
+        - 5432:5432

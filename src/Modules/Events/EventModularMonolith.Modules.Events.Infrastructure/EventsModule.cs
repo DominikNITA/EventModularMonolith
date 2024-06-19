@@ -5,6 +5,7 @@ using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Infrastructure.Database;
 using EventModularMonolith.Modules.Events.Infrastructure.Events;
 using EventModularMonolith.Modules.Events.Presentation.Events;
+using FluentValidation;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -28,6 +29,8 @@ public static class EventsModule
       {
          config.RegisterServicesFromAssembly(Application.AssemblyReference.Assembly);
       });
+
+      services.AddValidatorsFromAssembly(Application.AssemblyReference.Assembly, includeInternalTypes: true);
 
       services.AddInfrastructure(configuration);
 

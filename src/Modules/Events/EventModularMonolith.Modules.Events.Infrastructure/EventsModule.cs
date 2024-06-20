@@ -54,7 +54,8 @@ public static class EventsModule
          options.UseNpgsql(databaseConnectionString,
                npgsqlOptions => npgsqlOptions
                   .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
-            .UseSnakeCaseNamingConvention());
+            .UseSnakeCaseNamingConvention()
+            .AddInterceptors());
 
       services.AddScoped<IEventRepository, EventRepository>();
 

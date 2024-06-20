@@ -1,4 +1,4 @@
-﻿using EventModularMonolith.Modules.Events.Api.Database;
+﻿using EventModularMonolith.Modules.Events.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventModularMonolith.Api.Extensions;

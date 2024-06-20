@@ -1,7 +1,9 @@
-﻿using EventModularMonolith.Modules.Events.Application;
+﻿using Evently.Modules.Events.Infrastructure.Categories;
+using EventModularMonolith.Modules.Events.Application;
 using EventModularMonolith.Modules.Events.Application.Abstractions.Clock;
 using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Application.Events;
+using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Infrastructure.Clock;
 using EventModularMonolith.Modules.Events.Infrastructure.Database;
@@ -58,6 +60,7 @@ public static class EventsModule
             .AddInterceptors());
 
       services.AddScoped<IEventRepository, EventRepository>();
+      services.AddScoped<ICategoryRepository, CategoryRepository>();
 
       services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
    }

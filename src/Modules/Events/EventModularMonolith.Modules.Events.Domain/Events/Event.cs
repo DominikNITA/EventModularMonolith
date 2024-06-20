@@ -1,15 +1,13 @@
 ﻿using EventModularMonolith.Modules.Events.Domain.Abstractions;
+using EventModularMonolith.Modules.Events.Domain.Categories;
 
 namespace EventModularMonolith.Modules.Events.Domain.Events;
 
 public sealed class Event : Entity
 {
-   private Event()
-   {
+   private Event() { }
 
-   }
-
-   public Guid Id { get; private set; }
+   public Guid CategoryId { get; private set; }
    public string Title { get; private set; }
    public string Description { get; private set; }
    public string Location { get; private set; }
@@ -17,7 +15,7 @@ public sealed class Event : Entity
    public DateTime? EndsAtUtc { get; private set; }
    public EventStatus Status { get; private set; }
 
-   public static Result<Event> Create(string title, string description, string location, DateTime startsAtUtc, DateTime? endsAtUtc)
+   public static Result<Event> Create(Category category, string title, string description, string location, DateTime startsAtUtc, DateTime? endsAtUtc)
    {
       if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
       {
@@ -26,6 +24,7 @@ public sealed class Event : Entity
 
       var @event = new Event()
       {
+         CategoryId = category.Id,
          Title = title,
          Description = description,
          Location = location,

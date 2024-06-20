@@ -1,6 +1,8 @@
-﻿namespace EventModularMonolith.Modules.Events.Domain.Events;
+﻿using EventModularMonolith.Modules.Events.Domain.Abstractions;
 
-public interface IEventRepository
+namespace EventModularMonolith.Modules.Events.Domain.Events;
+
+public interface IEventRepository : IRepository<Event>
 {
-   void Insert(Event @event);
+
 }

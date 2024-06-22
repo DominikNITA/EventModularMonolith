@@ -1,6 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Messaging;
+﻿using EventModularMonolith.Shared.Application.Messaging;
 using FluentValidation;
-using MediatR;
 
 namespace EventModularMonolith.Modules.Events.Application.Events.CreateEvent;
 

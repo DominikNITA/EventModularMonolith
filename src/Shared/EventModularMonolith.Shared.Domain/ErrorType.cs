@@ -1,4 +1,4 @@
-﻿namespace EventModularMonolith.Modules.Events.Domain.Abstractions;
+﻿namespace EventModularMonolith.Shared.Domain;
 
 public enum ErrorType
 {

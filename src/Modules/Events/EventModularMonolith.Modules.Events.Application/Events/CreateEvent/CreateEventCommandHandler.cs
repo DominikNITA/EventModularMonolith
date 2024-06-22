@@ -1,10 +1,9 @@
-﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Clock;
-using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
-using EventModularMonolith.Modules.Events.Application.Abstractions.Messaging;
-using EventModularMonolith.Modules.Events.Domain.Abstractions;
+﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
-using MediatR;
+using EventModularMonolith.Shared.Application.Clock;
+using EventModularMonolith.Shared.Application.Messaging;
+using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Application.Events.CreateEvent;
 

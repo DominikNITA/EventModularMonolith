@@ -30,6 +30,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Module
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Modules.Events.Presentation", "src\Modules\Events\EventModularMonolith.Modules.Events.Presentation\EventModularMonolith.Modules.Events.Presentation.csproj", "{A2E1D821-ED9E-4D6C-A5BC-CB68D2A369D0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{B07DBC85-2DBF-4540-96CC-15F19026AFB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventModularMonolith.Shared.Application", "src\Shared\EventModularMonolith.Shared.Application\EventModularMonolith.Shared.Application.csproj", "{5B28C5BC-F769-4F6D-8F69-5A5F9FD23775}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventModularMonolith.Shared.Domain", "src\Shared\EventModularMonolith.Shared.Domain\EventModularMonolith.Shared.Domain.csproj", "{A7341256-7F82-4265-A45E-E5871880CE1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventModularMonolith.Shared.Infrastructure", "src\Shared\EventModularMonolith.Shared.Infrastructure\EventModularMonolith.Shared.Infrastructure.csproj", "{5A8340A4-14A8-4820-BCA8-52CC76375D9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,6 +68,18 @@ Global
 		{A2E1D821-ED9E-4D6C-A5BC-CB68D2A369D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2E1D821-ED9E-4D6C-A5BC-CB68D2A369D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2E1D821-ED9E-4D6C-A5BC-CB68D2A369D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B28C5BC-F769-4F6D-8F69-5A5F9FD23775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B28C5BC-F769-4F6D-8F69-5A5F9FD23775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B28C5BC-F769-4F6D-8F69-5A5F9FD23775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B28C5BC-F769-4F6D-8F69-5A5F9FD23775}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7341256-7F82-4265-A45E-E5871880CE1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7341256-7F82-4265-A45E-E5871880CE1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7341256-7F82-4265-A45E-E5871880CE1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7341256-7F82-4265-A45E-E5871880CE1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A8340A4-14A8-4820-BCA8-52CC76375D9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A8340A4-14A8-4820-BCA8-52CC76375D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A8340A4-14A8-4820-BCA8-52CC76375D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A8340A4-14A8-4820-BCA8-52CC76375D9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +93,10 @@ Global
 		{D49255D8-5E0C-4AD7-B432-727F6201F94E} = {70825A86-9FA8-4215-AF77-D40CC7FC5E8F}
 		{FE591225-7A08-4F3A-9073-09A0BC3A2F65} = {70825A86-9FA8-4215-AF77-D40CC7FC5E8F}
 		{A2E1D821-ED9E-4D6C-A5BC-CB68D2A369D0} = {70825A86-9FA8-4215-AF77-D40CC7FC5E8F}
+		{B07DBC85-2DBF-4540-96CC-15F19026AFB4} = {D56F4193-ADA4-4082-8EEA-A56959651F40}
+		{5B28C5BC-F769-4F6D-8F69-5A5F9FD23775} = {B07DBC85-2DBF-4540-96CC-15F19026AFB4}
+		{A7341256-7F82-4265-A45E-E5871880CE1A} = {B07DBC85-2DBF-4540-96CC-15F19026AFB4}
+		{5A8340A4-14A8-4820-BCA8-52CC76375D9C} = {B07DBC85-2DBF-4540-96CC-15F19026AFB4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0B6ABF4-3032-41EB-B72C-0DD72F624BB8}

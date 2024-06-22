@@ -1,4 +1,4 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Abstractions;
+﻿using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Modules.Events.Domain.Events;
 
 namespace EventModularMonolith.Modules.Events.Domain.TicketTypes;

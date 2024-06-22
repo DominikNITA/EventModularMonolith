@@ -1,4 +1,4 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Abstractions;
+﻿using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Presentation.ApiResults;
 

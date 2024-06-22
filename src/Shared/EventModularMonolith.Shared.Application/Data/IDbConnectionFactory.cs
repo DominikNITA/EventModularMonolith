@@ -1,6 +1,6 @@
 ﻿using System.Data.Common;
 
-namespace EventModularMonolith.Modules.Events.Application.Abstractions.Data;
+namespace EventModularMonolith.Shared.Application.Data;
 
 public interface IDbConnectionFactory
 {

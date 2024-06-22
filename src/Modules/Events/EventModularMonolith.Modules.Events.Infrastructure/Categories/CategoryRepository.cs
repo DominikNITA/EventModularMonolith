@@ -1,7 +1,8 @@
 ﻿using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Infrastructure.Database;
+using EventModularMonolith.Shared.Infrastructure.Database;
 
-namespace Evently.Modules.Events.Infrastructure.Categories;
+namespace EventModularMonolith.Modules.Events.Infrastructure.Categories;
 
 internal sealed class CategoryRepository(EventsDbContext context) : Repository<Category>(context), ICategoryRepository
 {

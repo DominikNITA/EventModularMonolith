@@ -1,9 +1,9 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Abstractions;
+﻿using EventModularMonolith.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventModularMonolith.Modules.Events.Infrastructure.Database;
+namespace EventModularMonolith.Shared.Infrastructure.Database;
 
-internal class Repository<T>(EventsDbContext context) : IRepository<T> where T : Entity
+public class Repository<T>(DbContext context) : IRepository<T> where T : Entity
 {
    public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken = default)
    {

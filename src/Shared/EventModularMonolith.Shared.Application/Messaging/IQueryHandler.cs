@@ -1,7 +1,7 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Abstractions;
+﻿using EventModularMonolith.Shared.Domain;
 using MediatR;
 
-namespace EventModularMonolith.Modules.Events.Application.Abstractions.Messaging;
+namespace EventModularMonolith.Shared.Application.Messaging;
 
 public interface IQueryHandler<in TQuery, TResponse> : IRequestHandler<TQuery, Result<TResponse>>
     where TQuery : IQuery<TResponse>;

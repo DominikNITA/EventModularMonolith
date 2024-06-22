@@ -1,6 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Application.Events;
-using EventModularMonolith.Modules.Events.Application.Events.CreateEvent;
-using EventModularMonolith.Modules.Events.Domain.Abstractions;
+﻿using EventModularMonolith.Modules.Events.Application.Events.CreateEvent;
+using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Modules.Events.Presentation.ApiResults;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

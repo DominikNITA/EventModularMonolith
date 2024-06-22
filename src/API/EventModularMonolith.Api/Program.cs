@@ -1,10 +1,16 @@
 using EventModularMonolith.Api.Extensions;
 using EventModularMonolith.Modules.Events.Infrastructure;
+using EventModularMonolith.Shared.Application;
+using EventModularMonolith.Shared.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddApplication([EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly]);
+
+builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
 
 builder.Services.AddEventsModule(builder.Configuration);
 

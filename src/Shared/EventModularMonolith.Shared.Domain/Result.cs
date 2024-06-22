@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace EventModularMonolith.Modules.Events.Domain.Abstractions;
+namespace EventModularMonolith.Shared.Domain;
 
 public class Result
 {

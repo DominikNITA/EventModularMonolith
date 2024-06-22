@@ -1,10 +1,9 @@
 ﻿using System.Data.Common;
 using Dapper;
-using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
-using EventModularMonolith.Modules.Events.Application.Abstractions.Messaging;
-using EventModularMonolith.Modules.Events.Domain.Abstractions;
+using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Modules.Events.Domain.Events;
-using MediatR;
+using EventModularMonolith.Shared.Application.Data;
+using EventModularMonolith.Shared.Application.Messaging;
 
 namespace EventModularMonolith.Modules.Events.Application.Events.GetEvent;
 
@@ -31,7 +30,7 @@ internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFact
 
       if (@event == null)
       {
-         return Result.Failure<EventResponse>(EventErrors.NotFound(request.eventId));
+         return Result.Failure<EventResponse>(EventErrors.NotFound(request.EventId));
       }
 
       return @event;

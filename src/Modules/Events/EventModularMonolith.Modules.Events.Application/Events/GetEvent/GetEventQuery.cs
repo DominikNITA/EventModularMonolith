@@ -1,6 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Messaging;
-using MediatR;
+﻿using EventModularMonolith.Shared.Application.Messaging;
 
 namespace EventModularMonolith.Modules.Events.Application.Events.GetEvent;
 
-public sealed record GetEventQuery(Guid eventId) : IQuery<EventResponse>;
+public sealed record GetEventQuery(Guid EventId) : IQuery<EventResponse>;

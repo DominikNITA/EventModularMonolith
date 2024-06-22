@@ -1,6 +1,4 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Categories;
-
-namespace EventModularMonolith.Modules.Events.Domain.Abstractions;
+﻿namespace EventModularMonolith.Shared.Domain;
 
 public interface IRepository<T> where T : Entity
 {

@@ -8,9 +8,13 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddApplication([EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly]);
 
 builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
+
+// TODO: Create base module class which contains abstract module name and assembly
+builder.Configuration.AddModuleConfigurations(["events"]);
 
 builder.Services.AddEventsModule(builder.Configuration);
 

@@ -1,7 +1,7 @@
 ﻿using EventModularMonolith.Modules.Events.Application.Events;
 using EventModularMonolith.Modules.Events.Application.Events.GetEvent;
 using EventModularMonolith.Shared.Domain;
-using EventModularMonolith.Modules.Events.Presentation.ApiResults;
+using EventModularMonolith.Shared.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +17,7 @@ internal static class GetEvent
          {
             Result<EventResponse> result = await sender.Send(new GetEventQuery(id));
 
-            return result.Match(Results.Ok, ApiResults.ApiResults.Problem);
+            return result.Match(Results.Ok, ApiResults.Problem);
          })
          .WithTags(Tags.Events);
    }

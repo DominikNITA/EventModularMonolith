@@ -5,6 +5,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Presentation\EventModularMonolith.Shared.Presentation.csproj" />
     <ProjectReference Include="..\EventModularMonolith.Modules.Events.Application\EventModularMonolith.Modules.Events.Application.csproj" />
   </ItemGroup>
 </Project>

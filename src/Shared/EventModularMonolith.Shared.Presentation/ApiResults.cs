@@ -1,7 +1,7 @@
 ﻿using EventModularMonolith.Shared.Domain;
 using Microsoft.AspNetCore.Http;
 
-namespace EventModularMonolith.Modules.Events.Presentation.ApiResults;
+namespace EventModularMonolith.Shared.Presentation;
 
 public static class ApiResults
 {

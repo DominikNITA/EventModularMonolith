@@ -1,6 +1,6 @@
 ﻿using EventModularMonolith.Modules.Events.Application.Events.CreateEvent;
 using EventModularMonolith.Shared.Domain;
-using EventModularMonolith.Modules.Events.Presentation.ApiResults;
+using EventModularMonolith.Shared.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +24,7 @@ internal static class CreateEvent
 
             Result<Guid> result = await sender.Send(command);
 
-            return result.Match(Results.Ok, ApiResults.ApiResults.Problem);
+            return result.Match(Results.Ok, ApiResults.Problem);
          })
       .WithTags(Tags.Events);
    }

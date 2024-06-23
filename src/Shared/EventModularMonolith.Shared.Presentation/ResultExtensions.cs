@@ -1,6 +1,6 @@
 ﻿using EventModularMonolith.Shared.Domain;
 
-namespace EventModularMonolith.Modules.Events.Presentation.ApiResults;
+namespace EventModularMonolith.Shared.Presentation;
 
 public static class ResultExtensions
 {

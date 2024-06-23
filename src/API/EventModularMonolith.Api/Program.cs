@@ -3,6 +3,8 @@ using EventModularMonolith.Api.Middleware;
 using EventModularMonolith.Modules.Events.Infrastructure;
 using EventModularMonolith.Shared.Application;
 using EventModularMonolith.Shared.Infrastructure;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -17,10 +19,16 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication([EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly]);
 
-builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!, builder.Configuration.GetConnectionString("Cache")!);
+string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
+string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
+builder.Services.AddInfrastructure(databaseConnectionString, redisConnectionString);
 
 // TODO: Create base module class which contains abstract module name and assembly
 builder.Configuration.AddModuleConfigurations(["events"]);
+
+builder.Services.AddHealthChecks()
+   .AddNpgSql(databaseConnectionString)
+   .AddRedis(redisConnectionString);
 
 builder.Services.AddEventsModule(builder.Configuration);
 
@@ -36,6 +44,11 @@ if (app.Environment.IsDevelopment())
 
 
 EventsModule.MapEndpoints(app);
+
+app.MapHealthChecks("health", new HealthCheckOptions()
+{
+   ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.UseSerilogRequestLogging();
 

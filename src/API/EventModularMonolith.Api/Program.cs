@@ -1,13 +1,19 @@
 using EventModularMonolith.Api.Extensions;
+using EventModularMonolith.Api.Middleware;
 using EventModularMonolith.Modules.Events.Infrastructure;
 using EventModularMonolith.Shared.Application;
 using EventModularMonolith.Shared.Infrastructure;
+using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(context.Configuration));
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 builder.Services.AddApplication([EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly]);
 
@@ -30,5 +36,9 @@ if (app.Environment.IsDevelopment())
 
 
 EventsModule.MapEndpoints(app);
+
+app.UseSerilogRequestLogging();
+
+app.UseExceptionHandler();
 
 app.Run();

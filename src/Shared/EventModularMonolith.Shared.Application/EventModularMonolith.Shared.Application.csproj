@@ -4,8 +4,13 @@
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
 		<PackageReference Include="MediatR" Version="12.3.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Serilog" Version="4.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\EventModularMonolith.Shared.Domain\EventModularMonolith.Shared.Domain.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Exceptions\" />
 	</ItemGroup>
 </Project>

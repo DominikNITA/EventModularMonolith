@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication([EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly]);
 
-builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
+builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!, builder.Configuration.GetConnectionString("Cache")!);
 
 // TODO: Create base module class which contains abstract module name and assembly
 builder.Configuration.AddModuleConfigurations(["events"]);

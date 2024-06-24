@@ -7,6 +7,7 @@ using EventModularMonolith.Modules.Events.Infrastructure.Database;
 using EventModularMonolith.Modules.Events.Infrastructure.Events;
 using EventModularMonolith.Modules.Events.Infrastructure.TicketTypes;
 using EventModularMonolith.Modules.Events.Presentation.Events;
+using EventModularMonolith.Shared.Presentation;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -17,13 +18,11 @@ namespace EventModularMonolith.Modules.Events.Infrastructure;
 
 public static class EventsModule
 {
-   public static void MapEndpoints(IEndpointRouteBuilder app)
-   {
-      EventEndpoints.MapEndpoints(app);
-   }
 
    public static IServiceCollection AddEventsModule(this IServiceCollection services, IConfiguration configuration)
    {
+      services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
       services.AddInfrastructure(configuration);
 
       return services;

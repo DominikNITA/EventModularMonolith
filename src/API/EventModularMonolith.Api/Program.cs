@@ -3,6 +3,7 @@ using EventModularMonolith.Api.Middleware;
 using EventModularMonolith.Modules.Events.Infrastructure;
 using EventModularMonolith.Shared.Application;
 using EventModularMonolith.Shared.Infrastructure;
+using EventModularMonolith.Shared.Presentation;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
@@ -43,7 +44,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
-EventsModule.MapEndpoints(app);
+app.MapEndpoints();
 
 app.MapHealthChecks("health", new HealthCheckOptions()
 {

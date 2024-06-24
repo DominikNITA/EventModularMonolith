@@ -8,4 +8,8 @@
 		<ProjectReference Include="..\EventModularMonolith.Shared.Domain\EventModularMonolith.Shared.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Endpoints\" />
+	</ItemGroup>
+
 </Project>

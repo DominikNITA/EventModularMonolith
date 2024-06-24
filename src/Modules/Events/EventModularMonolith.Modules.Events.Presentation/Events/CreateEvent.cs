@@ -1,6 +1,7 @@
 ﻿using EventModularMonolith.Modules.Events.Application.Events.CreateEvent;
 using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Shared.Presentation;
+using EventModularMonolith.Shared.Presentation.Endpoints;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -8,11 +9,11 @@ using Microsoft.AspNetCore.Routing;
 
 namespace EventModularMonolith.Modules.Events.Presentation.Events;
 
-internal static class CreateEvent
+internal sealed class CreateEvent : IEndpoint
 {
-   public static void MapEndpoint(IEndpointRouteBuilder app)
+   public void MapEndpoint(IEndpointRouteBuilder app)
    {
-      app.MapPost("events", async (Request request, ISender sender) =>
+      app.MapPost("events", async (CreateEventRequest request, ISender sender) =>
          {
             var command = new CreateEventCommand(
                request.CategoryId,
@@ -29,7 +30,7 @@ internal static class CreateEvent
       .WithTags(Tags.Events);
    }
 
-   internal sealed class Request
+   internal sealed class CreateEventRequest
    {
       public Guid CategoryId { get; set; }
       public string Title { get; set; }

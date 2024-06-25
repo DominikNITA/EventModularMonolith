@@ -1,6 +1,7 @@
 using EventModularMonolith.Api.Extensions;
 using EventModularMonolith.Api.Middleware;
 using EventModularMonolith.Modules.Events.Infrastructure;
+using EventModularMonolith.Modules.Users.Infrastructure;
 using EventModularMonolith.Shared.Application;
 using EventModularMonolith.Shared.Infrastructure;
 using EventModularMonolith.Shared.Presentation;
@@ -35,6 +36,7 @@ builder.Services.AddHealthChecks()
    .AddRedis(redisConnectionString);
 
 builder.Services.AddEventsModule(builder.Configuration);
+builder.Services.AddUsersModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 

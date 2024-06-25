@@ -1,4 +1,5 @@
 ﻿using EventModularMonolith.Modules.Events.Infrastructure.Database;
+using EventModularMonolith.Modules.Users.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventModularMonolith.Api.Extensions;
@@ -10,6 +11,7 @@ internal static class MigrationExtensions
       using IServiceScope scope = app.ApplicationServices.CreateScope();
 
       ApplyMigrations<EventsDbContext>(scope);
+      ApplyMigrations<UsersDbContext>(scope);
    }
 
    private static void ApplyMigrations<TDbContext>(IServiceScope scope)

@@ -2,6 +2,8 @@
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Domain.TicketTypes;
+using EventModularMonolith.Modules.Events.Infrastructure.Events;
+using EventModularMonolith.Modules.Events.Infrastructure.TicketTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventModularMonolith.Modules.Events.Infrastructure.Database;
@@ -17,5 +19,8 @@ public sealed class EventsDbContext : DbContext, IUnitOfWork
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
       modelBuilder.HasDefaultSchema(Schemas.Events);
+
+      modelBuilder.ApplyConfiguration(new TicketTypeConfiguration());
+      modelBuilder.ApplyConfiguration(new EventConfiguration());
    }
 }

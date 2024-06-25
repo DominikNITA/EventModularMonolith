@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<Folder Include="Users\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Domain\EventModularMonolith.Shared.Domain.csproj" />
+	</ItemGroup>
+</Project>

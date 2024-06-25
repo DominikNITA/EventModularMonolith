@@ -18,14 +18,17 @@ builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddApplication([EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly]);
+builder.Services.AddApplication([
+   EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly,
+   EventModularMonolith.Modules.Users.Application.AssemblyReference.Assembly
+]);
 
 string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
 string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
 builder.Services.AddInfrastructure(databaseConnectionString, redisConnectionString);
 
 // TODO: Create base module class which contains abstract module name and assembly
-builder.Configuration.AddModuleConfigurations(["events"]);
+builder.Configuration.AddModuleConfigurations(["events","users"]);
 
 builder.Services.AddHealthChecks()
    .AddNpgSql(databaseConnectionString)

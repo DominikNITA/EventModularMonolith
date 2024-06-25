@@ -7,6 +7,7 @@ using EventModularMonolith.Modules.Events.Infrastructure.Database;
 using EventModularMonolith.Modules.Events.Infrastructure.Events;
 using EventModularMonolith.Modules.Events.Infrastructure.TicketTypes;
 using EventModularMonolith.Modules.Events.Presentation.Events;
+using EventModularMonolith.Shared.Infrastructure.Interceptors;
 using EventModularMonolith.Shared.Presentation;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -32,12 +33,12 @@ public static class EventsModule
    {
       string databaseConnectionString = configuration.GetConnectionString("Database")!;
 
-      services.AddDbContext<EventsDbContext>(options =>
+      services.AddDbContext<EventsDbContext>((sp,options) =>
          options.UseNpgsql(databaseConnectionString,
                npgsqlOptions => npgsqlOptions
                   .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
             .UseSnakeCaseNamingConvention()
-            .AddInterceptors());
+            .AddInterceptors(sp.GetRequiredService<PublishDomainEventsInterceptor>()));
 
       services.AddScoped<IEventRepository, EventRepository>();
       services.AddScoped<ICategoryRepository, CategoryRepository>();

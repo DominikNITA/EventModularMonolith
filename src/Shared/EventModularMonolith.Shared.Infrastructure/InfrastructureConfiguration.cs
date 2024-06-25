@@ -4,6 +4,7 @@ using EventModularMonolith.Shared.Application.Data;
 using EventModularMonolith.Shared.Infrastructure.Caching;
 using EventModularMonolith.Shared.Infrastructure.Clock;
 using EventModularMonolith.Shared.Infrastructure.Database;
+using EventModularMonolith.Shared.Infrastructure.Interceptors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -20,6 +21,8 @@ public static class InfrastructureConfiguration
       services.TryAddSingleton(npgsqlDataSource);
 
       services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+
+      services.TryAddSingleton<PublishDomainEventsInterceptor>();
 
       services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
 

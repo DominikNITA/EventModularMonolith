@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Caching\" />
+	  <Folder Include="Interceptors\" />
 	</ItemGroup>
 
 </Project>

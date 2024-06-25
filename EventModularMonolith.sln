@@ -32,13 +32,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Module
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{B07DBC85-2DBF-4540-96CC-15F19026AFB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventModularMonolith.Shared.Application", "src\Shared\EventModularMonolith.Shared.Application\EventModularMonolith.Shared.Application.csproj", "{5B28C5BC-F769-4F6D-8F69-5A5F9FD23775}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Shared.Application", "src\Shared\EventModularMonolith.Shared.Application\EventModularMonolith.Shared.Application.csproj", "{5B28C5BC-F769-4F6D-8F69-5A5F9FD23775}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventModularMonolith.Shared.Domain", "src\Shared\EventModularMonolith.Shared.Domain\EventModularMonolith.Shared.Domain.csproj", "{A7341256-7F82-4265-A45E-E5871880CE1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Shared.Domain", "src\Shared\EventModularMonolith.Shared.Domain\EventModularMonolith.Shared.Domain.csproj", "{A7341256-7F82-4265-A45E-E5871880CE1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventModularMonolith.Shared.Infrastructure", "src\Shared\EventModularMonolith.Shared.Infrastructure\EventModularMonolith.Shared.Infrastructure.csproj", "{5A8340A4-14A8-4820-BCA8-52CC76375D9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Shared.Infrastructure", "src\Shared\EventModularMonolith.Shared.Infrastructure\EventModularMonolith.Shared.Infrastructure.csproj", "{5A8340A4-14A8-4820-BCA8-52CC76375D9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventModularMonolith.Shared.Presentation", "src\Shared\EventModularMonolith.Shared.Presentation\EventModularMonolith.Shared.Presentation.csproj", "{2B897B38-E87A-4297-9A5C-A7F2983A01B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Shared.Presentation", "src\Shared\EventModularMonolith.Shared.Presentation\EventModularMonolith.Shared.Presentation.csproj", "{2B897B38-E87A-4297-9A5C-A7F2983A01B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{0EDD7911-4BCC-4EC0-AE72-ACECA1A446D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +106,7 @@ Global
 		{A7341256-7F82-4265-A45E-E5871880CE1A} = {B07DBC85-2DBF-4540-96CC-15F19026AFB4}
 		{5A8340A4-14A8-4820-BCA8-52CC76375D9C} = {B07DBC85-2DBF-4540-96CC-15F19026AFB4}
 		{2B897B38-E87A-4297-9A5C-A7F2983A01B8} = {B07DBC85-2DBF-4540-96CC-15F19026AFB4}
+		{0EDD7911-4BCC-4EC0-AE72-ACECA1A446D8} = {E152D6C5-B6F1-4AA6-B79C-8F83A451999C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0B6ABF4-3032-41EB-B72C-0DD72F624BB8}

@@ -50,6 +50,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Module
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Modules.Users.Presentation", "src\Modules\Users\EventModularMonolith.Modules.Users.Presentation\EventModularMonolith.Modules.Users.Presentation.csproj", "{B0253E3B-AE5B-4645-B4E0-FB7F1473A9E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ticketing", "Ticketing", "{7128DA2C-0075-4F0B-8239-24B4A3DAC12A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Modules.Ticketing.Application", "src\Modules\Ticketing\EventModularMonolith.Modules.Ticketing.Application\EventModularMonolith.Modules.Ticketing.Application.csproj", "{A74AE84C-9970-4F07-80F6-B380EF76B17C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Modules.Ticketing.Domain", "src\Modules\Ticketing\EventModularMonolith.Modules.Ticketing.Domain\EventModularMonolith.Modules.Ticketing.Domain.csproj", "{22A7A7B9-51D1-4B6A-9323-0806952D0DD0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Modules.Ticketing.Infrastructure", "src\Modules\Ticketing\EventModularMonolith.Modules.Ticketing.Infrastructure\EventModularMonolith.Modules.Ticketing.Infrastructure.csproj", "{F90A457F-A747-43DD-9068-F03F4CB5B15A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventModularMonolith.Modules.Ticketing.Presentation", "src\Modules\Ticketing\EventModularMonolith.Modules.Ticketing.Presentation\EventModularMonolith.Modules.Ticketing.Presentation.csproj", "{B9DC72F5-316A-4DA5-B68D-6D399E9531C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,6 +122,22 @@ Global
 		{B0253E3B-AE5B-4645-B4E0-FB7F1473A9E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0253E3B-AE5B-4645-B4E0-FB7F1473A9E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0253E3B-AE5B-4645-B4E0-FB7F1473A9E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A74AE84C-9970-4F07-80F6-B380EF76B17C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A74AE84C-9970-4F07-80F6-B380EF76B17C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A74AE84C-9970-4F07-80F6-B380EF76B17C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A74AE84C-9970-4F07-80F6-B380EF76B17C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22A7A7B9-51D1-4B6A-9323-0806952D0DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22A7A7B9-51D1-4B6A-9323-0806952D0DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22A7A7B9-51D1-4B6A-9323-0806952D0DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22A7A7B9-51D1-4B6A-9323-0806952D0DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F90A457F-A747-43DD-9068-F03F4CB5B15A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F90A457F-A747-43DD-9068-F03F4CB5B15A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F90A457F-A747-43DD-9068-F03F4CB5B15A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F90A457F-A747-43DD-9068-F03F4CB5B15A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9DC72F5-316A-4DA5-B68D-6D399E9531C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9DC72F5-316A-4DA5-B68D-6D399E9531C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9DC72F5-316A-4DA5-B68D-6D399E9531C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9DC72F5-316A-4DA5-B68D-6D399E9531C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +161,11 @@ Global
 		{FDB2C375-EA0C-426D-9563-2504AD674DAB} = {0EDD7911-4BCC-4EC0-AE72-ACECA1A446D8}
 		{CBEDC1AF-0107-48FD-9D2D-4DDEE121D22A} = {0EDD7911-4BCC-4EC0-AE72-ACECA1A446D8}
 		{B0253E3B-AE5B-4645-B4E0-FB7F1473A9E7} = {0EDD7911-4BCC-4EC0-AE72-ACECA1A446D8}
+		{7128DA2C-0075-4F0B-8239-24B4A3DAC12A} = {E152D6C5-B6F1-4AA6-B79C-8F83A451999C}
+		{A74AE84C-9970-4F07-80F6-B380EF76B17C} = {7128DA2C-0075-4F0B-8239-24B4A3DAC12A}
+		{22A7A7B9-51D1-4B6A-9323-0806952D0DD0} = {7128DA2C-0075-4F0B-8239-24B4A3DAC12A}
+		{F90A457F-A747-43DD-9068-F03F4CB5B15A} = {7128DA2C-0075-4F0B-8239-24B4A3DAC12A}
+		{B9DC72F5-316A-4DA5-B68D-6D399E9531C5} = {7128DA2C-0075-4F0B-8239-24B4A3DAC12A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0B6ABF4-3032-41EB-B72C-0DD72F624BB8}

@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <Folder Include="Carts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Application\EventModularMonolith.Shared.Application.csproj" />
+  </ItemGroup>
+</Project>

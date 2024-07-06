@@ -4,9 +4,11 @@
     <Folder Include="Users\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Domain\EventModularMonolith.Shared.Domain.csproj" />
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Infrastructure\EventModularMonolith.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Presentation\EventModularMonolith.Shared.Presentation.csproj" />
     <ProjectReference Include="..\EventModularMonolith.Modules.Users.Application\EventModularMonolith.Modules.Users.Application.csproj" />
     <ProjectReference Include="..\EventModularMonolith.Modules.Users.Presentation\EventModularMonolith.Modules.Users.Presentation.csproj" />
+    <ProjectReference Include="..\EventModularMonolith.Modules.Users.PublicApi\EventModularMonolith.Modules.Users.PublicApi.csproj" />
   </ItemGroup>
 </Project>

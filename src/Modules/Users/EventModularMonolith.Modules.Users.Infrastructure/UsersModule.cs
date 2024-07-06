@@ -1,7 +1,9 @@
 ﻿using EventModularMonolith.Modules.Users.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Users.Domain.Users;
 using EventModularMonolith.Modules.Users.Infrastructure.Database;
+using EventModularMonolith.Modules.Users.Infrastructure.PublicApi;
 using EventModularMonolith.Modules.Users.Infrastructure.Users;
+using EventModularMonolith.Modules.Users.PublicApi;
 using EventModularMonolith.Shared.Infrastructure.Interceptors;
 using EventModularMonolith.Shared.Presentation;
 using Microsoft.EntityFrameworkCore;
@@ -38,5 +40,7 @@ public static class UsersModule
       services.AddScoped<IUserRepository, UserRepository>();
 
       services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
+
+      services.AddScoped<IUsersApi, UsersApi>();
    }
 }

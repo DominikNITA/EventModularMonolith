@@ -1,3 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Domain\EventModularMonolith.Shared.Domain.csproj" />
+  </ItemGroup>
 </Project>

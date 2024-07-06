@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <Folder Include="Carts\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Application\EventModularMonolith.Shared.Application.csproj" />
+    <ProjectReference Include="..\..\Users\EventModularMonolith.Modules.Users.PublicApi\EventModularMonolith.Modules.Users.PublicApi.csproj" />
+    <ProjectReference Include="..\EventModularMonolith.Modules.Ticketing.Domain\EventModularMonolith.Modules.Ticketing.Domain.csproj" />
   </ItemGroup>
 </Project>

@@ -17,7 +17,7 @@ internal sealed class GetTicketType : IEndpoint
 {
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
-      app.MapPost("ticketTypes/{id}", async (Guid id, ISender sender) =>
+      app.MapPost("ticket-types/{id}", async (Guid id, ISender sender) =>
          {
             Result<TicketTypeDto> result = await sender.Send(new GetTicketTypeQuery(id));
 

@@ -17,10 +17,10 @@ internal sealed class UpdateTicketTypePrice : IEndpoint
 {
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
-      app.MapPost("ticketTypes", async (UpdateTicketTypePriceRequest request, ISender sender) =>
+      app.MapPut("ticket-types/{id}", async (Guid id, UpdateTicketTypePriceRequest request, ISender sender) =>
          {
             var command = new UpdateTicketTypePriceCommand(
-               request.EventId,
+               id,
                request.Price
             );
 
@@ -33,7 +33,6 @@ internal sealed class UpdateTicketTypePrice : IEndpoint
 
    internal sealed class UpdateTicketTypePriceRequest
    {
-      public Guid EventId { get; set; }
       public decimal Price { get; set; }
    }
 }

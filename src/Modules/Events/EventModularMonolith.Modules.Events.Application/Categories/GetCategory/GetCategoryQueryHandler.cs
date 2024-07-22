@@ -25,6 +25,7 @@ public sealed class GetCategoryQueryHandler(IDbConnectionFactory dbConnectionFac
                  name AS {nameof(CategoryDto.Name)},
                  is_archived AS {nameof(CategoryDto.IsArchived)},
              FROM events.categories
+             WHERE id = @CategoryId
              """;
 
         CategoryDto? category = await connection.QuerySingleOrDefaultAsync<CategoryDto>(sql, request);

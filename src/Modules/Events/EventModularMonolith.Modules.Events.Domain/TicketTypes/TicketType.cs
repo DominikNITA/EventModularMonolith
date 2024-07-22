@@ -1,5 +1,6 @@
 ﻿using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Modules.Events.Domain.Events;
+using EventModularMonolith.Modules.Events.Domain.TicketTypes.Events;
 
 namespace EventModularMonolith.Modules.Events.Domain.TicketTypes;
 
@@ -38,7 +39,6 @@ public sealed class TicketType : Entity
       };
 
       ticketType.Raise(new TicketTypeCreatedDomainEvent(ticketType.Id));
-
 
       return ticketType;
    }

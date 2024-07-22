@@ -1,6 +1,6 @@
 ﻿using EventModularMonolith.Shared.Domain;
 
-namespace EventModularMonolith.Modules.Events.Domain.TicketTypes;
+namespace EventModularMonolith.Modules.Events.Domain.TicketTypes.Events;
 
 public sealed class TicketTypePriceChangedDomainEvent(Guid ticketTypeId, decimal price) : DomainEvent
 {

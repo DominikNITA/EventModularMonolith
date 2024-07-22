@@ -16,7 +16,7 @@ internal sealed class CreateTicketType : IEndpoint
 {
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
-      app.MapPost("ticketTypes", async (CreateTicketTypeRequest request, ISender sender) =>
+      app.MapPost("ticket-types", async (CreateTicketTypeRequest request, ISender sender) =>
          {
             var command = new CreateTicketTypeCommand(
                request.EventId,

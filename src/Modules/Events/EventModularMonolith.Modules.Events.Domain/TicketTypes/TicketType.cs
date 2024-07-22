@@ -13,6 +13,7 @@ public sealed class TicketType : Entity
 
    public string Name { get; private set; }
 
+   //TODO: Create money value object
    public decimal Price { get; private set; }
 
    public string Currency { get; private set; }

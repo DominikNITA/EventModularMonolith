@@ -5,7 +5,7 @@ namespace EventModularMonolith.Modules.Events.Application.Categories.DTOs;
 
 public class CategoryDto
 {
-   public int Id { get; set; }
+   public Guid Id { get; set; }
    public string Name { get; set; } = string.Empty;
    public bool IsArchived { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using EventModularMonolith.Shared.Domain;
+﻿using EventModularMonolith.Modules.Events.Domain.Categories.Events;
+using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Domain.Categories;
 
@@ -22,9 +23,16 @@ public sealed class Category : Entity
 
       return category;
    }
-}
 
-public sealed class CategoryCreatedDomainEvent(Guid categoryId) : DomainEvent
-{
-   public Guid CategoryId { get; init; } = categoryId;
+   public void Update(string name)
+   {
+      if (Name == name)
+      {
+         return;
+      }
+
+      Name = name;
+
+      Raise(new CategoryUpdatedDomainEvent(Id, Name));
+   }
 }

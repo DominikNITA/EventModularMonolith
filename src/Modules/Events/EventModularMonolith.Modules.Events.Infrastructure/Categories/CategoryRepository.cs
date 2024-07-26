@@ -2,11 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using EventModularMonolith.Modules.Events.Domain.Categories;
-using EventModularMonolith.Shared.Domain;
+using EventModularMonolith.Modules.Events.Infrastructure.Database;
+using EventModularMonolith.Shared.Infrastructure.Database;
 
 namespace EventModularMonolith.Modules.Events.Infrastructure.Categories;
 
-public interface ICategoryRepository : IRepository<Category>
+internal sealed class CategoryRepository(EventsDbContext context) : Repository<Category>(context), ICategoryRepository
 {
 
 }

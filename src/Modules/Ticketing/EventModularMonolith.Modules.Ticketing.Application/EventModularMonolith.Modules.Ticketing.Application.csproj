@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Application\EventModularMonolith.Shared.Application.csproj" />
+    <ProjectReference Include="..\..\Events\EventModularMonolith.Modules.Events.Domain\EventModularMonolith.Modules.Events.Domain.csproj" />
     <ProjectReference Include="..\..\Users\EventModularMonolith.Modules.Users.PublicApi\EventModularMonolith.Modules.Users.PublicApi.csproj" />
     <ProjectReference Include="..\EventModularMonolith.Modules.Ticketing.Domain\EventModularMonolith.Modules.Ticketing.Domain.csproj" />
   </ItemGroup>

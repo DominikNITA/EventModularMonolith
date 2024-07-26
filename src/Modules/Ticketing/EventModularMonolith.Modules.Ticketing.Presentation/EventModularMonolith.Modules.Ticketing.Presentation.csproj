@@ -1,5 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Presentation\EventModularMonolith.Shared.Presentation.csproj" />
+    <ProjectReference Include="..\..\Events\EventModularMonolith.Modules.Events.Application\EventModularMonolith.Modules.Events.Application.csproj" />
+    <ProjectReference Include="..\..\Events\EventModularMonolith.Modules.Events.IntegrationEvents\EventModularMonolith.Modules.Events.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\..\Users\EventModularMonolith.Modules.Users.Application\EventModularMonolith.Modules.Users.Application.csproj" />
+    <ProjectReference Include="..\..\Users\EventModularMonolith.Modules.Users.IntegrationEvents\EventModularMonolith.Modules.Users.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\EventModularMonolith.Modules.Ticketing.Application\EventModularMonolith.Modules.Ticketing.Application.csproj" />
   </ItemGroup>
 </Project>

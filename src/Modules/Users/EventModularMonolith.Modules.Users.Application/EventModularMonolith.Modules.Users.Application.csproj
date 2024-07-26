@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <Folder Include="Abstractions\Data\" />
-    <Folder Include="Users\RegisterUser\" />
+    <Folder Include="Exceptions\" />
     <Folder Include="Users\GetUser\" />
     <Folder Include="Users\UpdateUser\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Application\EventModularMonolith.Shared.Application.csproj" />
     <ProjectReference Include="..\EventModularMonolith.Modules.Users.Domain\EventModularMonolith.Modules.Users.Domain.csproj" />
+    <ProjectReference Include="..\EventModularMonolith.Modules.Users.IntegrationEvents\EventModularMonolith.Modules.Users.IntegrationEvents.csproj" />
   </ItemGroup>
 </Project>

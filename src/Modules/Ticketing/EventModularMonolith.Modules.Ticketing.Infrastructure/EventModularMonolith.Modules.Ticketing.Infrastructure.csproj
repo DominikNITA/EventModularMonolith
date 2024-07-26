@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Infrastructure\EventModularMonolith.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Presentation\EventModularMonolith.Shared.Presentation.csproj" />
+    <ProjectReference Include="..\..\Users\EventModularMonolith.Modules.Users.IntegrationEvents\EventModularMonolith.Modules.Users.IntegrationEvents.csproj" />
     <ProjectReference Include="..\EventModularMonolith.Modules.Ticketing.Application\EventModularMonolith.Modules.Ticketing.Application.csproj" />
     <ProjectReference Include="..\EventModularMonolith.Modules.Ticketing.Presentation\EventModularMonolith.Modules.Ticketing.Presentation.csproj" />
   </ItemGroup>

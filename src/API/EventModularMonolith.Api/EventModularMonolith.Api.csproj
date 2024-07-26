@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\Events\EventModularMonolith.Modules.Events.Infrastructure\EventModularMonolith.Modules.Events.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Ticketing\EventModularMonolith.Modules.Ticketing.Infrastructure\EventModularMonolith.Modules.Ticketing.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Users\EventModularMonolith.Modules.Users.Infrastructure\EventModularMonolith.Modules.Users.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -1,6 +1,7 @@
 using EventModularMonolith.Api.Extensions;
 using EventModularMonolith.Api.Middleware;
 using EventModularMonolith.Modules.Events.Infrastructure;
+using EventModularMonolith.Modules.Ticketing.Infrastructure;
 using EventModularMonolith.Modules.Users.Infrastructure;
 using EventModularMonolith.Shared.Application;
 using EventModularMonolith.Shared.Infrastructure;
@@ -21,15 +22,18 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication([
    EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly,
-   EventModularMonolith.Modules.Users.Application.AssemblyReference.Assembly
+   EventModularMonolith.Modules.Users.Application.AssemblyReference.Assembly,
+   EventModularMonolith.Modules.Ticketing.Application.AssemblyReference.Assembly,
 ]);
 
 string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
 string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
-builder.Services.AddInfrastructure(databaseConnectionString, redisConnectionString);
+builder.Services.AddInfrastructure(
+   [TicketingModule.ConfigureConsumers],
+   databaseConnectionString, redisConnectionString);
 
 // TODO: Create base module class which contains abstract module name and assembly
-builder.Configuration.AddModuleConfigurations(["events","users"]);
+builder.Configuration.AddModuleConfigurations(["events","users", "ticketing"]);
 
 builder.Services.AddHealthChecks()
    .AddNpgSql(databaseConnectionString)
@@ -37,6 +41,7 @@ builder.Services.AddHealthChecks()
 
 builder.Services.AddEventsModule(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
+builder.Services.AddTicketingModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 

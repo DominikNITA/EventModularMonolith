@@ -1,8 +1,10 @@
 ﻿using EventModularMonolith.Modules.Ticketing.Domain.Customers;
+using EventModularMonolith.Modules.Ticketing.Domain.TicketTypes;
 using EventModularMonolith.Modules.Users.PublicApi;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;
 using FluentValidation;
+using MediatR;
 
 namespace EventModularMonolith.Modules.Ticketing.Application.Carts.AddItemToCart;
 
@@ -18,7 +20,10 @@ internal sealed class AddItemToCartCommandValidator : AbstractValidator<AddItemT
    }
 }
 
-internal sealed class AddItemToCartCommandHandler(IUsersApi usersApi, CartService cartService) : ICommandHandler<AddItemToCartCommand>
+internal sealed class AddItemToCartCommandHandler(
+   IUsersApi usersApi,
+   ITicketTypeRepository ticketTypeRepository,
+   CartService cartService) : ICommandHandler<AddItemToCartCommand>
 {
    public async Task<Result> Handle(AddItemToCartCommand command, CancellationToken cancellationToken)
    {
@@ -29,7 +34,29 @@ internal sealed class AddItemToCartCommandHandler(IUsersApi usersApi, CartServic
          return Result.Failure(CustomerErrors.NotFound(command.CustomerId));
       }
 
+      TicketType? ticketType = await ticketTypeRepository.GetAsync(command.TicketTypeId, cancellationToken);
 
+      if (ticketType is null)
+      {
+         return Result.Failure(TicketTypeErrors.NotFound(command.TicketTypeId));
+      }
+
+      if (ticketType.AvailableQuantity < command.Quantity)
+      {
+         return Result.Failure(TicketTypeErrors.NotEnoughQuantity(ticketType.AvailableQuantity));
+      }
+
+      var cartItem = new CartItem
+      {
+         TicketTypeId = command.TicketTypeId,
+         Quantity = command.Quantity,
+         Price = ticketType.Price,
+         Currency = ticketType.Currency
+      };
+
+      await cartService.AddItemAsync(customer.Id, cartItem, cancellationToken);
+
+      return Result.Success();
    }
 }
 

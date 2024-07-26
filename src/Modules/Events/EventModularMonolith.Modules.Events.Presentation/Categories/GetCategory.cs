@@ -17,7 +17,7 @@ internal sealed class GetCategory : IEndpoint
 {
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
-      app.MapPost("categories/{id}", async (Guid id, ISender sender) =>
+      app.MapGet("categories/{id}", async (Guid id, ISender sender) =>
          {
             Result<CategoryDto> result = await sender.Send(new GetCategoryQuery(id));
 

@@ -6,6 +6,7 @@ using EventModularMonolith.Shared.Application.Messaging;
 namespace EventModularMonolith.Modules.Ticketing.Application.Customers.CreateCustomer;
 
 public sealed record CreateCustomerCommand(
+    Guid Id,
     string Email,
     string FirstName,
     string LastName

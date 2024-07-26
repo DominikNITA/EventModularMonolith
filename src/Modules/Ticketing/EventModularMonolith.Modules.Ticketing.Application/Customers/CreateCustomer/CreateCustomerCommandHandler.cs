@@ -17,6 +17,7 @@ public class CreateCustomerCommandHandler(
    public async Task<Result<Guid>> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
    {
       Result<Customer> customer = Customer.Create(
+           request.Id,
            request.Email,
            request.FirstName,
            request.LastName

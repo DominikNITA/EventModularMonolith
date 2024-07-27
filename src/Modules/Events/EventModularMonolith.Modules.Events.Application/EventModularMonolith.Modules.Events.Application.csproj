@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Application\EventModularMonolith.Shared.Application.csproj" />
     <ProjectReference Include="..\EventModularMonolith.Modules.Events.Domain\EventModularMonolith.Modules.Events.Domain.csproj" />
+    <ProjectReference Include="..\EventModularMonolith.Modules.Events.IntegrationEvents\EventModularMonolith.Modules.Events.IntegrationEvents.csproj" />
   </ItemGroup>
 	
 

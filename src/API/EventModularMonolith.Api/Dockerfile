@@ -5,6 +5,7 @@ USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
+EXPOSE 3000
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -21,5 +22,6 @@ RUN dotnet publish "./EventModularMonolith.Api.csproj" -c $BUILD_CONFIGURATION -
 
 FROM base AS final
 WORKDIR /app
+RUN MKDIR /app/wwwroot
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "EventModularMonolith.Api.dll"]

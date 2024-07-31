@@ -1,9 +1,11 @@
 ﻿using EventModularMonolith.Modules.Events.IntegrationEvents;
+using EventModularMonolith.Modules.Ticketing.Application.Abstractions.Authentication;
 using EventModularMonolith.Modules.Ticketing.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Ticketing.Application.Carts;
 using EventModularMonolith.Modules.Ticketing.Domain.Customers;
 using EventModularMonolith.Modules.Ticketing.Domain.Events;
 using EventModularMonolith.Modules.Ticketing.Domain.TicketTypes;
+using EventModularMonolith.Modules.Ticketing.Infrastructure.Authentication;
 using EventModularMonolith.Modules.Ticketing.Infrastructure.Customers;
 using EventModularMonolith.Modules.Ticketing.Infrastructure.Database;
 using EventModularMonolith.Modules.Ticketing.Infrastructure.Events;
@@ -67,6 +69,8 @@ public static class TicketingModule
       services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<TicketingDbContext>());
 
       services.AddSingleton<CartService>();
+      services.AddScoped<ICustomerContext, CustomerContext>();
+
 
       services.Configure<OutboxOptions>(configuration.GetSection("Ticketing:Outbox"));
 

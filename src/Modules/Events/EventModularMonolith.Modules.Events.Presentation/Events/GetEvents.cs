@@ -11,15 +11,17 @@ namespace EventModularMonolith.Modules.Events.Presentation.Events;
 
 internal sealed class GetEvents : IEndpoint
 {
-    public void MapEndpoint(IEndpointRouteBuilder app)
-    {
+   public void MapEndpoint(IEndpointRouteBuilder app)
+   {
 
-        app.MapGet("events", async (ISender sender) =>
-        {
-            Result<IReadOnlyCollection<EventResponse>> result = await sender.Send(new GetEventsQuery());
+      app.MapGet("events", async (ISender sender) =>
+      {
+         Result<IReadOnlyCollection<EventResponse>> result = await sender.Send(new GetEventsQuery());
 
-            return result.Match(Results.Ok, ApiResults.Problem);
-        })
-        .WithTags(Tags.Events);
-    }
+         return result.Match(Results.Ok, ApiResults.Problem);
+      })
+      .WithTags(Tags.Events)
+      .Produces<Result<IReadOnlyCollection<EventResponse>>>()
+      .WithName("GetEvents");
+   }
 }

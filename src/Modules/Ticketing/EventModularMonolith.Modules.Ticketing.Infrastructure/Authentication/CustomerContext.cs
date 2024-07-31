@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Authentication;
 
-internal sealed class CustomerContext(IHttpContextAccessor httpContextAccessor) : ICustomerContext
+internal sealed class CustomerContext() : ICustomerContext
 {
-   public Guid CustomerId => Guid.NewGuid(); //httpContextAccessor.HttpContext?.User.GetUserId() ??
-   //throw new GeneralException("User identifier is unavailable");
+   public Guid CustomerId => Guid.NewGuid();
 }

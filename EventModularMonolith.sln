@@ -66,6 +66,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventModularMonolith.Module
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventModularMonolith.Modules.Events.IntegrationEvents", "src\Modules\Events\EventModularMonolith.Modules.Events.IntegrationEvents\EventModularMonolith.Modules.Events.IntegrationEvents.csproj", "{7ADD4CE4-6EBC-42BE-B204-CA5554C189EF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{E2E57BC1-8714-4FBD-A138-D1662E77DA7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{84B61C73-0E4C-4B0A-9803-781A50FEA3B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -187,6 +191,8 @@ Global
 		{E6F23946-4269-4939-8F25-5A4530B2197B} = {0EDD7911-4BCC-4EC0-AE72-ACECA1A446D8}
 		{F2B2CAA6-90A0-4AB3-87A9-B74C69DB7F57} = {0EDD7911-4BCC-4EC0-AE72-ACECA1A446D8}
 		{7ADD4CE4-6EBC-42BE-B204-CA5554C189EF} = {70825A86-9FA8-4215-AF77-D40CC7FC5E8F}
+		{E2E57BC1-8714-4FBD-A138-D1662E77DA7F} = {D56F4193-ADA4-4082-8EEA-A56959651F40}
+		{84B61C73-0E4C-4B0A-9803-781A50FEA3B9} = {E2E57BC1-8714-4FBD-A138-D1662E77DA7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0B6ABF4-3032-41EB-B72C-0DD72F624BB8}

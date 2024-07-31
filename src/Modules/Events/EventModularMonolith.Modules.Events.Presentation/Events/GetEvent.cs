@@ -34,6 +34,8 @@ internal sealed class GetEvent : IEndpoint
 
             return result.Match(Results.Ok, ApiResults.Problem);
          })
-         .WithTags(Tags.Events);
+         .WithTags(Tags.Events)
+         .Produces<Result<EventResponse>>()
+         .WithName("GetEvent");
    }
 }

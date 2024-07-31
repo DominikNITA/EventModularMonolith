@@ -18,13 +18,20 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.Services.AddSwaggerGen(options => { options.CustomSchemaIds(type => type.ToString().Replace("+", ".")); });
+builder.Services.AddOpenApiDocument();
 builder.Services.AddApplication([
    EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly,
    EventModularMonolith.Modules.Users.Application.AssemblyReference.Assembly,
    EventModularMonolith.Modules.Ticketing.Application.AssemblyReference.Assembly,
 ]);
+
+builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+{
+   builder.WithOrigins("*")
+      .AllowAnyMethod()
+      .AllowAnyHeader();
+}));
 
 string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
 string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
@@ -33,7 +40,7 @@ builder.Services.AddInfrastructure(
    databaseConnectionString, redisConnectionString);
 
 // TODO: Create base module class which contains abstract module name and assembly
-builder.Configuration.AddModuleConfigurations(["events","users", "ticketing"]);
+builder.Configuration.AddModuleConfigurations(["events", "users", "ticketing"]);
 
 builder.Services.AddHealthChecks()
    .AddNpgSql(databaseConnectionString)
@@ -45,16 +52,17 @@ builder.Services.AddTicketingModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 
+app.UseCors("MyPolicy");
+
 if (app.Environment.IsDevelopment())
 {
    app.UseSwagger();
    app.UseSwaggerUI();
-
-   app.ApplyMigrations();
 }
 
+RouteGroupBuilder apiGroup = app.MapGroup("/api");
 
-app.MapEndpoints();
+app.MapEndpoints(apiGroup);
 
 app.MapHealthChecks("health", new HealthCheckOptions()
 {

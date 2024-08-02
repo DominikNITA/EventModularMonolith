@@ -108,7 +108,7 @@ internal sealed class ProcessInboxJob(
             UPDATE events.inbox_messages
             SET processed_on_utc = @ProcessedOnUtc,
                 error = @Error
-            WHERE id = @Id
+            WHERE id = @VenueId
             """;
 
         await connection.ExecuteAsync(

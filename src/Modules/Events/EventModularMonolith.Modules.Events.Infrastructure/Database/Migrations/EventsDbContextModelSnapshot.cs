@@ -25,7 +25,7 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("EventModularMonolith.Modules.Events.Domain.Categories.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -39,7 +39,7 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.HasKey("Id")
+                    b.HasKey("VenueId")
                         .HasName("pk_categories");
 
                     b.ToTable("categories", "events");
@@ -47,7 +47,7 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("EventModularMonolith.Modules.Events.Domain.Events.Event", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -65,11 +65,6 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("ends_at_utc");
 
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("location");
-
                     b.Property<DateTime>("StartsAtUtc")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("starts_at_utc");
@@ -83,18 +78,25 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("title");
 
-                    b.HasKey("Id")
+                    b.Property<Guid>("VenueId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("venue_id");
+
+                    b.HasKey("VenueId")
                         .HasName("pk_events");
 
                     b.HasIndex("CategoryId")
                         .HasDatabaseName("ix_events_category_id");
+
+                    b.HasIndex("VenueId")
+                        .HasDatabaseName("ix_events_venue_id");
 
                     b.ToTable("events", "events");
                 });
 
             modelBuilder.Entity("EventModularMonolith.Modules.Events.Domain.TicketTypes.TicketType", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -121,7 +123,7 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("quantity");
 
-                    b.HasKey("Id")
+                    b.HasKey("VenueId")
                         .HasName("pk_ticket_types");
 
                     b.HasIndex("EventId")
@@ -130,9 +132,32 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                     b.ToTable("ticket_types", "events");
                 });
 
+            modelBuilder.Entity("EventModularMonolith.Modules.Events.Domain.Venues.Venue", b =>
+                {
+                    b.Property<Guid>("VenueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("VenueId")
+                        .HasName("pk_venues");
+
+                    b.ToTable("venues", "events");
+                });
+
             modelBuilder.Entity("EventModularMonolith.Shared.Infrastructure.Inbox.InboxMessage", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -160,7 +185,7 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("type");
 
-                    b.HasKey("Id")
+                    b.HasKey("VenueId")
                         .HasName("pk_inbox_messages");
 
                     b.ToTable("inbox_messages", "events");
@@ -185,7 +210,7 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("EventModularMonolith.Shared.Infrastructure.Outbox.OutboxMessage", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -213,7 +238,7 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("type");
 
-                    b.HasKey("Id")
+                    b.HasKey("VenueId")
                         .HasName("pk_outbox_messages");
 
                     b.ToTable("outbox_messages", "events");
@@ -244,6 +269,13 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_events_categories_category_id");
+
+                    b.HasOne("EventModularMonolith.Modules.Events.Domain.Venues.Venue", null)
+                        .WithMany()
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_events_venues_venue_id");
                 });
 
             modelBuilder.Entity("EventModularMonolith.Modules.Events.Domain.TicketTypes.TicketType", b =>
@@ -254,6 +286,55 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_ticket_types_events_event_id");
+                });
+
+            modelBuilder.Entity("EventModularMonolith.Modules.Events.Domain.Venues.Venue", b =>
+                {
+                    b.OwnsOne("EventModularMonolith.Modules.Events.Domain.Venues.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("VenueId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("address_city");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("address_country");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("address_latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("address_longitude");
+
+                            b1.Property<string>("Region")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("address_region");
+
+                            b1.Property<string>("StreetAndNumber")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("address_street_and_number");
+
+                            b1.HasKey("VenueId");
+
+                            b1.ToTable("venues", "events");
+
+                            b1.WithOwner()
+                                .HasForeignKey("VenueId")
+                                .HasConstraintName("fk_venues_venues_id");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

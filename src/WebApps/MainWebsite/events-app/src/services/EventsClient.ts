@@ -13,6 +13,12 @@ import dayjs from 'dayjs'
 
 export interface IClient {
 
+    postApiVenues(request: CreateVenueRequest): Promise<ResultOfGuid>;
+
+    getVenues(): Promise<ResultOfIReadOnlyCollectionOfVenueDto>;
+
+    getVenue(id: string): Promise<ResultOfVenueDto>;
+
     postApiTicketTypes(request: CreateTicketTypeRequest): Promise<void>;
 
     getApiTicketTypes(): Promise<void>;
@@ -65,6 +71,121 @@ export class Client extends ClientBase implements IClient {
         super();
         this.http = http ? http : window as any;
         this.baseUrl = this.getBaseUrl("", baseUrl);
+    }
+
+    postApiVenues(request: CreateVenueRequest): Promise<ResultOfGuid> {
+        let url_ = this.baseUrl + "/api/venues";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processPostApiVenues(_response));
+        });
+    }
+
+    protected processPostApiVenues(response: Response): Promise<ResultOfGuid> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfGuid.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfGuid>(null as any);
+    }
+
+    getVenues(): Promise<ResultOfIReadOnlyCollectionOfVenueDto> {
+        let url_ = this.baseUrl + "/api/venues";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetVenues(_response));
+        });
+    }
+
+    protected processGetVenues(response: Response): Promise<ResultOfIReadOnlyCollectionOfVenueDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfIReadOnlyCollectionOfVenueDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfIReadOnlyCollectionOfVenueDto>(null as any);
+    }
+
+    getVenue(id: string): Promise<ResultOfVenueDto> {
+        let url_ = this.baseUrl + "/api/venues/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetVenue(_response));
+        });
+    }
+
+    protected processGetVenue(response: Response): Promise<ResultOfVenueDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfVenueDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfVenueDto>(null as any);
     }
 
     postApiTicketTypes(request: CreateTicketTypeRequest): Promise<void> {
@@ -822,94 +943,6 @@ export class Client extends ClientBase implements IClient {
     }
 }
 
-export class CreateTicketTypeRequest implements ICreateTicketTypeRequest {
-    eventId!: string;
-    name!: string;
-    price!: number;
-    currency!: string;
-    quantity!: number;
-
-    constructor(data?: ICreateTicketTypeRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.eventId = _data["eventId"];
-            this.name = _data["name"];
-            this.price = _data["price"];
-            this.currency = _data["currency"];
-            this.quantity = _data["quantity"];
-        }
-    }
-
-    static fromJS(data: any): CreateTicketTypeRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreateTicketTypeRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["eventId"] = this.eventId;
-        data["name"] = this.name;
-        data["price"] = this.price;
-        data["currency"] = this.currency;
-        data["quantity"] = this.quantity;
-        return data;
-    }
-}
-
-export interface ICreateTicketTypeRequest {
-    eventId: string;
-    name: string;
-    price: number;
-    currency: string;
-    quantity: number;
-}
-
-export class UpdateTicketTypePriceRequest implements IUpdateTicketTypePriceRequest {
-    price!: number;
-
-    constructor(data?: IUpdateTicketTypePriceRequest) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.price = _data["price"];
-        }
-    }
-
-    static fromJS(data: any): UpdateTicketTypePriceRequest {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdateTicketTypePriceRequest();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["price"] = this.price;
-        return data;
-    }
-}
-
-export interface IUpdateTicketTypePriceRequest {
-    price: number;
-}
-
 export class Result implements IResult {
     isSuccess!: boolean;
     isFailure!: boolean;
@@ -1045,11 +1078,333 @@ export enum ErrorType {
     Conflict = 4,
 }
 
+export class CreateVenueRequest implements ICreateVenueRequest {
+    name!: string;
+    description!: string;
+    address!: AddressDto;
+
+    constructor(data?: ICreateVenueRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.address = _data["address"] ? AddressDto.fromJS(_data["address"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): CreateVenueRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateVenueRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["address"] = this.address ? this.address.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface ICreateVenueRequest {
+    name: string;
+    description: string;
+    address: AddressDto;
+}
+
+export class AddressDto implements IAddressDto {
+    streetAndNumber!: string;
+    city!: string;
+    region!: string;
+    country!: string;
+    longitude!: number;
+    latitude!: number;
+
+    constructor(data?: IAddressDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.streetAndNumber = _data["streetAndNumber"];
+            this.city = _data["city"];
+            this.region = _data["region"];
+            this.country = _data["country"];
+            this.longitude = _data["longitude"];
+            this.latitude = _data["latitude"];
+        }
+    }
+
+    static fromJS(data: any): AddressDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddressDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["streetAndNumber"] = this.streetAndNumber;
+        data["city"] = this.city;
+        data["region"] = this.region;
+        data["country"] = this.country;
+        data["longitude"] = this.longitude;
+        data["latitude"] = this.latitude;
+        return data;
+    }
+}
+
+export interface IAddressDto {
+    streetAndNumber: string;
+    city: string;
+    region: string;
+    country: string;
+    longitude: number;
+    latitude: number;
+}
+
+export class ResultOfIReadOnlyCollectionOfVenueDto extends Result implements IResultOfIReadOnlyCollectionOfVenueDto {
+    value!: VenueDto[] | undefined;
+
+    constructor(data?: IResultOfIReadOnlyCollectionOfVenueDto) {
+        super(undefined);
+		if (data) {
+			for (var property in data) {
+				if (data.hasOwnProperty(property))
+					(<any>this)[property] = (<any>data)[property];
+			}
+		}
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["value"])) {
+                this.value = [] as any;
+                for (let item of _data["value"])
+                    this.value!.push(VenueDto.fromJS(item));
+            }
+        }
+    }
+
+    static override fromJS(data: any): ResultOfIReadOnlyCollectionOfVenueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResultOfIReadOnlyCollectionOfVenueDto();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.value)) {
+            data["value"] = [];
+            for (let item of this.value)
+                data["value"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IResultOfIReadOnlyCollectionOfVenueDto extends IResult {
+    value: VenueDto[] | undefined;
+}
+
+export class VenueDto implements IVenueDto {
+    venueId!: string;
+    name!: string;
+    description!: string;
+    address!: AddressDto;
+
+    constructor(data?: IVenueDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.venueId = _data["venueId"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.address = _data["address"] ? AddressDto.fromJS(_data["address"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): VenueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new VenueDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["venueId"] = this.venueId;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["address"] = this.address ? this.address.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IVenueDto {
+    venueId: string;
+    name: string;
+    description: string;
+    address: AddressDto;
+}
+
+export class ResultOfVenueDto extends Result implements IResultOfVenueDto {
+    value!: VenueDto | undefined;
+
+    constructor(data?: IResultOfVenueDto) {
+        super(undefined);
+		if (data) {
+			for (var property in data) {
+				if (data.hasOwnProperty(property))
+					(<any>this)[property] = (<any>data)[property];
+			}
+		}
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.value = _data["value"] ? VenueDto.fromJS(_data["value"]) : <any>undefined;
+        }
+    }
+
+    static override fromJS(data: any): ResultOfVenueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResultOfVenueDto();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["value"] = this.value ? this.value.toJSON() : <any>undefined;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IResultOfVenueDto extends IResult {
+    value: VenueDto | undefined;
+}
+
+export class CreateTicketTypeRequest implements ICreateTicketTypeRequest {
+    eventId!: string;
+    name!: string;
+    price!: number;
+    currency!: string;
+    quantity!: number;
+
+    constructor(data?: ICreateTicketTypeRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.eventId = _data["eventId"];
+            this.name = _data["name"];
+            this.price = _data["price"];
+            this.currency = _data["currency"];
+            this.quantity = _data["quantity"];
+        }
+    }
+
+    static fromJS(data: any): CreateTicketTypeRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateTicketTypeRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["eventId"] = this.eventId;
+        data["name"] = this.name;
+        data["price"] = this.price;
+        data["currency"] = this.currency;
+        data["quantity"] = this.quantity;
+        return data;
+    }
+}
+
+export interface ICreateTicketTypeRequest {
+    eventId: string;
+    name: string;
+    price: number;
+    currency: string;
+    quantity: number;
+}
+
+export class UpdateTicketTypePriceRequest implements IUpdateTicketTypePriceRequest {
+    price!: number;
+
+    constructor(data?: IUpdateTicketTypePriceRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.price = _data["price"];
+        }
+    }
+
+    static fromJS(data: any): UpdateTicketTypePriceRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateTicketTypePriceRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["price"] = this.price;
+        return data;
+    }
+}
+
+export interface IUpdateTicketTypePriceRequest {
+    price: number;
+}
+
 export class CreateEventRequest implements ICreateEventRequest {
     categoryId!: string;
     title!: string;
     description!: string;
-    location!: string;
+    venueId!: string;
     startsAtUtc!: dayjs.Dayjs;
     endsAtUtc!: dayjs.Dayjs | undefined;
 
@@ -1067,7 +1422,7 @@ export class CreateEventRequest implements ICreateEventRequest {
             this.categoryId = _data["categoryId"];
             this.title = _data["title"];
             this.description = _data["description"];
-            this.location = _data["location"];
+            this.venueId = _data["venueId"];
             this.startsAtUtc = _data["startsAtUtc"] ? dayjs(_data["startsAtUtc"].toString()) : <any>undefined;
             this.endsAtUtc = _data["endsAtUtc"] ? dayjs(_data["endsAtUtc"].toString()) : <any>undefined;
         }
@@ -1085,7 +1440,7 @@ export class CreateEventRequest implements ICreateEventRequest {
         data["categoryId"] = this.categoryId;
         data["title"] = this.title;
         data["description"] = this.description;
-        data["location"] = this.location;
+        data["venueId"] = this.venueId;
         data["startsAtUtc"] = this.startsAtUtc ? this.startsAtUtc.toISOString() : <any>undefined;
         data["endsAtUtc"] = this.endsAtUtc ? this.endsAtUtc.toISOString() : <any>undefined;
         return data;
@@ -1096,7 +1451,7 @@ export interface ICreateEventRequest {
     categoryId: string;
     title: string;
     description: string;
-    location: string;
+    venueId: string;
     startsAtUtc: dayjs.Dayjs;
     endsAtUtc: dayjs.Dayjs | undefined;
 }
@@ -1145,10 +1500,11 @@ export class EventResponse implements IEventResponse {
     categoryId!: string;
     title!: string;
     description!: string;
-    location!: string;
     startsAtUtc!: dayjs.Dayjs;
     endsAtUtc!: dayjs.Dayjs | undefined;
     ticketTypes!: TicketTypeResponse[];
+    venue!: VenueDto;
+    backgroundImage!: string;
 
     constructor(data?: IEventResponse) {
         if (data) {
@@ -1165,7 +1521,6 @@ export class EventResponse implements IEventResponse {
             this.categoryId = _data["categoryId"];
             this.title = _data["title"];
             this.description = _data["description"];
-            this.location = _data["location"];
             this.startsAtUtc = _data["startsAtUtc"] ? dayjs(_data["startsAtUtc"].toString()) : <any>undefined;
             this.endsAtUtc = _data["endsAtUtc"] ? dayjs(_data["endsAtUtc"].toString()) : <any>undefined;
             if (Array.isArray(_data["ticketTypes"])) {
@@ -1173,6 +1528,8 @@ export class EventResponse implements IEventResponse {
                 for (let item of _data["ticketTypes"])
                     this.ticketTypes!.push(TicketTypeResponse.fromJS(item));
             }
+            this.venue = _data["venue"] ? VenueDto.fromJS(_data["venue"]) : <any>undefined;
+            this.backgroundImage = _data["backgroundImage"];
         }
     }
 
@@ -1189,7 +1546,6 @@ export class EventResponse implements IEventResponse {
         data["categoryId"] = this.categoryId;
         data["title"] = this.title;
         data["description"] = this.description;
-        data["location"] = this.location;
         data["startsAtUtc"] = this.startsAtUtc ? this.startsAtUtc.toISOString() : <any>undefined;
         data["endsAtUtc"] = this.endsAtUtc ? this.endsAtUtc.toISOString() : <any>undefined;
         if (Array.isArray(this.ticketTypes)) {
@@ -1197,6 +1553,8 @@ export class EventResponse implements IEventResponse {
             for (let item of this.ticketTypes)
                 data["ticketTypes"].push(item.toJSON());
         }
+        data["venue"] = this.venue ? this.venue.toJSON() : <any>undefined;
+        data["backgroundImage"] = this.backgroundImage;
         return data;
     }
 }
@@ -1206,10 +1564,11 @@ export interface IEventResponse {
     categoryId: string;
     title: string;
     description: string;
-    location: string;
     startsAtUtc: dayjs.Dayjs;
     endsAtUtc: dayjs.Dayjs | undefined;
     ticketTypes: TicketTypeResponse[];
+    venue: VenueDto;
+    backgroundImage: string;
 }
 
 export class TicketTypeResponse implements ITicketTypeResponse {

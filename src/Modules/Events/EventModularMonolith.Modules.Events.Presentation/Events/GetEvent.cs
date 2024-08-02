@@ -17,20 +17,23 @@ internal sealed class GetEvent : IEndpoint
    {
       app.MapGet("events/{id}", async (Guid id, ISender sender, ICacheService cacheService) =>
          {
-            string cacheKey = $"getEvent-{id}";
-            EventResponse eventResponse = await cacheService.GetAsync<EventResponse>(cacheKey);
+#pragma warning disable S125
+            //string cacheKey = $"getEvent-{id}";
 
-            if (eventResponse is not null)
-            {
-               return Results.Ok(eventResponse);
-            }
+            //EventResponse eventResponse = await cacheService.GetAsync<EventResponse>(cacheKey);
+
+            //if (eventResponse is not null)
+            //{
+            //   return Results.Ok(eventResponse);
+            //}
 
             Result<EventResponse> result = await sender.Send(new GetEventQuery(id));
 
-            if (result.IsSuccess)
-            {
-               await cacheService.SetAsync(cacheKey, result.Value);
-            }
+            //if (result.IsSuccess)
+            //{
+            //   await cacheService.SetAsync(cacheKey, result.Value);
+            //}
+#pragma warning restore S125
 
             return result.Match(Results.Ok, ApiResults.Problem);
          })

@@ -25,7 +25,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
 
             modelBuilder.Entity("EventModularMonolith.Modules.Ticketing.Domain.Customers.Customer", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -45,7 +45,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
                         .HasColumnType("text")
                         .HasColumnName("last_name");
 
-                    b.HasKey("Id")
+                    b.HasKey("VenueId")
                         .HasName("pk_customers");
 
                     b.ToTable("customers", "ticketing");
@@ -53,7 +53,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
 
             modelBuilder.Entity("EventModularMonolith.Modules.Ticketing.Domain.Events.Event", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -89,7 +89,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
                         .HasColumnType("text")
                         .HasColumnName("title");
 
-                    b.HasKey("Id")
+                    b.HasKey("VenueId")
                         .HasName("pk_events");
 
                     b.ToTable("events", "ticketing");
@@ -97,7 +97,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
 
             modelBuilder.Entity("EventModularMonolith.Modules.Ticketing.Domain.TicketTypes.TicketType", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -128,7 +128,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
                         .HasColumnType("numeric")
                         .HasColumnName("quantity");
 
-                    b.HasKey("Id")
+                    b.HasKey("VenueId")
                         .HasName("pk_ticket_types");
 
                     b.ToTable("ticket_types", "ticketing");
@@ -136,7 +136,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
 
             modelBuilder.Entity("EventModularMonolith.Shared.Infrastructure.Inbox.InboxMessage", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -164,7 +164,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
                         .HasColumnType("text")
                         .HasColumnName("type");
 
-                    b.HasKey("Id")
+                    b.HasKey("VenueId")
                         .HasName("pk_inbox_messages");
 
                     b.ToTable("inbox_messages", "ticketing");
@@ -189,7 +189,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
 
             modelBuilder.Entity("EventModularMonolith.Shared.Infrastructure.Outbox.OutboxMessage", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("VenueId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
@@ -217,7 +217,7 @@ namespace EventModularMonolith.Modules.Ticketing.Infrastructure.Database.Migrati
                         .HasColumnType("text")
                         .HasColumnName("type");
 
-                    b.HasKey("Id")
+                    b.HasKey("VenueId")
                         .HasName("pk_outbox_messages");
 
                     b.ToTable("outbox_messages", "ticketing");

@@ -57,7 +57,7 @@
       "useLeafType": false,
       "classTypes": [],
       "extendedClasses": [],
-      "extensionCode": "apiClientExtensions.ts",
+      "extensionCode": "apiClientExtensions.ts.template",
       "generateDefaultValues": false,
       "excludedTypeNames": [],
       "excludedParameterNames": [],

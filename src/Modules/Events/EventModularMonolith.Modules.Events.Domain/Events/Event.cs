@@ -10,12 +10,12 @@ public sealed class Event : Entity
    public Guid CategoryId { get; private set; }
    public string Title { get; private set; }
    public string Description { get; private set; }
-   public string Location { get; private set; }
+   public Guid VenueId { get; private set; }
    public DateTime StartsAtUtc { get; private set; }
    public DateTime? EndsAtUtc { get; private set; }
    public EventStatus Status { get; private set; }
 
-   public static Result<Event> Create(Category category, string title, string description, string location, DateTime startsAtUtc, DateTime? endsAtUtc)
+   public static Result<Event> Create(Category category, string title, string description, Guid venueId, DateTime startsAtUtc, DateTime? endsAtUtc)
    {
       if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
       {
@@ -27,7 +27,7 @@ public sealed class Event : Entity
          CategoryId = category.Id,
          Title = title,
          Description = description,
-         Location = location,
+         VenueId = venueId,
          StartsAtUtc = startsAtUtc,
          EndsAtUtc = endsAtUtc,
          Id = Guid.NewGuid(),

@@ -19,7 +19,7 @@ internal sealed class CreateEvent : IEndpoint
                request.CategoryId,
                request.Title,
                request.Description,
-               request.Location,
+               request.VenueId,
                request.StartsAtUtc,
                request.EndsAtUtc);
 
@@ -36,7 +36,7 @@ internal sealed class CreateEvent : IEndpoint
       public Guid CategoryId { get; set; }
       public string Title { get; set; }
       public string Description { get; set; }
-      public string Location { get; set; }
+      public Guid VenueId { get; set; }
       public DateTime StartsAtUtc { get; set; }
       public DateTime? EndsAtUtc { get; set; }
    }

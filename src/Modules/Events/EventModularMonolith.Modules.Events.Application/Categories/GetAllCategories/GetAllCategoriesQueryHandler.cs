@@ -22,7 +22,7 @@ public sealed class GetAllCategoriesQueryHandler(IDbConnectionFactory dbConnecti
              SELECT
              id AS {nameof(CategoryDto.Id)},
              name AS {nameof(CategoryDto.Name)},
-             is_archived AS {nameof(CategoryDto.IsArchived)},
+             is_archived AS {nameof(CategoryDto.IsArchived)}
              FROM events.categories
              """;
 

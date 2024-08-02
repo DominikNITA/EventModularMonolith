@@ -2,12 +2,14 @@
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Domain.TicketTypes;
+using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Modules.Events.Infrastructure.Categories;
 using EventModularMonolith.Modules.Events.Infrastructure.Database;
 using EventModularMonolith.Modules.Events.Infrastructure.Events;
 using EventModularMonolith.Modules.Events.Infrastructure.Inbox;
 using EventModularMonolith.Modules.Events.Infrastructure.Outbox;
 using EventModularMonolith.Modules.Events.Infrastructure.TicketTypes;
+using EventModularMonolith.Modules.Events.Infrastructure.Venues;
 using EventModularMonolith.Shared.Application.EventBus;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Infrastructure.Outbox;
@@ -50,6 +52,7 @@ public static class EventsModule
       services.AddScoped<IEventRepository, EventRepository>();
       services.AddScoped<ICategoryRepository, CategoryRepository>();
       services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
+      services.AddScoped<IVenueRepository, VenueRepository>();
 
       services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
 

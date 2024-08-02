@@ -32,7 +32,7 @@ internal sealed class CreateEventCommandHandler(
          category,
          request.Title,
          request.Description,
-         request.Location,
+         request.VenueId,
          request.StartsAtUtc,
          request.EndsAtUtc);
 

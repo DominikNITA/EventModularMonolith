@@ -6,6 +6,6 @@ public sealed record CreateEventCommand(
    Guid CategoryId,
    string Title,
    string Description,
-   string Location,
+   Guid VenueId,
    DateTime StartsAtUtc,
    DateTime? EndsAtUtc) : ICommand<Guid>;

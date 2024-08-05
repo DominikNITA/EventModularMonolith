@@ -1,4 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Application.Events.GetEvents;
+﻿using EventModularMonolith.Modules.Events.Application.Events;
+using EventModularMonolith.Modules.Events.Application.Events.GetEvents;
 using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Shared.Presentation;
 using EventModularMonolith.Shared.Presentation.Endpoints;

@@ -1,64 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { useClient } from '../../../../services/RootClient'
 import { Link } from 'react-router-dom'
+import { SpeakerDto } from '../../../../services/EventsClient'
+import { getResponse, useAjax } from '../../../../services/ApiHelper'
 
 interface IProps {
   eventId: string
 }
 
-interface Speaker {
-  id: string
-  image_src: string
-  name: string
-  description: string
-  links: Link[]
-}
-
-interface Link {
-  type: string
-  link: string
-}
-
 export const SpeakersSection = (props: IProps) => {
   const { mainClient } = useClient()
 
-  const [speakers, setSpeakers] = useState<Speaker[]>()
+  const [speakers, setSpeakers] = useState<SpeakerDto[]>()
 
-  useEffect(() => {
-    setSpeakers([
-      {
-        id: 'speaker1',
-        description: 'Quas alias incidunt',
-        image_src: '/img/speakers/speaker-1.jpg',
-        name: 'Walter White',
-        links: [
-          { link: 'https://sport.tvp.pl/', type: 'facebook' },
-          { link: 'https://sport.tvp.pl/', type: 'instagram' },
-        ],
+  const result = useAjax(
+    {
+      request: () => mainClient.getSpeakersForEvent(props.eventId ?? ''),
+      setResult: (r) => {
+        const response = getResponse(r)?.value
+        setSpeakers(response)
+        console.log(response, r)
       },
-      {
-        id: 'speaker2',
-        description: 'Quel bg',
-        image_src: '/img/speakers/speaker-2.jpg',
-        name: 'Hubert Hirthe',
-        links: [{ link: 'https://sport.tvp.pl/', type: 'twitter' }],
-      },
-      {
-        id: 'speaker3',
-        description: 'Testing description',
-        image_src: '/img/speakers/speaker-3.jpg',
-        name: 'Amanda Jepson',
-        links: [{ link: 'https://sport.tvp.pl/', type: 'linkedin' }],
-      },
-      {
-        id: 'speaker4',
-        description: 'Testing description',
-        image_src: '/img/speakers/speaker-3.jpg',
-        name: 'Amanda Jepson',
-        links: [{ link: 'https://sport.tvp.pl/', type: 'linkedin' }],
-      },
-    ])
-  }, [])
+    },
+    [],
+  )
 
   return (
     <>
@@ -75,7 +40,7 @@ export const SpeakersSection = (props: IProps) => {
             {speakers?.map((speaker) => (
               <div className="col-xl-3 col-lg-4 col-md-6">
                 <div className="member">
-                  <img src={speaker.image_src} className="img-fluid" alt="" />
+                  <img src={speaker.imageUrl} className="img-fluid" alt="" />
                   <div className="member-info">
                     <div className="member-info-content">
                       <h4>
@@ -86,9 +51,9 @@ export const SpeakersSection = (props: IProps) => {
                       <span>{speaker.description}</span>
                     </div>
                     <div className="social">
-                      {speaker.links.map((link) => (
-                        <a href={link.link}>
-                          <i className={`bi bi-${link.type}-x`}></i>
+                      {speaker.links?.map((link) => (
+                        <a href={link.url}>
+                          <i className={`bi bi-twitter-x`}></i>
                         </a>
                       ))}
                     </div>

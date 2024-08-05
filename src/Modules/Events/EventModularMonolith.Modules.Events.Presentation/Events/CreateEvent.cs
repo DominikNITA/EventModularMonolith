@@ -21,7 +21,8 @@ internal sealed class CreateEvent : IEndpoint
                request.Description,
                request.VenueId,
                request.StartsAtUtc,
-               request.EndsAtUtc);
+               request.EndsAtUtc,
+               request.SpeakersIds);
 
             Result<Guid> result = await sender.Send(command);
 
@@ -39,5 +40,6 @@ internal sealed class CreateEvent : IEndpoint
       public Guid VenueId { get; set; }
       public DateTime StartsAtUtc { get; set; }
       public DateTime? EndsAtUtc { get; set; }
+      public IEnumerable<Guid> SpeakersIds { get; set; }
    }
 }

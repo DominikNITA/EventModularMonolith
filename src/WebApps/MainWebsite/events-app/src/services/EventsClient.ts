@@ -13,6 +13,8 @@ import dayjs from 'dayjs'
 
 export interface IClient {
 
+    postApiEventsModuleInitialize(): Promise<void>;
+
     postApiVenues(request: CreateVenueRequest): Promise<ResultOfGuid>;
 
     getVenues(): Promise<ResultOfIReadOnlyCollectionOfVenueDto>;
@@ -26,6 +28,12 @@ export interface IClient {
     getApiTicketTypes2(id: string): Promise<void>;
 
     putApiTicketTypes(id: string, request: UpdateTicketTypePriceRequest): Promise<void>;
+
+    postApiSpeakers(request: CreateSpeakerRequest): Promise<ResultOfGuid>;
+
+    getSpeakersForEvent(id: string): Promise<ResultOfIReadOnlyCollectionOfSpeakerDto>;
+
+    getSpeaker(id: string): Promise<ResultOfSpeakerDto>;
 
     deleteApiEventsCancel(id: string): Promise<void>;
 
@@ -46,6 +54,8 @@ export interface IClient {
     getApiCategories2(id: string): Promise<void>;
 
     putApiCategories(id: string, request: UpdateCategoryRequest): Promise<void>;
+
+    postApiUsersModuleInitialize(): Promise<void>;
 
     getApiUsersProfile(id: string): Promise<void>;
 
@@ -71,6 +81,38 @@ export class Client extends ClientBase implements IClient {
         super();
         this.http = http ? http : window as any;
         this.baseUrl = this.getBaseUrl("", baseUrl);
+    }
+
+    postApiEventsModuleInitialize(): Promise<void> {
+        let url_ = this.baseUrl + "/api/eventsModule/initialize";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processPostApiEventsModuleInitialize(_response));
+        });
+    }
+
+    protected processPostApiEventsModuleInitialize(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
     }
 
     postApiVenues(request: CreateVenueRequest): Promise<ResultOfGuid> {
@@ -328,6 +370,124 @@ export class Client extends ClientBase implements IClient {
             });
         }
         return Promise.resolve<void>(null as any);
+    }
+
+    postApiSpeakers(request: CreateSpeakerRequest): Promise<ResultOfGuid> {
+        let url_ = this.baseUrl + "/api/speakers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processPostApiSpeakers(_response));
+        });
+    }
+
+    protected processPostApiSpeakers(response: Response): Promise<ResultOfGuid> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfGuid.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfGuid>(null as any);
+    }
+
+    getSpeakersForEvent(id: string): Promise<ResultOfIReadOnlyCollectionOfSpeakerDto> {
+        let url_ = this.baseUrl + "/api/events/{id}/speakers";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetSpeakersForEvent(_response));
+        });
+    }
+
+    protected processGetSpeakersForEvent(response: Response): Promise<ResultOfIReadOnlyCollectionOfSpeakerDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfIReadOnlyCollectionOfSpeakerDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfIReadOnlyCollectionOfSpeakerDto>(null as any);
+    }
+
+    getSpeaker(id: string): Promise<ResultOfSpeakerDto> {
+        let url_ = this.baseUrl + "/api/speakers/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetSpeaker(_response));
+        });
+    }
+
+    protected processGetSpeaker(response: Response): Promise<ResultOfSpeakerDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfSpeakerDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfSpeakerDto>(null as any);
     }
 
     deleteApiEventsCancel(id: string): Promise<void> {
@@ -682,6 +842,38 @@ export class Client extends ClientBase implements IClient {
     }
 
     protected processPutApiCategories(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
+    }
+
+    postApiUsersModuleInitialize(): Promise<void> {
+        let url_ = this.baseUrl + "/api/usersModule/initialize";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processPostApiUsersModuleInitialize(_response));
+        });
+    }
+
+    protected processPostApiUsersModuleInitialize(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
@@ -1400,6 +1592,240 @@ export interface IUpdateTicketTypePriceRequest {
     price: number;
 }
 
+export class CreateSpeakerRequest implements ICreateSpeakerRequest {
+    name!: string;
+    description!: string;
+    links!: SpeakerLinkDto[];
+
+    constructor(data?: ICreateSpeakerRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            if (Array.isArray(_data["links"])) {
+                this.links = [] as any;
+                for (let item of _data["links"])
+                    this.links!.push(SpeakerLinkDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): CreateSpeakerRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateSpeakerRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        if (Array.isArray(this.links)) {
+            data["links"] = [];
+            for (let item of this.links)
+                data["links"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface ICreateSpeakerRequest {
+    name: string;
+    description: string;
+    links: SpeakerLinkDto[];
+}
+
+export class SpeakerLinkDto implements ISpeakerLinkDto {
+    url!: string;
+
+    constructor(data?: ISpeakerLinkDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.url = _data["url"];
+        }
+    }
+
+    static fromJS(data: any): SpeakerLinkDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SpeakerLinkDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["url"] = this.url;
+        return data;
+    }
+}
+
+export interface ISpeakerLinkDto {
+    url: string;
+}
+
+export class ResultOfIReadOnlyCollectionOfSpeakerDto extends Result implements IResultOfIReadOnlyCollectionOfSpeakerDto {
+    value!: SpeakerDto[] | undefined;
+
+    constructor(data?: IResultOfIReadOnlyCollectionOfSpeakerDto) {
+        super(undefined);
+		if (data) {
+			for (var property in data) {
+				if (data.hasOwnProperty(property))
+					(<any>this)[property] = (<any>data)[property];
+			}
+		}
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["value"])) {
+                this.value = [] as any;
+                for (let item of _data["value"])
+                    this.value!.push(SpeakerDto.fromJS(item));
+            }
+        }
+    }
+
+    static override fromJS(data: any): ResultOfIReadOnlyCollectionOfSpeakerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResultOfIReadOnlyCollectionOfSpeakerDto();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.value)) {
+            data["value"] = [];
+            for (let item of this.value)
+                data["value"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IResultOfIReadOnlyCollectionOfSpeakerDto extends IResult {
+    value: SpeakerDto[] | undefined;
+}
+
+export class SpeakerDto implements ISpeakerDto {
+    id!: string;
+    name!: string;
+    description!: string;
+    imageUrl!: string;
+    links!: SpeakerLinkDto[];
+
+    constructor(data?: ISpeakerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.imageUrl = _data["imageUrl"];
+            if (Array.isArray(_data["links"])) {
+                this.links = [] as any;
+                for (let item of _data["links"])
+                    this.links!.push(SpeakerLinkDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): SpeakerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SpeakerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["imageUrl"] = this.imageUrl;
+        if (Array.isArray(this.links)) {
+            data["links"] = [];
+            for (let item of this.links)
+                data["links"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface ISpeakerDto {
+    id: string;
+    name: string;
+    description: string;
+    imageUrl: string;
+    links: SpeakerLinkDto[];
+}
+
+export class ResultOfSpeakerDto extends Result implements IResultOfSpeakerDto {
+    value!: SpeakerDto | undefined;
+
+    constructor(data?: IResultOfSpeakerDto) {
+        super(undefined);
+		if (data) {
+			for (var property in data) {
+				if (data.hasOwnProperty(property))
+					(<any>this)[property] = (<any>data)[property];
+			}
+		}
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.value = _data["value"] ? SpeakerDto.fromJS(_data["value"]) : <any>undefined;
+        }
+    }
+
+    static override fromJS(data: any): ResultOfSpeakerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResultOfSpeakerDto();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["value"] = this.value ? this.value.toJSON() : <any>undefined;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IResultOfSpeakerDto extends IResult {
+    value: SpeakerDto | undefined;
+}
+
 export class CreateEventRequest implements ICreateEventRequest {
     categoryId!: string;
     title!: string;
@@ -1407,6 +1833,7 @@ export class CreateEventRequest implements ICreateEventRequest {
     venueId!: string;
     startsAtUtc!: dayjs.Dayjs;
     endsAtUtc!: dayjs.Dayjs | undefined;
+    speakersIds!: string[];
 
     constructor(data?: ICreateEventRequest) {
         if (data) {
@@ -1425,6 +1852,11 @@ export class CreateEventRequest implements ICreateEventRequest {
             this.venueId = _data["venueId"];
             this.startsAtUtc = _data["startsAtUtc"] ? dayjs(_data["startsAtUtc"].toString()) : <any>undefined;
             this.endsAtUtc = _data["endsAtUtc"] ? dayjs(_data["endsAtUtc"].toString()) : <any>undefined;
+            if (Array.isArray(_data["speakersIds"])) {
+                this.speakersIds = [] as any;
+                for (let item of _data["speakersIds"])
+                    this.speakersIds!.push(item);
+            }
         }
     }
 
@@ -1443,6 +1875,11 @@ export class CreateEventRequest implements ICreateEventRequest {
         data["venueId"] = this.venueId;
         data["startsAtUtc"] = this.startsAtUtc ? this.startsAtUtc.toISOString() : <any>undefined;
         data["endsAtUtc"] = this.endsAtUtc ? this.endsAtUtc.toISOString() : <any>undefined;
+        if (Array.isArray(this.speakersIds)) {
+            data["speakersIds"] = [];
+            for (let item of this.speakersIds)
+                data["speakersIds"].push(item);
+        }
         return data;
     }
 }
@@ -1454,6 +1891,7 @@ export interface ICreateEventRequest {
     venueId: string;
     startsAtUtc: dayjs.Dayjs;
     endsAtUtc: dayjs.Dayjs | undefined;
+    speakersIds: string[];
 }
 
 export class ResultOfEventResponse extends Result implements IResultOfEventResponse {
@@ -1624,7 +2062,7 @@ export interface ITicketTypeResponse {
 }
 
 export class ResultOfIReadOnlyCollectionOfEventResponse extends Result implements IResultOfIReadOnlyCollectionOfEventResponse {
-    value!: EventResponse2[] | undefined;
+    value!: EventResponse[] | undefined;
 
     constructor(data?: IResultOfIReadOnlyCollectionOfEventResponse) {
         super(undefined);
@@ -1642,7 +2080,7 @@ export class ResultOfIReadOnlyCollectionOfEventResponse extends Result implement
             if (Array.isArray(_data["value"])) {
                 this.value = [] as any;
                 for (let item of _data["value"])
-                    this.value!.push(EventResponse2.fromJS(item));
+                    this.value!.push(EventResponse.fromJS(item));
             }
         }
     }
@@ -1667,67 +2105,7 @@ export class ResultOfIReadOnlyCollectionOfEventResponse extends Result implement
 }
 
 export interface IResultOfIReadOnlyCollectionOfEventResponse extends IResult {
-    value: EventResponse2[] | undefined;
-}
-
-export class EventResponse2 implements IEventResponse2 {
-    id!: string;
-    categoryId!: string;
-    title!: string;
-    description!: string;
-    location!: string;
-    startsAtUtc!: dayjs.Dayjs;
-    endsAtUtc!: dayjs.Dayjs | undefined;
-
-    constructor(data?: IEventResponse2) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.categoryId = _data["categoryId"];
-            this.title = _data["title"];
-            this.description = _data["description"];
-            this.location = _data["location"];
-            this.startsAtUtc = _data["startsAtUtc"] ? dayjs(_data["startsAtUtc"].toString()) : <any>undefined;
-            this.endsAtUtc = _data["endsAtUtc"] ? dayjs(_data["endsAtUtc"].toString()) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): EventResponse2 {
-        data = typeof data === 'object' ? data : {};
-        let result = new EventResponse2();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["categoryId"] = this.categoryId;
-        data["title"] = this.title;
-        data["description"] = this.description;
-        data["location"] = this.location;
-        data["startsAtUtc"] = this.startsAtUtc ? this.startsAtUtc.toISOString() : <any>undefined;
-        data["endsAtUtc"] = this.endsAtUtc ? this.endsAtUtc.toISOString() : <any>undefined;
-        return data;
-    }
-}
-
-export interface IEventResponse2 {
-    id: string;
-    categoryId: string;
-    title: string;
-    description: string;
-    location: string;
-    startsAtUtc: dayjs.Dayjs;
-    endsAtUtc: dayjs.Dayjs | undefined;
+    value: EventResponse[] | undefined;
 }
 
 export class Request implements IRequest {

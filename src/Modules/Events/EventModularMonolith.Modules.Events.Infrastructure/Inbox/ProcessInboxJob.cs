@@ -22,7 +22,7 @@ internal sealed class ProcessInboxJob(
     IOptions<InboxOptions> inboxOptions,
     ILogger<ProcessInboxJob> logger) : IJob
 {
-    private const string ModuleName = "Ticketing";
+    private const string ModuleName = "Events";
 
     public async Task Execute(IJobExecutionContext context)
     {
@@ -108,7 +108,7 @@ internal sealed class ProcessInboxJob(
             UPDATE events.inbox_messages
             SET processed_on_utc = @ProcessedOnUtc,
                 error = @Error
-            WHERE id = @VenueId
+            WHERE id = @Id
             """;
 
         await connection.ExecuteAsync(

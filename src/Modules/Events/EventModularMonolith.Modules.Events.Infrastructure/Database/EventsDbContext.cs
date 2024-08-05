@@ -1,9 +1,11 @@
 ﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
+using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Modules.Events.Domain.TicketTypes;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Modules.Events.Infrastructure.Events;
+using EventModularMonolith.Modules.Events.Infrastructure.Speakers;
 using EventModularMonolith.Modules.Events.Infrastructure.TicketTypes;
 using EventModularMonolith.Modules.Events.Infrastructure.Venues;
 using EventModularMonolith.Shared.Infrastructure.Inbox;
@@ -20,6 +22,8 @@ public sealed class EventsDbContext : DbContext, IUnitOfWork
    internal DbSet<Category> Categories { get; set; }
    internal DbSet<TicketType> TicketTypes { get; set; }
    internal DbSet<Venue> Venues { get; set; }
+   internal DbSet<Speaker> Speakers { get; set; }
+   internal DbSet<Link> Links { get; set; }
 
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
@@ -32,5 +36,7 @@ public sealed class EventsDbContext : DbContext, IUnitOfWork
       modelBuilder.ApplyConfiguration(new TicketTypeConfiguration());
       modelBuilder.ApplyConfiguration(new EventConfiguration());
       modelBuilder.ApplyConfiguration(new VenueConfiguration());
+      modelBuilder.ApplyConfiguration(new SpeakerConfiguration());
+      modelBuilder.ApplyConfiguration(new LinkConfiguration());
    }
 }

@@ -1,4 +1,5 @@
 ﻿using EventModularMonolith.Modules.Events.Domain.Categories;
+using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Domain.Events;
@@ -14,8 +15,9 @@ public sealed class Event : Entity
    public DateTime StartsAtUtc { get; private set; }
    public DateTime? EndsAtUtc { get; private set; }
    public EventStatus Status { get; private set; }
+   public List<Speaker> Speakers { get; set; } = [];
 
-   public static Result<Event> Create(Category category, string title, string description, Guid venueId, DateTime startsAtUtc, DateTime? endsAtUtc)
+   public static Result<Event> Create(Category category, string title, string description, Guid venueId, DateTime startsAtUtc, DateTime? endsAtUtc, List<Speaker> speakers)
    {
       if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
       {
@@ -32,6 +34,7 @@ public sealed class Event : Entity
          EndsAtUtc = endsAtUtc,
          Id = Guid.NewGuid(),
          Status = EventStatus.Draft,
+         Speakers = speakers
       };
 
       @event.Raise(new EventCreatedDomainEvent(@event.Id));

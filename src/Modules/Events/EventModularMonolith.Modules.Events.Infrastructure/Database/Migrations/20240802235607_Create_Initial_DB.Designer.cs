@@ -3,6 +3,7 @@ using System;
 using EventModularMonolith.Modules.Events.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(EventsDbContext))]
-    partial class EventsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240802235607_Create_Initial_DB")]
+    partial class Create_Initial_DB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,15 +99,21 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("EventModularMonolith.Modules.Events.Domain.Speakers.Link", b =>
                 {
-                    b.Property<string>("Url")
-                        .HasColumnType("text")
-                        .HasColumnName("url");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
-                    b.Property<Guid>("SpeakerId")
+                    b.Property<Guid?>("SpeakerId")
                         .HasColumnType("uuid")
                         .HasColumnName("speaker_id");
 
-                    b.HasKey("Url", "SpeakerId")
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("url");
+
+                    b.HasKey("Id")
                         .HasName("pk_links");
 
                     b.HasIndex("SpeakerId")
@@ -344,8 +353,6 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                     b.HasOne("EventModularMonolith.Modules.Events.Domain.Speakers.Speaker", null)
                         .WithMany("Links")
                         .HasForeignKey("SpeakerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_links_speakers_speaker_id");
                 });
 

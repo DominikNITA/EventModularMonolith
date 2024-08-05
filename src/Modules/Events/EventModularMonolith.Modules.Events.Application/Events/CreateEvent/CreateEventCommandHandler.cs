@@ -1,6 +1,7 @@
 ﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
+using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Shared.Application.Clock;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;
@@ -11,6 +12,7 @@ internal sealed class CreateEventCommandHandler(
    IDateTimeProvider dateTimeProvider, 
    IEventRepository eventRepository,
    ICategoryRepository categoryRepository,
+   ISpeakerRepository speakerRepository,
    IUnitOfWork unitOfWork) : ICommandHandler<CreateEventCommand, Guid>
 {
 
@@ -28,13 +30,16 @@ internal sealed class CreateEventCommandHandler(
          return Result.Failure<Guid>(CategoryErrors.NotFound(request.CategoryId));
       }
 
+      IEnumerable<Speaker> speakers = speakerRepository.GetSpeakersByIds(request.SpeakerIds);
+
       Result<Event> result = Event.Create(
          category,
          request.Title,
          request.Description,
          request.VenueId,
          request.StartsAtUtc,
-         request.EndsAtUtc);
+         request.EndsAtUtc,
+         speakers.ToList());
 
       if (result.IsFailure)
       {

@@ -8,4 +8,5 @@ public sealed record CreateEventCommand(
    string Description,
    Guid VenueId,
    DateTime StartsAtUtc,
-   DateTime? EndsAtUtc) : ICommand<Guid>;
+   DateTime? EndsAtUtc,
+   IEnumerable<Guid> SpeakerIds) : ICommand<Guid>;

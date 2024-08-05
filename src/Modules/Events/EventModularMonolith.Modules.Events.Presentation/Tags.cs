@@ -6,4 +6,5 @@ internal static class Tags
    internal const string Categories = "Categories";
    internal const string TicketTypes = "TicketTypes";
    internal const string Venues = "Venues";
+   internal const string Speakers = "Speakers";
 }

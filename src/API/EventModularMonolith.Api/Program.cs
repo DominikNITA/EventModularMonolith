@@ -37,7 +37,7 @@ string databaseConnectionString = builder.Configuration.GetConnectionString("Dat
 string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
 builder.Services.AddInfrastructure(
    [TicketingModule.ConfigureConsumers],
-   databaseConnectionString, redisConnectionString);
+   databaseConnectionString, redisConnectionString, builder.Configuration);
 
 // TODO: Create base module class which contains abstract module name and assembly
 builder.Configuration.AddModuleConfigurations(["events", "users", "ticketing"]);

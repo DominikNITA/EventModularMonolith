@@ -8,18 +8,19 @@ using EventModularMonolith.Shared.Application.Data;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Modules.Events.Domain.Venues;
+using EventModularMonolith.Shared.Application.Storage;
 
 namespace EventModularMonolith.Modules.Events.Application.Venues.GetVenue;
 
-public sealed class GetVenueQueryHandler(IDbConnectionFactory dbConnectionFactory) :
+public sealed class GetVenueQueryHandler(IDbConnectionFactory dbConnectionFactory, IBlobService blobService) :
      IQueryHandler<GetVenueQuery, VenueDto>
 {
-    public async Task<Result<VenueDto>> Handle(GetVenueQuery request, CancellationToken cancellationToken)
-    {
-        await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
+   public async Task<Result<VenueDto>> Handle(GetVenueQuery request, CancellationToken cancellationToken)
+   {
+      await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
-        const string sql =
-            $"""
+      const string sql =
+          $"""
              SELECT
                   v.id AS {nameof(VenueDto.VenueId)},
                   v.name AS {nameof(VenueDto.Name)},
@@ -30,28 +31,32 @@ public sealed class GetVenueQueryHandler(IDbConnectionFactory dbConnectionFactor
                   v.address_country as {nameof(AddressDto.Country)},
                   v.address_longitude as {nameof(AddressDto.Longitude)},
                   v.address_latitude as {nameof(AddressDto.Latitude)}
-             FROM events.venues
+             FROM events.venues v
              WHERE id = @VenueId
 """;
+      Dictionary<Guid, VenueDto> venuesDictionary = [];
 
-        VenueDto? venue = await connection.QuerySingleOrDefaultAsync<VenueDto>(sql, request);
-
-        await connection.QueryAsync<VenueDto, AddressDto, VenueDto>(
+      await connection.QueryAsync<VenueDto, AddressDto, VenueDto>(
            sql,
            (venue, address) =>
            {
               venue.Address = address;
+              venuesDictionary.Add(venue.VenueId, venue);
               return venue;
            },
            request,
            splitOn:
            $"{nameof(AddressDto.StreetAndNumber)}");
 
-        if (venue is null)
-        {
-            return Result.Failure<VenueDto>(VenueErrors.NotFound(request.VenueId));
-        }
+      VenueDto? venue = venuesDictionary.GetValueOrDefault(request.VenueId);
 
-        return venue;
-    }
+      if (venue is null)
+      {
+         return Result.Failure<VenueDto>(VenueErrors.NotFound(request.VenueId));
+      }
+
+      venue.ImageUrls = await blobService.GetUrlsFromContainerAsync("venue", venue.VenueId, cancellationToken);
+
+      return venue;
+   }
 }

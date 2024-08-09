@@ -24,7 +24,10 @@ internal sealed class CreateVenue : IEndpoint
                     request.Name,
                     request.Description,
                     request.Address
-            );
+            )
+            {
+               ImageContainers = request.ImageContainers
+            };
 
             Result<Guid> result = await sender.Send(command);
 
@@ -39,5 +42,7 @@ internal sealed class CreateVenue : IEndpoint
       public string Name { get; set; } = string.Empty;
       public string Description { get; set; } = string.Empty;
       public AddressDto Address { get; set; }
+
+      public IEnumerable<string> ImageContainers { get; set; }
    }
 }

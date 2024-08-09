@@ -13,7 +13,7 @@ export const VenueSection = ({ venue }: IProps) => {
   useEffect(() => {
     setImageSources([
       '/img/venue-gallery/venue-gallery-1.jpg',
-      '/img/venue-gallery/venue-gallery-2.jpg',
+      'http://127.0.0.1:10000/devstoreaccount1/images/0002.png',
       '/img/venue-gallery/venue-gallery-3.jpg',
       '/img/venue-gallery/venue-gallery-4.jpg',
       '/img/venue-gallery/venue-gallery-5.jpg',

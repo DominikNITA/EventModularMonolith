@@ -13,6 +13,8 @@ import dayjs from 'dayjs'
 
 export interface IClient {
 
+    postApiFiles(file?: FileParameter | null | undefined): Promise<void>;
+
     postApiEventsModuleInitialize(): Promise<void>;
 
     postApiVenues(request: CreateVenueRequest): Promise<ResultOfGuid>;
@@ -81,6 +83,43 @@ export class Client extends ClientBase implements IClient {
         super();
         this.http = http ? http : window as any;
         this.baseUrl = this.getBaseUrl("", baseUrl);
+    }
+
+    postApiFiles(file?: FileParameter | null | undefined): Promise<void> {
+        let url_ = this.baseUrl + "/api/files";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (file !== null && file !== undefined)
+            content_.append("file", file.data, file.fileName ? file.fileName : "file");
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processPostApiFiles(_response));
+        });
+    }
+
+    protected processPostApiFiles(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(null as any);
     }
 
     postApiEventsModuleInitialize(): Promise<void> {
@@ -1274,6 +1313,7 @@ export class CreateVenueRequest implements ICreateVenueRequest {
     name!: string;
     description!: string;
     address!: AddressDto;
+    imageContainers!: string[];
 
     constructor(data?: ICreateVenueRequest) {
         if (data) {
@@ -1289,6 +1329,11 @@ export class CreateVenueRequest implements ICreateVenueRequest {
             this.name = _data["name"];
             this.description = _data["description"];
             this.address = _data["address"] ? AddressDto.fromJS(_data["address"]) : <any>undefined;
+            if (Array.isArray(_data["imageContainers"])) {
+                this.imageContainers = [] as any;
+                for (let item of _data["imageContainers"])
+                    this.imageContainers!.push(item);
+            }
         }
     }
 
@@ -1304,6 +1349,11 @@ export class CreateVenueRequest implements ICreateVenueRequest {
         data["name"] = this.name;
         data["description"] = this.description;
         data["address"] = this.address ? this.address.toJSON() : <any>undefined;
+        if (Array.isArray(this.imageContainers)) {
+            data["imageContainers"] = [];
+            for (let item of this.imageContainers)
+                data["imageContainers"].push(item);
+        }
         return data;
     }
 }
@@ -1312,6 +1362,7 @@ export interface ICreateVenueRequest {
     name: string;
     description: string;
     address: AddressDto;
+    imageContainers: string[];
 }
 
 export class AddressDto implements IAddressDto {
@@ -1422,6 +1473,7 @@ export class VenueDto implements IVenueDto {
     name!: string;
     description!: string;
     address!: AddressDto;
+    imageUrls!: string[];
 
     constructor(data?: IVenueDto) {
         if (data) {
@@ -1438,6 +1490,11 @@ export class VenueDto implements IVenueDto {
             this.name = _data["name"];
             this.description = _data["description"];
             this.address = _data["address"] ? AddressDto.fromJS(_data["address"]) : <any>undefined;
+            if (Array.isArray(_data["imageUrls"])) {
+                this.imageUrls = [] as any;
+                for (let item of _data["imageUrls"])
+                    this.imageUrls!.push(item);
+            }
         }
     }
 
@@ -1454,6 +1511,11 @@ export class VenueDto implements IVenueDto {
         data["name"] = this.name;
         data["description"] = this.description;
         data["address"] = this.address ? this.address.toJSON() : <any>undefined;
+        if (Array.isArray(this.imageUrls)) {
+            data["imageUrls"] = [];
+            for (let item of this.imageUrls)
+                data["imageUrls"].push(item);
+        }
         return data;
     }
 }
@@ -1463,6 +1525,7 @@ export interface IVenueDto {
     name: string;
     description: string;
     address: AddressDto;
+    imageUrls: string[];
 }
 
 export class ResultOfVenueDto extends Result implements IResultOfVenueDto {
@@ -2382,6 +2445,11 @@ export class Request3 implements IRequest3 {
 
 export interface IRequest3 {
     ticketTypeId: string;
+}
+
+export interface FileParameter {
+    data: any;
+    fileName: string;
 }
 
 export class SwaggerException extends Error {

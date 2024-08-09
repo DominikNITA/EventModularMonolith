@@ -9,8 +9,11 @@ using EventModularMonolith.Shared.Application.Messaging;
 namespace EventModularMonolith.Modules.Events.Application.Venues.CreateVenue;
 
 public sealed record CreateVenueCommand(
-    string Name, 
-    string Description,
-    AddressDto Address
-): ICommand<Guid>; 
+   string Name,
+   string Description,
+   AddressDto Address
+) : ICommand<Guid>
+{
+   public IEnumerable<string> ImageContainers { get; set; }
+}; 
 

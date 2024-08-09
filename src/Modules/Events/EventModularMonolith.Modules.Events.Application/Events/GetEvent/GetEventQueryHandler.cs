@@ -5,10 +5,11 @@ using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Shared.Application.Data;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Modules.Events.Application.Venues.DTOs;
+using EventModularMonolith.Shared.Application.Storage;
 
 namespace EventModularMonolith.Modules.Events.Application.Events.GetEvent;
 
-internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetEventQuery, EventResponse>
+internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFactory, IBlobService blobService) : IQueryHandler<GetEventQuery, EventResponse>
 {
    public async Task<Result<EventResponse>> Handle(GetEventQuery request, CancellationToken cancellationToken)
    {
@@ -78,8 +79,11 @@ internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFact
          return Result.Failure<EventResponse>(EventErrors.NotFound(request.EventId));
       }
 
-      //TODO: Add Azure blob storage
-      eventResponse.BackgroundImage = "/img/hero-bg.jpg";
+      IReadOnlyCollection<string> eventImages = await blobService.GetUrlsFromContainerAsync("event", eventResponse.Id, cancellationToken);
+      eventResponse.BackgroundImage = eventImages.First() ?? "";
+
+      IReadOnlyCollection<string> venueImages = await blobService.GetUrlsFromContainerAsync("venue", eventResponse.Venue.VenueId, cancellationToken);
+      eventResponse.Venue.ImageUrls = venueImages;
 
       return eventResponse;
    }

@@ -4,6 +4,7 @@
 using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Shared.Application.Messaging;
+using EventModularMonolith.Shared.Application.Storage;
 using EventModularMonolith.Shared.Domain;
 
 
@@ -11,7 +12,8 @@ namespace EventModularMonolith.Modules.Events.Application.Venues.CreateVenue;
 
 public class CreateVenueCommandHandler(
     IVenueRepository venueRepository,
-    IUnitOfWork unitOfWork
+    IUnitOfWork unitOfWork,
+    IBlobService blobService
 ) : ICommandHandler<CreateVenueCommand, Guid>
 {
    public async Task<Result<Guid>> Handle(CreateVenueCommand request, CancellationToken cancellationToken)
@@ -37,6 +39,8 @@ public class CreateVenueCommandHandler(
       }
 
       venueRepository.Insert(venue.Value);
+
+      await blobService.MoveFilesFromTempToEntityContainer(request.ImageContainers, "venue", venue.Value.Id, cancellationToken);
 
       await unitOfWork.SaveChangesAsync(cancellationToken);
 

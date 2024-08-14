@@ -20,6 +20,7 @@ builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => { options.CustomSchemaIds(type => type.ToString().Replace("+", ".")); });
 builder.Services.AddOpenApiDocument();
+
 builder.Services.AddApplication([
    EventModularMonolith.Modules.Events.Application.AssemblyReference.Assembly,
    EventModularMonolith.Modules.Users.Application.AssemblyReference.Assembly,

@@ -1,4 +1,5 @@
-﻿using Azure.Storage.Blobs;
+﻿using Azure;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using EventModularMonolith.Shared.Application.Storage;
 
@@ -31,11 +32,15 @@ internal sealed class BlobService(BlobServiceClient blobServiceClient) : IBlobSe
 
    public async Task<IReadOnlyCollection<string>> GetUrlsFromContainerAsync(string containerType, Guid id, CancellationToken cancellationToken = default)
    {
-      string containerName = $"{containerType}-{id}";
-
-      BlobContainerClient? containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+      BlobContainerClient? containerClient = blobServiceClient.GetBlobContainerClient(GetContainerName(containerType, id));
 
       var urls = new List<string>();
+
+      Response<bool>? containerExists = await containerClient.ExistsAsync(cancellationToken);
+      if (!containerExists.Value)
+      {
+         return urls;
+      }
 
       await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(cancellationToken: cancellationToken))
       {

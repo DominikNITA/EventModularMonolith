@@ -80,7 +80,7 @@ internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFact
       }
 
       IReadOnlyCollection<string> eventImages = await blobService.GetUrlsFromContainerAsync("event", eventResponse.Id, cancellationToken);
-      eventResponse.BackgroundImage = eventImages.First() ?? "";
+      eventResponse.BackgroundImage = eventImages.FirstOrDefault() ?? "";
 
       IReadOnlyCollection<string> venueImages = await blobService.GetUrlsFromContainerAsync("venue", eventResponse.Venue.VenueId, cancellationToken);
       eventResponse.Venue.ImageUrls = venueImages;

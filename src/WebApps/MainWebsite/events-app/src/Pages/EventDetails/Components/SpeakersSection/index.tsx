@@ -3,6 +3,7 @@ import { useClient } from '../../../../services/RootClient'
 import { Link } from 'react-router-dom'
 import { SpeakerDto } from '../../../../services/EventsClient'
 import { getResponse, useAjax } from '../../../../services/ApiHelper'
+import { Facebook, TwitterX } from 'react-bootstrap-icons'
 
 interface IProps {
   eventId: string
@@ -53,7 +54,8 @@ export const SpeakersSection = (props: IProps) => {
                     <div className="social">
                       {speaker.links?.map((link) => (
                         <a href={link.url}>
-                          <i className={`bi bi-twitter-x`}></i>
+                          <TwitterX></TwitterX>
+                          <Facebook></Facebook>
                         </a>
                       ))}
                     </div>

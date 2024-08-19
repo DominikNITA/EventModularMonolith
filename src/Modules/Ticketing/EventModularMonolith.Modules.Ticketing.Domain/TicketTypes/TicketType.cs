@@ -1,4 +1,5 @@
-﻿using EventModularMonolith.Modules.Ticketing.Domain.TicketTypes.Events;
+﻿using EventModularMonolith.Modules.Ticketing.Domain.Events;
+using EventModularMonolith.Modules.Ticketing.Domain.TicketTypes.Events;
 using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Ticketing.Domain.TicketTypes;
@@ -9,7 +10,8 @@ public sealed class TicketType : Entity
    {
    }
 
-   public Guid EventId { get; private set; }
+   public TicketTypeId Id { get; set; }
+   public EventId EventId { get; private set; }
 
    public string Name { get; private set; }
 
@@ -23,7 +25,7 @@ public sealed class TicketType : Entity
 
    public static TicketType Create(
       Guid id,
-      Guid eventId,
+      EventId eventId,
       string name,
       decimal price,
       string currency,
@@ -31,7 +33,7 @@ public sealed class TicketType : Entity
    {
       var ticketType = new TicketType
       {
-         Id = id,
+         Id = new TicketTypeId(id),
          EventId = eventId,
          Name = name,
          Price = price,
@@ -65,3 +67,5 @@ public sealed class TicketType : Entity
       return Result.Success();
    }
 }
+
+public class TicketTypeId(Guid value) : TypedIdValueBase(value) { }

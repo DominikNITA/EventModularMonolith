@@ -2,7 +2,7 @@
 
 namespace EventModularMonolith.Modules.Events.Domain.Events;
 
-public class EventPublishedDomainEvent(Guid eventId) : DomainEvent
+public class EventPublishedDomainEvent(EventId eventId) : DomainEvent
 {
-   public Guid EventId { get; init; } = eventId;
+   public EventId EventId { get; init; } = eventId;
 }

@@ -25,11 +25,11 @@ public class CreateCategoryCommandHandler(
                 return Result.Failure<Guid>(result.Error);
            }
 
-           categoryRepository.Insert(result.Value);
+           await categoryRepository.InsertAsync(result.Value, cancellationToken);
 
            await unitOfWork.SaveChangesAsync(cancellationToken);
 
-           return result.Value.Id;
+           return result.Value.Id.Value;
         }
     }
 

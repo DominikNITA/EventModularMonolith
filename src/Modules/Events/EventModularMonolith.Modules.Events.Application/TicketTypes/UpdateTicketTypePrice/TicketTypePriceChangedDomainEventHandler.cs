@@ -16,7 +16,7 @@ internal sealed class TicketTypePriceChangedDomainEventHandler(IEventBus eventBu
             new TicketTypePriceChangedIntegrationEvent(
                 domainEvent.Id,
                 domainEvent.OccurredOnUtc,
-                domainEvent.TicketTypeId,
+                domainEvent.TicketTypeId.Value,
                 domainEvent.Price),
             cancellationToken);
     }

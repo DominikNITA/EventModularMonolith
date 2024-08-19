@@ -1,5 +1,6 @@
 ﻿using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Speakers;
+using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Domain.Events;
@@ -8,16 +9,17 @@ public sealed class Event : Entity
 {
    private Event() { }
 
-   public Guid CategoryId { get; private set; }
+   public EventId Id { get; set; }
+   public CategoryId CategoryId { get; private set; }
    public string Title { get; private set; }
    public string Description { get; private set; }
-   public Guid VenueId { get; private set; }
+   public VenueId VenueId { get; private set; }
    public DateTime StartsAtUtc { get; private set; }
    public DateTime? EndsAtUtc { get; private set; }
    public EventStatus Status { get; private set; }
    public List<Speaker> Speakers { get; set; } = [];
 
-   public static Result<Event> Create(Category category, string title, string description, Guid venueId, DateTime startsAtUtc, DateTime? endsAtUtc, List<Speaker> speakers)
+   public static Result<Event> Create(Category category, string title, string description, VenueId venueId, DateTime startsAtUtc, DateTime? endsAtUtc, List<Speaker> speakers)
    {
       if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
       {
@@ -32,7 +34,7 @@ public sealed class Event : Entity
          VenueId = venueId,
          StartsAtUtc = startsAtUtc,
          EndsAtUtc = endsAtUtc,
-         Id = Guid.NewGuid(),
+         Id = new EventId(Guid.NewGuid()),
          Status = EventStatus.Draft,
          Speakers = speakers
       };
@@ -88,3 +90,8 @@ public sealed class Event : Entity
       return Result.Success();
    }
 }
+
+
+public class EventId(Guid value) : TypedIdValueBase(value) { }
+
+

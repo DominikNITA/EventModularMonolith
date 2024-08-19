@@ -12,10 +12,10 @@ internal sealed class RegisterUserCommandHandler(IUserRepository userRepository,
    {
       var user = User.Create(request.Email, request.FirstName, request.LastName);
 
-      userRepository.Insert(user);
+      await userRepository.InsertAsync(user, cancellationToken);
 
       await unitOfWork.SaveChangesAsync(cancellationToken);
 
-      return user.Id;
+      return user.Id.Value;
    }
 }

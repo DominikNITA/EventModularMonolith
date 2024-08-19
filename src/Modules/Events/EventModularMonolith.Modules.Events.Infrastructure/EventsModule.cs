@@ -14,10 +14,12 @@ using EventModularMonolith.Modules.Events.Infrastructure.TicketTypes;
 using EventModularMonolith.Modules.Events.Infrastructure.Venues;
 using EventModularMonolith.Shared.Application.EventBus;
 using EventModularMonolith.Shared.Application.Messaging;
+using EventModularMonolith.Shared.Infrastructure.Database;
 using EventModularMonolith.Shared.Infrastructure.Outbox;
 using EventModularMonolith.Shared.Presentation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -45,11 +47,15 @@ public static class EventsModule
       string databaseConnectionString = configuration.GetConnectionString("Database")!;
 
       services.AddDbContext<EventsDbContext>((sp,options) =>
-         options.UseNpgsql(databaseConnectionString,
-               npgsqlOptions => npgsqlOptions
-                  .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
-            .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
-            .UseSnakeCaseNamingConvention());
+         {
+            options.UseNpgsql(databaseConnectionString,
+                  npgsqlOptions => npgsqlOptions
+                     .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
+               .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
+               .UseSnakeCaseNamingConvention();
+            options.ReplaceService<IValueConverterSelector, StronglyTypedIdValueConverterSelector>();
+         }
+      );
 
       services.AddScoped<IEventRepository, EventRepository>();
       services.AddScoped<ICategoryRepository, CategoryRepository>();

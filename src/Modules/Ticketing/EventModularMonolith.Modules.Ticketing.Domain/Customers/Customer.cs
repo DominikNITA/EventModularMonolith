@@ -8,6 +8,7 @@ public sealed class Customer : Entity
    {
    }
 
+   public CustomerId Id { get; set; }
    public string Email { get; private set; }
 
    public string FirstName { get; private set; }
@@ -18,7 +19,7 @@ public sealed class Customer : Entity
    {
       var user = new Customer
       {
-         Id = id,
+         Id = new CustomerId(id),
          Email = email,
          FirstName = firstName,
          LastName = lastName,
@@ -33,3 +34,5 @@ public sealed class Customer : Entity
       LastName = lastName;
    }
 }
+
+public class CustomerId(Guid value) : TypedIdValueBase(value) { }

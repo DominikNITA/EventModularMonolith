@@ -1,8 +1,9 @@
 ﻿namespace EventModularMonolith.Modules.Users.Domain.Users;
 
+
 public interface IUserRepository
 {
-   Task<User?> GetAsync(Guid id, CancellationToken cancellationToken = default);
+   Task InsertAsync(User user, CancellationToken cancellationToken = default);
 
-   void Insert(User user);
+   Task<User> GetByIdAsync(UserId id, CancellationToken cancellationToken = default);
 }

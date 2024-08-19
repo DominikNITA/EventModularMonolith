@@ -5,7 +5,9 @@ using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Domain.Categories;
 
-public interface ICategoryRepository : IRepository<Category>
+public interface ICategoryRepository
 {
+   Task InsertAsync(Category category, CancellationToken cancellationToken = default);
 
+   Task<Category> GetByIdAsync(CategoryId id, CancellationToken cancellationToken = default);
 }

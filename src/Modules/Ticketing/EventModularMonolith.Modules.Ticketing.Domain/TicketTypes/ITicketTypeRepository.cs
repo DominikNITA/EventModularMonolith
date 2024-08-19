@@ -5,7 +5,12 @@ using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Ticketing.Domain.TicketTypes;
 
-public interface ITicketTypeRepository : IRepository<TicketType>
+
+public interface ITicketTypeRepository
 {
    void InsertRange(IEnumerable<TicketType> ticketTypes);
+
+   Task InsertAsync(TicketType ticketType, CancellationToken cancellationToken = default);
+
+   Task<TicketType> GetByIdAsync(TicketTypeId id, CancellationToken cancellationToken = default);
 }

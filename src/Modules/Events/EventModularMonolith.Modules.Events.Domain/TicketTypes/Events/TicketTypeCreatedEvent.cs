@@ -5,8 +5,8 @@ using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Domain.TicketTypes.Events;
 
-public sealed class TicketTypeCreatedDomainEvent(Guid ticketTypeId) : DomainEvent
+public sealed class TicketTypeCreatedDomainEvent(TicketTypeId ticketTypeId) : DomainEvent
 {
-    public Guid TicketTypeId { get; init;} = ticketTypeId;
+    public TicketTypeId TicketTypeId { get; init;} = ticketTypeId;
 }
 

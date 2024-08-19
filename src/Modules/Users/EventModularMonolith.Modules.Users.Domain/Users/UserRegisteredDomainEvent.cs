@@ -2,7 +2,7 @@
 
 namespace EventModularMonolith.Modules.Users.Domain.Users;
 
-public sealed class UserRegisteredDomainEvent(Guid userId) : DomainEvent
+public sealed class UserRegisteredDomainEvent(UserId userId) : DomainEvent
 {
-   public Guid UserId { get; init; } = userId;
+   public UserId UserId { get; init; } = userId;
 }

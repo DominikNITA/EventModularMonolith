@@ -3,7 +3,6 @@
 public abstract class Entity
 {
    private readonly List<IDomainEvent> _domainEvents = [];
-   public Guid Id { get; protected set; }
 
    protected Entity()
    {

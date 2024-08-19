@@ -27,10 +27,10 @@ public class CreateEventCommandHandler(
            request.EndsAtUtc
       );
 
-      eventRepository.Insert(@event.Value);
+      await eventRepository.InsertAsync(@event.Value, cancellationToken);
 
       IEnumerable<TicketType> ticketTypes = request.TicketTypes
-         .Select(t => TicketType.Create(t.TicketTypeId, t.EventId, t.Name, t.Price, t.Currency, t.Quantity));
+         .Select(t => TicketType.Create(t.TicketTypeId, new EventId(t.EventId), t.Name, t.Price, t.Currency, t.Quantity));
 
       ticketTypeRepository.InsertRange(ticketTypes);
 

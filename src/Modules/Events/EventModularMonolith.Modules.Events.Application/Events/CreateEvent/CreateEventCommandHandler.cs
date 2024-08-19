@@ -2,6 +2,7 @@
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Domain.Speakers;
+using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Shared.Application.Clock;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;
@@ -23,20 +24,20 @@ internal sealed class CreateEventCommandHandler(
          return Result.Failure<Guid>(EventErrors.StartDateInPast);
       }
 
-      Category? category = await categoryRepository.GetAsync(request.CategoryId, cancellationToken);
+      Category? category = await categoryRepository.GetByIdAsync(new CategoryId(request.CategoryId), cancellationToken);
 
       if (category is null)
       {
          return Result.Failure<Guid>(CategoryErrors.NotFound(request.CategoryId));
       }
 
-      IEnumerable<Speaker> speakers = speakerRepository.GetSpeakersByIds(request.SpeakerIds);
+      IEnumerable<Speaker> speakers = speakerRepository.GetSpeakersByIds(request.SpeakerIds.Select(x => new SpeakerId(x)));
 
       Result<Event> result = Event.Create(
          category,
          request.Title,
          request.Description,
-         request.VenueId,
+         new VenueId(request.VenueId),
          request.StartsAtUtc,
          request.EndsAtUtc,
          speakers.ToList());
@@ -46,10 +47,10 @@ internal sealed class CreateEventCommandHandler(
          return Result.Failure<Guid>(result.Error);
       }
 
-      eventRepository.Insert(result.Value);
+      await eventRepository.InsertAsync(result.Value, cancellationToken);
 
       await unitOfWork.SaveChangesAsync(cancellationToken);
 
-      return result.Value.Id;
+      return result.Value.Id.Value;
    }
 }

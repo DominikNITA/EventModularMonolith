@@ -15,5 +15,7 @@ public class VenueConfiguration : IEntityTypeConfiguration<Venue>
       builder.Ignore(e => e.DomainEvents);
 
       builder.OwnsOne(x => x.Address);
+      builder.Property(e => e.Id)
+         .HasConversion(id => id.Value, value => new VenueId(value));
    }
 }

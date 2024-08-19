@@ -17,7 +17,7 @@ public class UpdateTicketTypePriceCommandHandler(
 {
    public async Task<Result> Handle(UpdateTicketTypePriceCommand request, CancellationToken cancellationToken)
    {
-      TicketType? ticketType = await ticketTypeRepository.GetAsync(request.TicketTypeId, cancellationToken);
+      TicketType? ticketType = await ticketTypeRepository.GetByIdAsync(new TicketTypeId(request.TicketTypeId), cancellationToken);
 
       if (ticketType is null)
       {

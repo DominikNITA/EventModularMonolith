@@ -13,5 +13,8 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     public void Configure(EntityTypeBuilder<Category> builder)
     {
         builder.Ignore(e => e.DomainEvents);
-    }
+        builder.HasKey(e => e.Id);
+        builder.Property(e => e.Id)
+           .HasConversion(id => id.Value, value => new CategoryId(value));
+   }
 }

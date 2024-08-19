@@ -28,11 +28,11 @@ public class CreateCustomerCommandHandler(
          return Result.Failure<Guid>(customer.Error);
       }
 
-      customerRepository.Insert(customer.Value);
+      await customerRepository.InsertAsync(customer.Value, cancellationToken);
 
       await unitOfWork.SaveChangesAsync(cancellationToken);
 
-      return customer.Value.Id;
+      return customer.Value.Id.Value;
    }
 }
 

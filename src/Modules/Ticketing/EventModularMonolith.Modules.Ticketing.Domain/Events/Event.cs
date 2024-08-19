@@ -1,4 +1,5 @@
-﻿using EventModularMonolith.Shared.Domain;
+﻿using EventModularMonolith.Modules.Ticketing.Domain.Customers;
+using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Ticketing.Domain.Events;
 
@@ -8,7 +9,8 @@ public sealed class Event : Entity
    {
    }
 
-   public Guid CustomerId { get; set; }
+   public EventId Id { get; set; }
+   public CustomerId CustomerId { get; set; }
 
    public string Title { get; private set; }
 
@@ -32,7 +34,7 @@ public sealed class Event : Entity
    {
       var @event = new Event
       {
-         Id = id,
+         Id = new EventId(id),
          Title = title,
          Description = description,
          Location = location,
@@ -43,3 +45,5 @@ public sealed class Event : Entity
       return @event;
    }
 }
+
+public class EventId(Guid value) : TypedIdValueBase(value) { }

@@ -10,7 +10,8 @@ public sealed class TicketType : Entity
    {
    }
 
-   public Guid EventId { get; private set; }
+   public TicketTypeId Id { get; set; }
+   public EventId EventId { get; private set; }
 
    public string Name { get; private set; }
 
@@ -30,7 +31,7 @@ public sealed class TicketType : Entity
    {
       var ticketType = new TicketType
       {
-         Id = Guid.NewGuid(),
+         Id = new TicketTypeId(Guid.NewGuid()),
          EventId = @event.Id,
          Name = name,
          Price = price,
@@ -55,3 +56,5 @@ public sealed class TicketType : Entity
       Raise(new TicketTypePriceChangedDomainEvent(Id, Price));
    }
 }
+
+public class TicketTypeId(Guid value) : TypedIdValueBase(value) { }

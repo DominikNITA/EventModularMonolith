@@ -14,7 +14,9 @@ public class SpeakerConfiguration : IEntityTypeConfiguration<Speaker>
     {
         builder.Ignore(e => e.DomainEvents);
         builder.HasMany(s => s.Links).WithOne().HasForeignKey(l => l.SpeakerId);
-    }
+        builder.Property(e => e.Id)
+           .HasConversion(id => id.Value, value => new SpeakerId(value));
+   }
 }
 
 public class LinkConfiguration : IEntityTypeConfiguration<Link>

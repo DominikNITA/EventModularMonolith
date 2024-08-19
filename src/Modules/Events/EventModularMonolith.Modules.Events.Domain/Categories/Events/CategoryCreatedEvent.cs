@@ -5,8 +5,8 @@ using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Domain.Categories.Events;
 
-public sealed class CategoryCreatedDomainEvent(Guid categoryId) : DomainEvent
+public sealed class CategoryCreatedDomainEvent(CategoryId categoryId) : DomainEvent
 {
-    public Guid CategoryId { get; init;} = categoryId;
+    public CategoryId CategoryId { get; init;} = categoryId;
 }
 

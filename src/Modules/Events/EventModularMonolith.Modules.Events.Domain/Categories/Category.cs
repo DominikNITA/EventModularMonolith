@@ -7,6 +7,8 @@ public sealed class Category : Entity
 {
    private Category() { }
 
+   public CategoryId Id { get; set; }
+
    public string Name { get; private set; }
    public bool IsArchived { get; private set; }
 
@@ -14,7 +16,7 @@ public sealed class Category : Entity
    {
       var category = new Category
       {
-         Id = Guid.NewGuid(),
+         Id = new CategoryId(Guid.NewGuid()),
          Name = name,
          IsArchived = false
       };
@@ -36,3 +38,5 @@ public sealed class Category : Entity
       Raise(new CategoryUpdatedDomainEvent(Id, Name));
    }
 }
+
+public class CategoryId(Guid value) : TypedIdValueBase(value) { }

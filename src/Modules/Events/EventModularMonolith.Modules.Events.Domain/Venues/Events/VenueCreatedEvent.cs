@@ -5,8 +5,8 @@ using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Domain.Venues.Events;
 
-public sealed class VenueCreatedDomainEvent(Guid venueId) : DomainEvent
+public sealed class VenueCreatedDomainEvent(VenueId venueId) : DomainEvent
 {
-    public Guid VenueId { get; init;} = venueId;
+    public VenueId VenueId { get; init;} = venueId;
 }
 

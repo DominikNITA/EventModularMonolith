@@ -38,13 +38,13 @@ public class CreateVenueCommandHandler(
          return Result.Failure<Guid>(venue.Error);
       }
 
-      venueRepository.Insert(venue.Value);
+      await venueRepository.InsertAsync(venue.Value, cancellationToken);
 
-      await blobService.MoveFilesFromTempToEntityContainer(request.ImageContainers, "venue", venue.Value.Id, cancellationToken);
+      await blobService.MoveFilesFromTempToEntityContainer(request.ImageContainers, "venue", venue.Value.Id.Value, cancellationToken);
 
       await unitOfWork.SaveChangesAsync(cancellationToken);
 
-      return venue.Value.Id;
+      return venue.Value.Id.Value;
    }
 }
 

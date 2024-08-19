@@ -2,9 +2,9 @@
 
 namespace EventModularMonolith.Modules.Users.Domain.Users;
 
-public sealed class UserProfileUpdatedDomainEvent(Guid userId, string firstName, string lastName) : DomainEvent
+public sealed class UserProfileUpdatedDomainEvent(UserId userId, string firstName, string lastName) : DomainEvent
 {
-   public Guid UserId { get; init; } = userId;
+   public UserId UserId { get; init; } = userId;
 
    public string FirstName { get; init; } = firstName;
 

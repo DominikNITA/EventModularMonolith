@@ -27,11 +27,11 @@ public class CreateSpeakerCommandHandler(
                 return Result.Failure<Guid>(speaker.Error);
            }
 
-           speakerRepository.Insert(speaker.Value);
+           await speakerRepository.InsertAsync(speaker.Value, cancellationToken);
 
            await unitOfWork.SaveChangesAsync(cancellationToken);
 
-           return speaker.Value.Id;
+           return speaker.Value.Id.Value;
         }
     }
 

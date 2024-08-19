@@ -10,5 +10,7 @@ internal sealed class TicketTypeConfiguration : IEntityTypeConfiguration<TicketT
    public void Configure(EntityTypeBuilder<TicketType> builder)
    {
       builder.HasOne<Event>().WithMany().HasForeignKey(t => t.EventId);
+      builder.Property(e => e.Id)
+         .HasConversion(id => id.Value, value => new TicketTypeId(value));
    }
 }

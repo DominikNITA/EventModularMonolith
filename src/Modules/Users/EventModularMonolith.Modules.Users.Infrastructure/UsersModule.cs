@@ -8,10 +8,12 @@ using EventModularMonolith.Modules.Users.Infrastructure.Users;
 using EventModularMonolith.Modules.Users.PublicApi;
 using EventModularMonolith.Shared.Application.EventBus;
 using EventModularMonolith.Shared.Application.Messaging;
+using EventModularMonolith.Shared.Infrastructure.Database;
 using EventModularMonolith.Shared.Infrastructure.Outbox;
 using EventModularMonolith.Shared.Presentation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -38,13 +40,18 @@ public static class UsersModule
    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
    {
       services.AddDbContext<UsersDbContext>((sp, options) =>
-         options
-            .UseNpgsql(
-               configuration.GetConnectionString("Database"),
-               npgsqlOptions => npgsqlOptions
-                  .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Users))
-            .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
-            .UseSnakeCaseNamingConvention());
+         {
+            options
+               .UseNpgsql(
+                  configuration.GetConnectionString("Database"),
+                  npgsqlOptions => npgsqlOptions
+                     .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Users))
+               .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
+               .UseSnakeCaseNamingConvention();
+            options.ReplaceService<IValueConverterSelector, StronglyTypedIdValueConverterSelector>();
+
+         }
+      );
 
       services.AddScoped<IUserRepository, UserRepository>();
 

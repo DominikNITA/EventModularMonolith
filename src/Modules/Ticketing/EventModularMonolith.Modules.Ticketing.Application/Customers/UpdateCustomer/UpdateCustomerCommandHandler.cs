@@ -15,7 +15,7 @@ public class UpdateCustomerCommandHandler(
 {
    public async Task<Result<Guid>> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
    {
-      Customer? customer = await customerRepository.GetAsync(request.Id, cancellationToken);
+      Customer? customer = await customerRepository.GetByIdAsync(new CustomerId(request.Id), cancellationToken);
 
       if (customer is null)
       {
@@ -26,7 +26,7 @@ public class UpdateCustomerCommandHandler(
 
       await unitOfWork.SaveChangesAsync(cancellationToken);
 
-      return customer.Id;
+      return customer.Id.Value;
    }
 }
 

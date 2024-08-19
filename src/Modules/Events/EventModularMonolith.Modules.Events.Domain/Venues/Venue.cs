@@ -6,7 +6,7 @@ namespace EventModularMonolith.Modules.Events.Domain.Venues;
 public sealed class Venue : Entity
 {
    private Venue() { }
-
+   public VenueId Id { get; set; }
    public string Name { get; private set; }
    public string Description { get; private set; }
    public Address Address { get; private set; }
@@ -15,7 +15,7 @@ public sealed class Venue : Entity
    {
       var venue = new Venue()
       {
-         Id = Guid.NewGuid(),
+         Id = new VenueId(Guid.NewGuid()),
          Name = name,
          Description = description,
          Address = address,
@@ -26,3 +26,6 @@ public sealed class Venue : Entity
       return venue;
    }
 }
+
+
+public class VenueId(Guid value) : TypedIdValueBase(value) { }

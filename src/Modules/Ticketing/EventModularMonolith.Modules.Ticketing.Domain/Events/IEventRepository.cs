@@ -5,7 +5,9 @@ using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Ticketing.Domain.Events;
 
-public interface IEventRepository : IRepository<Event>
+public interface IEventRepository
 {
+   Task InsertAsync(Event @event, CancellationToken cancellationToken = default);
 
+   Task<Event> GetByIdAsync(EventId id, CancellationToken cancellationToken = default);
 }

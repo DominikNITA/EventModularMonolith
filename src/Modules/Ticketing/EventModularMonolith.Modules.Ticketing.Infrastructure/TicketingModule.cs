@@ -15,11 +15,13 @@ using EventModularMonolith.Modules.Ticketing.Infrastructure.TicketTypes;
 using EventModularMonolith.Modules.Users.IntegrationEvents;
 using EventModularMonolith.Shared.Application.EventBus;
 using EventModularMonolith.Shared.Application.Messaging;
+using EventModularMonolith.Shared.Infrastructure.Database;
 using EventModularMonolith.Shared.Infrastructure.Outbox;
 using EventModularMonolith.Shared.Presentation;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -54,13 +56,17 @@ public static class TicketingModule
    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
    {
       services.AddDbContext<TicketingDbContext>((sp, options) =>
-         options
-            .UseNpgsql(
-               configuration.GetConnectionString("Database"),
-               npgsqlOptions => npgsqlOptions
-                  .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Ticketing))
-            .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
-            .UseSnakeCaseNamingConvention());
+         {
+            options
+               .UseNpgsql(
+                  configuration.GetConnectionString("Database"),
+                  npgsqlOptions => npgsqlOptions
+                     .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Ticketing))
+               .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
+               .UseSnakeCaseNamingConvention();
+         options.ReplaceService<IValueConverterSelector, StronglyTypedIdValueConverterSelector>();
+         }
+      );
 
       services.AddScoped<ICustomerRepository, CustomerRepository>();
       services.AddScoped<IEventRepository, EventRepository>();

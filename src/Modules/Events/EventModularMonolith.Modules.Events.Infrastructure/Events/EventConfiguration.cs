@@ -13,5 +13,7 @@ internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
         builder.HasOne<Category>().WithMany().HasForeignKey(e => e.CategoryId);
         builder.HasOne<Venue>().WithMany().HasForeignKey(e => e.VenueId);
         builder.HasMany(e => e.Speakers).WithMany(e => e.Events);
-    }
+        builder.Property(e => e.Id)
+           .HasConversion(id => id.Value, value => new EventId(value));
+   }
 }

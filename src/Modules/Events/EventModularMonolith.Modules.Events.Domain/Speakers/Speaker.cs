@@ -7,6 +7,7 @@ public class Speaker : Entity
 {
    private Speaker() { }
 
+   public SpeakerId Id { get; set; }
    public string Name { get; private set; }
    public string Description { get; private set; }
    public List<Link> Links { get; private set; } = [];
@@ -17,7 +18,7 @@ public class Speaker : Entity
       var id = Guid.NewGuid();
       var @event = new Speaker
       {
-         Id = id,
+         Id = new SpeakerId(id),
          Name = name,
          Description = description,
          Links = links.Select(l => new Link(l.Url)).ToList()
@@ -44,5 +45,7 @@ public class Link
    }
 
    public Uri Url { get; set; }
-   public Guid SpeakerId { get; set; }
+   public SpeakerId SpeakerId { get; set; }
 }
+
+public class SpeakerId(Guid value) : TypedIdValueBase(value) { }

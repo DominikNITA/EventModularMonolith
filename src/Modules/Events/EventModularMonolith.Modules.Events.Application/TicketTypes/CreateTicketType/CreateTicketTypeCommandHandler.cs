@@ -18,7 +18,7 @@ public class CreateTicketTypeCommandHandler(
 {
    public async Task<Result<Guid>> Handle(CreateTicketTypeCommand request, CancellationToken cancellationToken)
    {
-      Event? @event = await eventRepository.GetAsync(request.EventId, cancellationToken);
+      Event? @event = await eventRepository.GetByIdAsync(new EventId(request.EventId), cancellationToken);
 
       if (@event == null)
       {
@@ -32,11 +32,11 @@ public class CreateTicketTypeCommandHandler(
          return Result.Failure<Guid>(result.Error);
       }
 
-      ticketTypeRepository.Insert(result.Value);
+      await ticketTypeRepository.InsertAsync(result.Value, cancellationToken);
 
       await unitOfWork.SaveChangesAsync(cancellationToken);
 
-      return result.Value.Id;
+      return result.Value.Id.Value;
    }
 }
 

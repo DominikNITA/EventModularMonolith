@@ -34,7 +34,7 @@ internal sealed class AddItemToCartCommandHandler(
          return Result.Failure(CustomerErrors.NotFound(command.CustomerId));
       }
 
-      TicketType? ticketType = await ticketTypeRepository.GetAsync(command.TicketTypeId, cancellationToken);
+      TicketType? ticketType = await ticketTypeRepository.GetByIdAsync(new TicketTypeId(command.TicketTypeId), cancellationToken);
 
       if (ticketType is null)
       {

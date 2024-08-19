@@ -8,6 +8,7 @@ public sealed class User : Entity
    {
    }
 
+   public UserId Id { get; set; }
    public string Email { get; private set; }
 
    public string FirstName { get; private set; }
@@ -18,7 +19,7 @@ public sealed class User : Entity
    {
       var user = new User
       {
-         Id = Guid.NewGuid(),
+         Id = new UserId(Guid.NewGuid()),
          Email = email,
          FirstName = firstName,
          LastName = lastName,
@@ -42,3 +43,5 @@ public sealed class User : Entity
       Raise(new UserProfileUpdatedDomainEvent(Id, FirstName, LastName));
    }
 }
+
+public class UserId(Guid value) : TypedIdValueBase(value) { }

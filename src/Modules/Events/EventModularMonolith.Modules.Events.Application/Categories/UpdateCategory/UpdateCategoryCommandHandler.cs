@@ -15,7 +15,7 @@ public class UpdateCategoryCommandHandler(
 {
    public async Task<Result> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
    {
-      Category? category = await categoryRepository.GetAsync(request.CategoryId, cancellationToken);
+      Category? category = await categoryRepository.GetByIdAsync(new CategoryId(request.CategoryId), cancellationToken);
 
       if (category is null)
       {

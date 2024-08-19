@@ -15,10 +15,11 @@ This project is an Event Management System built using C# and React. The system 
 - **Redis** (for caching query results)
 - **Azure Blob Service** (locally with Azurite for storing images) 
 - **Docker** (for containerization and local developement)
-- **React 18** (for client-facing web app)
-- **Blazor Server** (for administration web app) **WIP**
-- **Aspire Dashborad** (WIP)
-- **Stripe Integration** (WIP)
+- **React 18** (for client-facing web app) **WIP**
+- **Blazor Server** (for administration web app) **Planned**
+- **Aspire Dashborad** **Planned**
+- **Stripe Integration** **Planned**
+- XUnit (for unit testing) **Planned**
 
 ## Concepts
 - **CQRS** (for now single PostgreSQL database with separate schemas per module)
@@ -35,14 +36,22 @@ The project follows a Modular Monolith architecture, which means the application
 - **Attendance** - checking tickets presented by attendees and counting stats (WIP: not yet created)
 
 The project will also have 3 web applications:
-- **Main selling app** - allowing users to search and buy tickets for events
-- **Administration app** - for overwatching the main app and the whole
-- **Organizers app** - managing events and reading QR codes on the tickets
+- **Main selling app** - allowing users to search and buy tickets for events **WIP**
+- **Administration app** - for overwatching the main app and the whole **Planned**
+- **Organizers app** - managing events and reading QR codes on the tickets **Planned**
 
 ## Roadmap
-- [ ] Architecture tests
-- [ ] Unit and integration tests for business logic
 - [ ] Complete business logic for exisitng modules and add new Attendance module for managing ongoing events
 - [ ] Add Authentication and Authorization with roles and permissions
+- [ ] Architecture tests
+- [ ] Unit and integration tests for business logic
 - [ ] Extend client web app
 - [ ] Create admin panel for managing and overwatching all events (with Aspire Dashboard)
+
+## ScreenShots
+...
+
+## How to run?
+
+
+

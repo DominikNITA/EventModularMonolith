@@ -5,6 +5,7 @@ using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Modules.Events.Domain.TicketTypes;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Modules.Events.Infrastructure.Events;
+using EventModularMonolith.Modules.Events.Infrastructure.Organizers;
 using EventModularMonolith.Modules.Events.Infrastructure.Speakers;
 using EventModularMonolith.Modules.Events.Infrastructure.TicketTypes;
 using EventModularMonolith.Modules.Events.Infrastructure.Venues;
@@ -38,5 +39,6 @@ public sealed class EventsDbContext : DbContext, IUnitOfWork
       modelBuilder.ApplyConfiguration(new VenueConfiguration());
       modelBuilder.ApplyConfiguration(new SpeakerConfiguration());
       modelBuilder.ApplyConfiguration(new LinkConfiguration());
+      modelBuilder.ApplyConfiguration(new OrganizerConfiguration());
    }
 }

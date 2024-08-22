@@ -37,7 +37,8 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
 string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
 string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
 builder.Services.AddInfrastructure(
-   [TicketingModule.ConfigureConsumers],
+   [TicketingModule.ConfigureConsumers,
+   EventsModule.ConfigureConsumers],
    databaseConnectionString, redisConnectionString, builder.Configuration);
 
 // TODO: Create base module class which contains abstract module name and assembly

@@ -1,5 +1,6 @@
 ﻿using EventModularMonolith.Modules.Users.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Users.Domain.Users;
+using EventModularMonolith.Modules.Users.Infrastructure.Organizers;
 using EventModularMonolith.Modules.Users.Infrastructure.Users;
 using EventModularMonolith.Shared.Infrastructure.Inbox;
 using EventModularMonolith.Shared.Infrastructure.Outbox;
@@ -22,5 +23,6 @@ public sealed class UsersDbContext : DbContext, IUnitOfWork
       modelBuilder.ApplyConfiguration(new InboxMessageConfiguration());
       modelBuilder.ApplyConfiguration(new InboxMessageConsumerConfiguration());
       modelBuilder.ApplyConfiguration(new UserConfiguration());
+      modelBuilder.ApplyConfiguration(new OrganizerConfiguration());
    }
 }

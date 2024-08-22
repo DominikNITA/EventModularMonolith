@@ -1,6 +1,8 @@
 ﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
+using EventModularMonolith.Modules.Events.Application.Organizers;
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
+using EventModularMonolith.Modules.Events.Domain.Organizers;
 using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Shared.Application.Clock;
@@ -14,6 +16,7 @@ internal sealed class CreateEventCommandHandler(
    IEventRepository eventRepository,
    ICategoryRepository categoryRepository,
    ISpeakerRepository speakerRepository,
+   IOrganizerRepository organizerRepository,
    IUnitOfWork unitOfWork) : ICommandHandler<CreateEventCommand, Guid>
 {
 
@@ -33,7 +36,14 @@ internal sealed class CreateEventCommandHandler(
 
       IEnumerable<Speaker> speakers = speakerRepository.GetSpeakersByIds(request.SpeakerIds.Select(x => new SpeakerId(x)));
 
-      Result<Event> result = Event.Create(
+      Organizer organizer = await organizerRepository.GetByIdAsync(new OrganizerId(request.OrganizerId), cancellationToken);
+
+      if (organizer is null)
+      {
+         return Result.Failure<Guid>(OrganizerErrors.NotFound(request.OrganizerId));
+      }
+
+      Result<Event> result = organizer.CreateEvent(
          category,
          request.Title,
          request.Description,

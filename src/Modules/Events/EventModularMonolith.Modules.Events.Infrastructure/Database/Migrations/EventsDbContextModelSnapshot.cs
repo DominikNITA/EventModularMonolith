@@ -23,6 +23,36 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("EventModularMonolith.Modules.Events.Application.Organizers.Organizer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_organizer");
+
+                    b.ToTable("organizer", "events");
+                });
+
             modelBuilder.Entity("EventModularMonolith.Modules.Events.Domain.Categories.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -63,6 +93,10 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("ends_at_utc");
 
+                    b.Property<Guid>("OrganizerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("organizer_id");
+
                     b.Property<DateTime>("StartsAtUtc")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("starts_at_utc");
@@ -85,6 +119,9 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
 
                     b.HasIndex("CategoryId")
                         .HasDatabaseName("ix_events_category_id");
+
+                    b.HasIndex("OrganizerId")
+                        .HasDatabaseName("ix_events_organizer_id");
 
                     b.HasIndex("VenueId")
                         .HasDatabaseName("ix_events_venue_id");
@@ -317,6 +354,65 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                     b.ToTable("event_speaker", "events");
                 });
 
+            modelBuilder.Entity("EventModularMonolith.Modules.Events.Application.Organizers.Organizer", b =>
+                {
+                    b.OwnsMany("EventModularMonolith.Modules.Events.Application.Organizers.Moderator", "Moderators", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("user_id");
+
+                            b1.Property<Guid>("OrganizerId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("organizer_id");
+
+                            b1.Property<bool>("IsActive")
+                                .HasColumnType("boolean")
+                                .HasColumnName("is_active");
+
+                            b1.HasKey("UserId", "OrganizerId")
+                                .HasName("pk_moderators");
+
+                            b1.HasIndex("OrganizerId")
+                                .HasDatabaseName("ix_moderators_organizer_id");
+
+                            b1.ToTable("moderators", "events");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrganizerId")
+                                .HasConstraintName("fk_moderators_organizer_organizer_id");
+
+                            b1.OwnsOne("EventModularMonolith.Modules.Events.Application.Organizers.ModeratorRole", "Role", b2 =>
+                                {
+                                    b2.Property<Guid>("ModeratorUserId")
+                                        .HasColumnType("uuid")
+                                        .HasColumnName("user_id");
+
+                                    b2.Property<Guid>("ModeratorOrganizerId")
+                                        .HasColumnType("uuid")
+                                        .HasColumnName("organizer_id");
+
+                                    b2.Property<string>("Value")
+                                        .IsRequired()
+                                        .HasColumnType("text")
+                                        .HasColumnName("Role");
+
+                                    b2.HasKey("ModeratorUserId", "ModeratorOrganizerId");
+
+                                    b2.ToTable("moderators", "events");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ModeratorUserId", "ModeratorOrganizerId")
+                                        .HasConstraintName("fk_moderators_moderators_user_id_organizer_id");
+                                });
+
+                            b1.Navigation("Role")
+                                .IsRequired();
+                        });
+
+                    b.Navigation("Moderators");
+                });
+
             modelBuilder.Entity("EventModularMonolith.Modules.Events.Domain.Events.Event", b =>
                 {
                     b.HasOne("EventModularMonolith.Modules.Events.Domain.Categories.Category", null)
@@ -325,6 +421,13 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_events_categories_category_id");
+
+                    b.HasOne("EventModularMonolith.Modules.Events.Application.Organizers.Organizer", null)
+                        .WithMany()
+                        .HasForeignKey("OrganizerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_events_organizer_organizer_id");
 
                     b.HasOne("EventModularMonolith.Modules.Events.Domain.Venues.Venue", null)
                         .WithMany()

@@ -1,4 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Categories;
+﻿using EventModularMonolith.Modules.Events.Application.Organizers;
+using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Shared.Domain;
@@ -9,7 +10,8 @@ public sealed class Event : Entity
 {
    private Event() { }
 
-   public EventId Id { get; set; }
+   public EventId Id { get; private set; }
+   public OrganizerId OrganizerId { get; private set; }
    public CategoryId CategoryId { get; private set; }
    public string Title { get; private set; }
    public string Description { get; private set; }
@@ -19,7 +21,7 @@ public sealed class Event : Entity
    public EventStatus Status { get; private set; }
    public List<Speaker> Speakers { get; set; } = [];
 
-   public static Result<Event> Create(Category category, string title, string description, VenueId venueId, DateTime startsAtUtc, DateTime? endsAtUtc, List<Speaker> speakers)
+   internal static Result<Event> Create(OrganizerId organizerId, Category category, string title, string description, VenueId venueId, DateTime startsAtUtc, DateTime? endsAtUtc, List<Speaker> speakers)
    {
       if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
       {
@@ -28,13 +30,14 @@ public sealed class Event : Entity
 
       var @event = new Event()
       {
+         Id = new EventId(Guid.NewGuid()),
+         OrganizerId = organizerId,
          CategoryId = category.Id,
          Title = title,
          Description = description,
          VenueId = venueId,
          StartsAtUtc = startsAtUtc,
          EndsAtUtc = endsAtUtc,
-         Id = new EventId(Guid.NewGuid()),
          Status = EventStatus.Draft,
          Speakers = speakers
       };

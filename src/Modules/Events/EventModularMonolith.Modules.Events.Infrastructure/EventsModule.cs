@@ -1,6 +1,7 @@
 ﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
+using EventModularMonolith.Modules.Events.Domain.Organizers;
 using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Modules.Events.Domain.TicketTypes;
 using EventModularMonolith.Modules.Events.Domain.Venues;
@@ -8,15 +9,19 @@ using EventModularMonolith.Modules.Events.Infrastructure.Categories;
 using EventModularMonolith.Modules.Events.Infrastructure.Database;
 using EventModularMonolith.Modules.Events.Infrastructure.Events;
 using EventModularMonolith.Modules.Events.Infrastructure.Inbox;
+using EventModularMonolith.Modules.Events.Infrastructure.Organizers;
 using EventModularMonolith.Modules.Events.Infrastructure.Outbox;
 using EventModularMonolith.Modules.Events.Infrastructure.Speakers;
 using EventModularMonolith.Modules.Events.Infrastructure.TicketTypes;
 using EventModularMonolith.Modules.Events.Infrastructure.Venues;
+using EventModularMonolith.Modules.Events.IntegrationEvents;
+using EventModularMonolith.Modules.Users.IntegrationEvents;
 using EventModularMonolith.Shared.Application.EventBus;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Infrastructure.Database;
 using EventModularMonolith.Shared.Infrastructure.Outbox;
 using EventModularMonolith.Shared.Presentation;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -42,6 +47,11 @@ public static class EventsModule
       return services;
    }
 
+   public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
+   {
+      registrationConfigurator.AddConsumer<IntegrationEventConsumer<OrganizerCreatedIntegrationEvent>>();
+   }
+
    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
    {
       string databaseConnectionString = configuration.GetConnectionString("Database")!;
@@ -62,6 +72,7 @@ public static class EventsModule
       services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
       services.AddScoped<IVenueRepository, VenueRepository>();
       services.AddScoped<ISpeakerRepository, SpeakerRepository>();
+      services.AddScoped<IOrganizerRepository, OrganizerRepository>();
 
       services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
 

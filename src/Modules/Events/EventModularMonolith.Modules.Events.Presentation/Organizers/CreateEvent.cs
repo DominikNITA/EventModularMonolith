@@ -6,16 +6,18 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using static EventModularMonolith.Modules.Events.Presentation.Organizers.CreateEvent;
 
-namespace EventModularMonolith.Modules.Events.Presentation.Events;
+namespace EventModularMonolith.Modules.Events.Presentation.Organizers;
 
 internal sealed class CreateEvent : IEndpoint
 {
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
-      app.MapPost("events", async (CreateEventRequest request, ISender sender) =>
+      app.MapPost("organizer/{id}/events", async (Guid id, CreateEventRequest request, ISender sender) =>
          {
             var command = new CreateEventCommand(
+               id,
                request.CategoryId,
                request.Title,
                request.Description,

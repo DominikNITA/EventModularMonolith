@@ -49,6 +49,7 @@ internal sealed class InitializeEventsModule : IEndpoint
 
             // Events
             await sender.Send(new CreateEventCommand(
+               Guid.NewGuid(),
                businessCategory.Value,
                "Example Event",
                "Some generic description with long epithets etc...",

@@ -1,4 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Categories;
+﻿using EventModularMonolith.Modules.Events.Application.Organizers;
+using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
     {
         builder.HasOne<Category>().WithMany().HasForeignKey(e => e.CategoryId);
         builder.HasOne<Venue>().WithMany().HasForeignKey(e => e.VenueId);
+        builder.HasOne<Organizer>().WithMany().HasForeignKey(e => e.OrganizerId);
         builder.HasMany(e => e.Speakers).WithMany(e => e.Events);
         builder.Property(e => e.Id)
            .HasConversion(id => id.Value, value => new EventId(value));

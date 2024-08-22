@@ -3,6 +3,7 @@
 namespace EventModularMonolith.Modules.Events.Application.Events.CreateEvent;
 
 public sealed record CreateEventCommand(
+   Guid OrganizerId,
    Guid CategoryId,
    string Title,
    string Description,

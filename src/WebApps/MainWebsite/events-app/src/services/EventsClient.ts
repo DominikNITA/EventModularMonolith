@@ -37,13 +37,13 @@ export interface IClient {
 
     getSpeaker(id: string): Promise<ResultOfSpeakerDto>;
 
+    postApiOrganizerEvents(id: string, request: CreateEventRequest): Promise<ResultOfGuid>;
+
     deleteApiEventsCancel(id: string): Promise<void>;
 
-    postApiEvents(request: CreateEventRequest): Promise<ResultOfGuid>;
+    getEvent(id: string): Promise<ResultOfEventResponse>;
 
     getEvents(): Promise<ResultOfIReadOnlyCollectionOfEventResponse>;
-
-    getEvent(id: string): Promise<ResultOfEventResponse>;
 
     putApiEventsPublish(id: string): Promise<void>;
 
@@ -64,6 +64,14 @@ export interface IClient {
     putApiUsersProfile(id: string, request: UpdateUserProfileRequest): Promise<void>;
 
     postApiUsersRegister(request: RegisterUserRequest): Promise<void>;
+
+    changeOrganizerStatus(id: string): Promise<ResultOfOrganizerDto>;
+
+    postApiOrganizers(request: CreateOrganizerRequest): Promise<ResultOfGuid>;
+
+    getOrganizers(): Promise<ResultOfIReadOnlyCollectionOfOrganizerDto>;
+
+    getOrganizer(id: string): Promise<ResultOfOrganizerDto>;
 
     putApiCartsAdd(request: Request2): Promise<void>;
 
@@ -529,6 +537,49 @@ export class Client extends ClientBase implements IClient {
         return Promise.resolve<ResultOfSpeakerDto>(null as any);
     }
 
+    postApiOrganizerEvents(id: string, request: CreateEventRequest): Promise<ResultOfGuid> {
+        let url_ = this.baseUrl + "/api/organizer/{id}/events";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processPostApiOrganizerEvents(_response));
+        });
+    }
+
+    protected processPostApiOrganizerEvents(response: Response): Promise<ResultOfGuid> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfGuid.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfGuid>(null as any);
+    }
+
     deleteApiEventsCancel(id: string): Promise<void> {
         let url_ = this.baseUrl + "/api/events/{id}/cancel";
         if (id === undefined || id === null)
@@ -562,82 +613,6 @@ export class Client extends ClientBase implements IClient {
             });
         }
         return Promise.resolve<void>(null as any);
-    }
-
-    postApiEvents(request: CreateEventRequest): Promise<ResultOfGuid> {
-        let url_ = this.baseUrl + "/api/events";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(request);
-
-        let options_: RequestInit = {
-            body: content_,
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        };
-
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.http.fetch(url_, transformedOptions_);
-        }).then((_response: Response) => {
-            return this.transformResult(url_, _response, (_response: Response) => this.processPostApiEvents(_response));
-        });
-    }
-
-    protected processPostApiEvents(response: Response): Promise<ResultOfGuid> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ResultOfGuid.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<ResultOfGuid>(null as any);
-    }
-
-    getEvents(): Promise<ResultOfIReadOnlyCollectionOfEventResponse> {
-        let url_ = this.baseUrl + "/api/events";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_: RequestInit = {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        };
-
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.http.fetch(url_, transformedOptions_);
-        }).then((_response: Response) => {
-            return this.transformResult(url_, _response, (_response: Response) => this.processGetEvents(_response));
-        });
-    }
-
-    protected processGetEvents(response: Response): Promise<ResultOfIReadOnlyCollectionOfEventResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200) {
-            return response.text().then((_responseText) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ResultOfIReadOnlyCollectionOfEventResponse.fromJS(resultData200);
-            return result200;
-            });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<ResultOfIReadOnlyCollectionOfEventResponse>(null as any);
     }
 
     getEvent(id: string): Promise<ResultOfEventResponse> {
@@ -677,6 +652,42 @@ export class Client extends ClientBase implements IClient {
             });
         }
         return Promise.resolve<ResultOfEventResponse>(null as any);
+    }
+
+    getEvents(): Promise<ResultOfIReadOnlyCollectionOfEventResponse> {
+        let url_ = this.baseUrl + "/api/events";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetEvents(_response));
+        });
+    }
+
+    protected processGetEvents(response: Response): Promise<ResultOfIReadOnlyCollectionOfEventResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfIReadOnlyCollectionOfEventResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfIReadOnlyCollectionOfEventResponse>(null as any);
     }
 
     putApiEventsPublish(id: string): Promise<void> {
@@ -1035,6 +1046,160 @@ export class Client extends ClientBase implements IClient {
             });
         }
         return Promise.resolve<void>(null as any);
+    }
+
+    changeOrganizerStatus(id: string): Promise<ResultOfOrganizerDto> {
+        let url_ = this.baseUrl + "/api/organizers/{id}/status";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processChangeOrganizerStatus(_response));
+        });
+    }
+
+    protected processChangeOrganizerStatus(response: Response): Promise<ResultOfOrganizerDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfOrganizerDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfOrganizerDto>(null as any);
+    }
+
+    postApiOrganizers(request: CreateOrganizerRequest): Promise<ResultOfGuid> {
+        let url_ = this.baseUrl + "/api/organizers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processPostApiOrganizers(_response));
+        });
+    }
+
+    protected processPostApiOrganizers(response: Response): Promise<ResultOfGuid> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfGuid.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfGuid>(null as any);
+    }
+
+    getOrganizers(): Promise<ResultOfIReadOnlyCollectionOfOrganizerDto> {
+        let url_ = this.baseUrl + "/api/organizers";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetOrganizers(_response));
+        });
+    }
+
+    protected processGetOrganizers(response: Response): Promise<ResultOfIReadOnlyCollectionOfOrganizerDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfIReadOnlyCollectionOfOrganizerDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfIReadOnlyCollectionOfOrganizerDto>(null as any);
+    }
+
+    getOrganizer(id: string): Promise<ResultOfOrganizerDto> {
+        let url_ = this.baseUrl + "/api/organizers/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processGetOrganizer(_response));
+        });
+    }
+
+    protected processGetOrganizer(response: Response): Promise<ResultOfOrganizerDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ResultOfOrganizerDto.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<ResultOfOrganizerDto>(null as any);
     }
 
     putApiCartsAdd(request: Request2): Promise<void> {
@@ -2369,6 +2534,228 @@ export class UpdateUserProfileRequest implements IUpdateUserProfileRequest {
 export interface IUpdateUserProfileRequest {
     firstName: string;
     lastName: string;
+}
+
+export class ResultOfOrganizerDto extends Result implements IResultOfOrganizerDto {
+    value!: OrganizerDto | undefined;
+
+    constructor(data?: IResultOfOrganizerDto) {
+        super(undefined);
+		if (data) {
+			for (var property in data) {
+				if (data.hasOwnProperty(property))
+					(<any>this)[property] = (<any>data)[property];
+			}
+		}
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.value = _data["value"] ? OrganizerDto.fromJS(_data["value"]) : <any>undefined;
+        }
+    }
+
+    static override fromJS(data: any): ResultOfOrganizerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResultOfOrganizerDto();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["value"] = this.value ? this.value.toJSON() : <any>undefined;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IResultOfOrganizerDto extends IResult {
+    value: OrganizerDto | undefined;
+}
+
+export class OrganizerDto implements IOrganizerDto {
+    id!: string;
+    name!: string;
+    description!: string;
+
+    constructor(data?: IOrganizerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+        }
+    }
+
+    static fromJS(data: any): OrganizerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OrganizerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        return data;
+    }
+}
+
+export interface IOrganizerDto {
+    id: string;
+    name: string;
+    description: string;
+}
+
+export class CreateOrganizerRequest implements ICreateOrganizerRequest {
+    name!: string;
+    description!: string;
+    registerUserCommand!: RegisterUserCommand;
+
+    constructor(data?: ICreateOrganizerRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.registerUserCommand = _data["registerUserCommand"] ? RegisterUserCommand.fromJS(_data["registerUserCommand"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): CreateOrganizerRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateOrganizerRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["registerUserCommand"] = this.registerUserCommand ? this.registerUserCommand.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface ICreateOrganizerRequest {
+    name: string;
+    description: string;
+    registerUserCommand: RegisterUserCommand;
+}
+
+export class RegisterUserCommand implements IRegisterUserCommand {
+    email!: string;
+    password!: string;
+    firstName!: string;
+    lastName!: string;
+
+    constructor(data?: IRegisterUserCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"];
+            this.password = _data["password"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+        }
+    }
+
+    static fromJS(data: any): RegisterUserCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new RegisterUserCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email;
+        data["password"] = this.password;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        return data;
+    }
+}
+
+export interface IRegisterUserCommand {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+}
+
+export class ResultOfIReadOnlyCollectionOfOrganizerDto extends Result implements IResultOfIReadOnlyCollectionOfOrganizerDto {
+    value!: OrganizerDto[] | undefined;
+
+    constructor(data?: IResultOfIReadOnlyCollectionOfOrganizerDto) {
+        super(undefined);
+		if (data) {
+			for (var property in data) {
+				if (data.hasOwnProperty(property))
+					(<any>this)[property] = (<any>data)[property];
+			}
+		}
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["value"])) {
+                this.value = [] as any;
+                for (let item of _data["value"])
+                    this.value!.push(OrganizerDto.fromJS(item));
+            }
+        }
+    }
+
+    static override fromJS(data: any): ResultOfIReadOnlyCollectionOfOrganizerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResultOfIReadOnlyCollectionOfOrganizerDto();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.value)) {
+            data["value"] = [];
+            for (let item of this.value)
+                data["value"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IResultOfIReadOnlyCollectionOfOrganizerDto extends IResult {
+    value: OrganizerDto[] | undefined;
 }
 
 export class Request2 implements IRequest2 {

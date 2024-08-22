@@ -1,7 +1,9 @@
 ﻿using EventModularMonolith.Modules.Users.Application.Abstractions.Data;
+using EventModularMonolith.Modules.Users.Domain.Organizers;
 using EventModularMonolith.Modules.Users.Domain.Users;
 using EventModularMonolith.Modules.Users.Infrastructure.Database;
 using EventModularMonolith.Modules.Users.Infrastructure.Inbox;
+using EventModularMonolith.Modules.Users.Infrastructure.Organizers;
 using EventModularMonolith.Modules.Users.Infrastructure.Outbox;
 using EventModularMonolith.Modules.Users.Infrastructure.PublicApi;
 using EventModularMonolith.Modules.Users.Infrastructure.Users;
@@ -54,6 +56,7 @@ public static class UsersModule
       );
 
       services.AddScoped<IUserRepository, UserRepository>();
+      services.AddScoped<IOrganizerRepository, OrganizerRepository>();
 
       services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UsersDbContext>());
 

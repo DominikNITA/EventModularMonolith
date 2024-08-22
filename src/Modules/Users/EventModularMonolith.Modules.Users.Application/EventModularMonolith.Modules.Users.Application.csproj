@@ -1,7 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Remove="Exceptions\**" />
+    <EmbeddedResource Remove="Exceptions\**" />
+    <None Remove="Exceptions\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Abstractions\Data\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="Users\GetUser\" />
     <Folder Include="Users\UpdateUser\" />
   </ItemGroup>

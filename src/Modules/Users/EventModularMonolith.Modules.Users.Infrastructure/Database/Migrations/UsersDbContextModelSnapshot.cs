@@ -23,10 +23,39 @@ namespace EventModularMonolith.Modules.Users.Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("EventModularMonolith.Modules.Users.Domain.Organizers.Organizer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_organizer");
+
+                    b.ToTable("organizer", "users");
+                });
+
             modelBuilder.Entity("EventModularMonolith.Modules.Users.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -162,6 +191,65 @@ namespace EventModularMonolith.Modules.Users.Infrastructure.Database.Migrations
                         .HasName("pk_outbox_message_consumers");
 
                     b.ToTable("outbox_message_consumers", "users");
+                });
+
+            modelBuilder.Entity("EventModularMonolith.Modules.Users.Domain.Organizers.Organizer", b =>
+                {
+                    b.OwnsMany("EventModularMonolith.Modules.Users.Domain.Organizers.Moderator", "Moderators", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("user_id");
+
+                            b1.Property<Guid>("OrganizerId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("organizer_id");
+
+                            b1.Property<bool>("IsActive")
+                                .HasColumnType("boolean")
+                                .HasColumnName("is_active");
+
+                            b1.HasKey("UserId", "OrganizerId")
+                                .HasName("pk_moderators");
+
+                            b1.HasIndex("OrganizerId")
+                                .HasDatabaseName("ix_moderators_organizer_id");
+
+                            b1.ToTable("moderators", "users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrganizerId")
+                                .HasConstraintName("fk_moderators_organizer_organizer_id");
+
+                            b1.OwnsOne("EventModularMonolith.Modules.Users.Domain.Organizers.ModeratorRole", "Role", b2 =>
+                                {
+                                    b2.Property<Guid>("ModeratorUserId")
+                                        .HasColumnType("uuid")
+                                        .HasColumnName("user_id");
+
+                                    b2.Property<Guid>("ModeratorOrganizerId")
+                                        .HasColumnType("uuid")
+                                        .HasColumnName("organizer_id");
+
+                                    b2.Property<string>("Value")
+                                        .IsRequired()
+                                        .HasColumnType("text")
+                                        .HasColumnName("Role");
+
+                                    b2.HasKey("ModeratorUserId", "ModeratorOrganizerId");
+
+                                    b2.ToTable("moderators", "users");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ModeratorUserId", "ModeratorOrganizerId")
+                                        .HasConstraintName("fk_moderators_moderators_user_id_organizer_id");
+                                });
+
+                            b1.Navigation("Role")
+                                .IsRequired();
+                        });
+
+                    b.Navigation("Moderators");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,6 +19,7 @@ using EventModularMonolith.Shared.Presentation;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Azure.Storage;
+using EventModularMonolith.Shared.Infrastructure.Authentication;
 
 namespace EventModularMonolith.Shared.Infrastructure;
 
@@ -31,6 +32,8 @@ public static class InfrastructureConfiguration
       string redisConnectionString,
       ConfigurationManager configuration)
    {
+      services.AddAuthenticationInternal();
+
       services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
 
       services.TryAddSingleton<IEventBus, EventBus.EventBus>();

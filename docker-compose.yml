@@ -41,6 +41,7 @@ services:
 
   eventmodularmonolith.webapp:
     image: eventsapp
+    container_name: EMM.WebApp
     build:
       context: src/WebApps/MainWebsite/events-app
       dockerfile: Dockerfile
@@ -59,4 +60,18 @@ services:
      ports:
         - "10000:10000"
      command: "azurite-blob --blobHost 0.0.0.0 -l /data --debug /debug.log"
+
+  eventmodularmonolith.identity:
+     image: quay.io/keycloak/keycloak:latest
+     container_name: EMM.Identity
+     command: start-dev #--import-realm
+     environment:
+        - KC_HEALTH_ENABLED=true
+        - KEYCLOAK_ADMIN=admin
+        - KEYCLOAK_ADMIN_PASSWORD=admin
+     volumes:
+        - ./.containers/identity:/opt/keycloak/data
+        - ./.files:/opt/keycloak/data/import
+     ports:
+        - 18080:8080
 

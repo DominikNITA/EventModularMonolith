@@ -1,7 +1,9 @@
 ﻿using EventModularMonolith.Modules.Users.Application.Abstractions.Data;
+using EventModularMonolith.Modules.Users.Application.Abstractions.Identity;
 using EventModularMonolith.Modules.Users.Domain.Organizers;
 using EventModularMonolith.Modules.Users.Domain.Users;
 using EventModularMonolith.Modules.Users.Infrastructure.Database;
+using EventModularMonolith.Modules.Users.Infrastructure.Identity;
 using EventModularMonolith.Modules.Users.Infrastructure.Inbox;
 using EventModularMonolith.Modules.Users.Infrastructure.Organizers;
 using EventModularMonolith.Modules.Users.Infrastructure.Outbox;
@@ -13,12 +15,14 @@ using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Infrastructure.Database;
 using EventModularMonolith.Shared.Infrastructure.Outbox;
 using EventModularMonolith.Shared.Presentation;
+using MassTransit.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace EventModularMonolith.Modules.Users.Infrastructure;
 
@@ -41,6 +45,20 @@ public static class UsersModule
 
    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
    {
+      services.Configure<KeyCloakOptions>(configuration.GetSection("Users:KeyCloak"));
+
+      services.AddTransient<KeyCloakAuthDelegatingHandler>();
+
+      services.AddHttpClient<KeyCloakClient>((serviceProvider, httpClient) =>
+         {
+            KeyCloakOptions keyCloakOptions = serviceProvider.GetRequiredService<IOptions<KeyCloakOptions>>().Value;
+
+            httpClient.BaseAddress = new Uri(keyCloakOptions.AdminUrl);
+         })
+         .AddHttpMessageHandler<KeyCloakAuthDelegatingHandler>();
+
+      services.AddTransient<IIdentityProviderService, IdentityProviderService>();
+
       services.AddDbContext<UsersDbContext>((sp, options) =>
          {
             options

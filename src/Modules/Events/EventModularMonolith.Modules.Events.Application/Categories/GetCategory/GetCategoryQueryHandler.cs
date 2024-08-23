@@ -23,7 +23,7 @@ public sealed class GetCategoryQueryHandler(IDbConnectionFactory dbConnectionFac
              SELECT
                  id AS {nameof(CategoryDto.Id)},
                  name AS {nameof(CategoryDto.Name)},
-                 is_archived AS {nameof(CategoryDto.IsArchived)},
+                 is_archived AS {nameof(CategoryDto.IsArchived)}
              FROM events.categories
              WHERE id = @CategoryId
              """;

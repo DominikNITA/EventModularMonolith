@@ -7,10 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Users\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Infrastructure\EventModularMonolith.Shared.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Presentation\EventModularMonolith.Shared.Presentation.csproj" />
     <ProjectReference Include="..\EventModularMonolith.Modules.Users.Application\EventModularMonolith.Modules.Users.Application.csproj" />
   </ItemGroup>

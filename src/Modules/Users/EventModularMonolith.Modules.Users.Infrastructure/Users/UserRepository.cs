@@ -15,6 +15,11 @@ internal sealed class UserRepository(UsersDbContext context) : IUserRepository
 
    public async Task InsertAsync(User user, CancellationToken cancellationToken = default)
    {
+      foreach (Role role in user.Roles)
+      {
+         context.Attach(role);
+      }
+
       await context.Set<User>().AddAsync(user, cancellationToken);
    }
 }

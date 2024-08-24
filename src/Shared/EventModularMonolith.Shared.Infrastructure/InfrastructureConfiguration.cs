@@ -20,6 +20,7 @@ using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Azure.Storage;
 using EventModularMonolith.Shared.Infrastructure.Authentication;
+using EventModularMonolith.Shared.Infrastructure.Authorization;
 
 namespace EventModularMonolith.Shared.Infrastructure;
 
@@ -33,6 +34,8 @@ public static class InfrastructureConfiguration
       ConfigurationManager configuration)
    {
       services.AddAuthenticationInternal();
+
+      services.AddAuthorizationInternal();
 
       services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
 

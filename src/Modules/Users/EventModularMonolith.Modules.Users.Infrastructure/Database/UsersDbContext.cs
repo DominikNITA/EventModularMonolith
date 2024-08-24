@@ -23,6 +23,8 @@ public sealed class UsersDbContext : DbContext, IUnitOfWork
       modelBuilder.ApplyConfiguration(new InboxMessageConfiguration());
       modelBuilder.ApplyConfiguration(new InboxMessageConsumerConfiguration());
       modelBuilder.ApplyConfiguration(new UserConfiguration());
+      modelBuilder.ApplyConfiguration(new RoleConfiguration());
+      modelBuilder.ApplyConfiguration(new PermissionConfiguration());
       modelBuilder.ApplyConfiguration(new OrganizerConfiguration());
    }
 }

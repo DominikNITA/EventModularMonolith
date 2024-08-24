@@ -10,13 +10,13 @@ interface IProps {
 }
 
 export const SpeakersSection = (props: IProps) => {
-  const { mainClient } = useClient()
+  const { speakersClient } = useClient()
 
   const [speakers, setSpeakers] = useState<SpeakerDto[]>()
 
   const result = useAjax(
     {
-      request: () => mainClient.getSpeakersForEvent(props.eventId ?? ''),
+      request: () => speakersClient.getSpeakersForEvent(props.eventId ?? ''),
       setResult: (r) => {
         const response = getResponse(r)?.value
         setSpeakers(response)

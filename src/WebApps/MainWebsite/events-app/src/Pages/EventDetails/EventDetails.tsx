@@ -14,10 +14,10 @@ export const EventDetails = () => {
   let { eventId } = useParams()
   //'c6db552f-978d-4011-927a-8b2682b3b125'
   const [event, setEvent] = useState<EventResponse>()
-  const { mainClient } = useClient()
+  const { eventsClient } = useClient()
   const result = useAjax(
     {
-      request: () => mainClient.getEvent(eventId ?? ''),
+      request: () => eventsClient.getEvent(eventId ?? ''),
       setResult: (r) => {
         const response = getResponse(r)?.value
         setEvent(response)

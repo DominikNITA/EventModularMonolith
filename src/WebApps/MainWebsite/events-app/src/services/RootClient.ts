@@ -1,21 +1,33 @@
 import React, { useContext } from 'react'
-import { ClientBase } from './ClientBase'
-import { Client, IClient } from './EventsClient'
+import { baseAppUrl } from './ClientBase'
+import {
+  EventsClient,
+  IEventsClient,
+  ISpeakersClient,
+  IUsersClient,
+  SpeakersClient,
+  UsersClient,
+} from './EventsClient'
+import axios from 'axios'
+import { AuthenticationService } from './AuthService'
 
 export type RootClientArgs = {
-  mainClient?: IClient
+  eventsClient?: IEventsClient
+  usersClient?: IUsersClient
+  speakersClient?: ISpeakersClient
 }
 
 export class RootClient {
-  mainClient: IClient
+  eventsClient: IEventsClient
+  usersClient: IUsersClient
+  speakersClient: ISpeakersClient
 
-  /* eslint-disable @typescript-eslint/no-non-null-assertion */
   constructor(args: RootClientArgs) {
-    this.mainClient = args.mainClient!
+    this.eventsClient = args.eventsClient!
+    this.usersClient = args.usersClient!
+    this.speakersClient = args.speakersClient!
   }
-  /* eslint-enable @typescript-eslint/no-non-null-assertion */
 }
-/* eslint-enable @typescript-eslint/no-non-null-assertion */
 
 export const ClientContext = React.createContext<RootClient | undefined>(
   undefined,
@@ -30,8 +42,59 @@ export function useClient(): RootClient {
   return rootClient
 }
 
+const axiosConfig = axios.create({
+  baseURL: baseAppUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
+axiosConfig.interceptors.request.use(
+  (config) => {
+    const accessToken = AuthenticationService.getAccessToken()
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  },
+)
+
+axiosConfig.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  async (error) => {
+    const originalRequest = error.config
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+      const refreshToken = localStorage.getItem('refreshToken')
+      if (refreshToken) {
+        try {
+          const response = await axios.post(`/refreshToken`, { refreshToken })
+          // don't use axious instance that already configured for refresh token api call
+          const newAccessToken = response.data.accessToken
+          localStorage.setItem('accessToken', newAccessToken) //set new access token
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+          return axios(originalRequest) //recall Api with new token
+        } catch (error) {
+          // Handle token refresh failure
+          // mostly logout the user and re-authenticate by login again
+        }
+      }
+    }
+    return Promise.reject(error)
+  },
+)
+
+export default axiosConfig
+
 export function createRootClient(): RootClient {
   return new RootClient({
-    mainClient: new Client(),
+    eventsClient: new EventsClient(undefined, axiosConfig),
+    usersClient: new UsersClient(undefined, axiosConfig),
+    speakersClient: new SpeakersClient(undefined, axiosConfig),
   })
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <Folder Include="Database\Migrations\" />
-    <Folder Include="Users\" />
+    <Folder Include="Authorization\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\EventModularMonolith.Shared.Domain\EventModularMonolith.Shared.Domain.csproj" />

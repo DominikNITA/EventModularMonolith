@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EventModularMonolith.Modules.Users.Infrastructure.Identity;
 
-internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILogger<IdentityProviderService> logger) : IIdentityProviderService
+internal sealed class IdentityProviderService(KeyCloakAdminClient keyCloakAdminClient, KeyCloakPublicClient keyCloakPublicClient, ILogger<IdentityProviderService> logger) : IIdentityProviderService
 {
    private const string PasswordCredentialType = "Password";
 
@@ -23,7 +23,7 @@ internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILo
 
       try
       {
-         string identityId = await keyCloakClient.RegisterUserAsync(userRepresentation, cancellationToken);
+         string identityId = await keyCloakAdminClient.RegisterUserAsync(userRepresentation, cancellationToken);
          return identityId;
       }
       catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.Conflict)
@@ -31,6 +31,21 @@ internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILo
          logger.LogError(exception, "User registration failed");
          
          return Result.Failure<string>(IdentityProviderErrors.EmailIsNotUnique);
+      }
+   }
+
+   public async Task<Result<AuthTokenWithRefresh>> GetAuthTokens(string email, string password, CancellationToken cancellationToken = default)
+   {
+      try
+      {
+         AuthTokenWithRefresh tokens = await keyCloakPublicClient.GetAuthTokens(email, password, cancellationToken);
+         return tokens;
+      }
+      catch (HttpRequestException exception)
+      {
+         logger.LogError(exception, "Auth token retrieval failed");
+
+         return Result.Failure<AuthTokenWithRefresh>(IdentityProviderErrors.InvalidCredentials);
       }
    }
 }

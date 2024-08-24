@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 export const MainLayout = () => {
   return (
     <>
-      <header
+      {/* <header
         id="header"
         className="header d-flex align-items-center fixed-top"
       >
@@ -94,7 +94,7 @@ export const MainLayout = () => {
             Buy Tickets
           </a>
         </div>
-      </header>
+      </header> */}
       <Outlet />
     </>
   )

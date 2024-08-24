@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { MainLayout } from './MainLayout'
 import { EventDetails } from './Pages/EventDetails'
 import { ClientContext, createRootClient } from './services/RootClient'
+import { Login } from './Pages/Login'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: 'events/:eventId',
         element: <EventDetails />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
       },
     ],
   },

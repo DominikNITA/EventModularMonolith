@@ -2,6 +2,7 @@
 using EventModularMonolith.Modules.Users.Application.Abstractions.Identity;
 using EventModularMonolith.Modules.Users.Domain.Organizers;
 using EventModularMonolith.Modules.Users.Domain.Users;
+using EventModularMonolith.Modules.Users.Infrastructure.Authorization;
 using EventModularMonolith.Modules.Users.Infrastructure.Database;
 using EventModularMonolith.Modules.Users.Infrastructure.Identity;
 using EventModularMonolith.Modules.Users.Infrastructure.Inbox;
@@ -10,6 +11,7 @@ using EventModularMonolith.Modules.Users.Infrastructure.Outbox;
 using EventModularMonolith.Modules.Users.Infrastructure.PublicApi;
 using EventModularMonolith.Modules.Users.Infrastructure.Users;
 using EventModularMonolith.Modules.Users.PublicApi;
+using EventModularMonolith.Shared.Application.Authorization;
 using EventModularMonolith.Shared.Application.EventBus;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Infrastructure.Database;
@@ -45,11 +47,14 @@ public static class UsersModule
 
    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
    {
+      services.AddScoped<IPermissionService, PermissionService>();
+
       services.Configure<KeyCloakOptions>(configuration.GetSection("Users:KeyCloak"));
 
       services.AddTransient<KeyCloakAuthDelegatingHandler>();
 
-      services.AddHttpClient<KeyCloakClient>((serviceProvider, httpClient) =>
+      services.AddHttpClient<KeyCloakPublicClient>();
+      services.AddHttpClient<KeyCloakAdminClient>((serviceProvider, httpClient) =>
          {
             KeyCloakOptions keyCloakOptions = serviceProvider.GetRequiredService<IOptions<KeyCloakOptions>>().Value;
 

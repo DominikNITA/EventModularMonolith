@@ -1,2 +1,3 @@
+import axios, { AxiosInstance, CancelToken, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { ClientBase } from './ClientBase';
 import dayjs from 'dayjs'

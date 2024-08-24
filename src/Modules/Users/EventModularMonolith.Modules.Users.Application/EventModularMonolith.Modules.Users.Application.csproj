@@ -6,7 +6,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Abstractions\Data\" />
-    <Folder Include="Abstractions\Identity\" />
     <Folder Include="Users\GetUser\" />
     <Folder Include="Users\UpdateUser\" />
   </ItemGroup>

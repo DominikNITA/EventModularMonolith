@@ -2,6 +2,7 @@
 
 import dayjs, { Dayjs } from 'dayjs'
 import { ErrorDto, IResult, Result } from './EventsClient'
+import { AxiosResponse } from 'axios'
 
 export const baseAppUrl = 'https://localhost:5001'
 // (
@@ -41,8 +42,8 @@ export class ClientBase {
 
   protected async transformResult(
     url: string,
-    response: Response,
-    processor: (response: Response) => any,
+    response: AxiosResponse,
+    processor: (response: AxiosResponse) => any,
   ) {
     const status = response.status
     let _headers: any = {}
@@ -50,7 +51,7 @@ export class ClientBase {
       response.headers.forEach((v: any, k: any) => (_headers[k] = v))
     }
     if (status === 200) {
-      var res = await response.json()
+      var res = await response.data
       console.log(res)
       var result: IResult & { value: any } = {
         isSuccess: true,

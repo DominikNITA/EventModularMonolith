@@ -10,4 +10,7 @@ public sealed record CreateEventCommand(
    Guid VenueId,
    DateTime StartsAtUtc,
    DateTime? EndsAtUtc,
-   IEnumerable<Guid> SpeakerIds) : ICommand<Guid>;
+   IEnumerable<Guid> SpeakerIds) : ICommand<Guid>
+{
+   public IEnumerable<string> ImageContainers { get; set; }
+}

@@ -13,7 +13,7 @@ public class Files : IEndpoint
          {
             using Stream stream = file.OpenReadStream();
 
-            string filePath = await blobService.UploadAsync("temp", Guid.NewGuid(), stream, file.ContentType);
+            string filePath = await blobService.UploadAsync(ContainerTags.Temporary, Guid.NewGuid(), stream, file.ContentType);
 
             return Results.Ok(filePath);
          })

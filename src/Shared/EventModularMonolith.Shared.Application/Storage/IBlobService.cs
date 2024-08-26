@@ -15,3 +15,11 @@ public interface IBlobService
       Guid id,
       CancellationToken cancellationToken = default);
 }
+
+public static class ContainerTags
+{
+   public const string Venue = "venue";
+   public const string Speaker = "speaker";
+   public const string Event = "event";
+   public const string Temporary = "temp";
+}

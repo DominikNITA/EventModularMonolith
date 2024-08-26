@@ -1,4 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
+﻿using System;
+using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Application.Organizers;
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
@@ -7,6 +8,7 @@ using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Shared.Application.Clock;
 using EventModularMonolith.Shared.Application.Messaging;
+using EventModularMonolith.Shared.Application.Storage;
 using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Application.Events.CreateEvent;
@@ -17,6 +19,7 @@ internal sealed class CreateEventCommandHandler(
    ICategoryRepository categoryRepository,
    ISpeakerRepository speakerRepository,
    IOrganizerRepository organizerRepository,
+   IBlobService blobService,
    IUnitOfWork unitOfWork) : ICommandHandler<CreateEventCommand, Guid>
 {
 
@@ -58,6 +61,9 @@ internal sealed class CreateEventCommandHandler(
       }
 
       await eventRepository.InsertAsync(result.Value, cancellationToken);
+
+      // TODO: Do it through events/notifications - might crash
+      await blobService.MoveFilesFromTempToEntityContainer(request.ImageContainers, "event", result.Value.Id.Value, cancellationToken);
 
       await unitOfWork.SaveChangesAsync(cancellationToken);
 

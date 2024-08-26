@@ -3,5 +3,5 @@ using EventModularMonolith.Shared.Application.Messaging;
 
 namespace EventModularMonolith.Modules.Users.Application.Users.GetAuthTokens;
 
-public sealed record GetAuthTokensQuery(string email, string password) : IQuery<AuthTokenWithRefresh>;
+public sealed record GetAuthTokensQuery(string Email, string Password) : IQuery<AuthTokenWithRefresh>;
 

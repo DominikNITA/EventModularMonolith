@@ -17,6 +17,24 @@ internal sealed class KeyCloakPublicClient(HttpClient httpClient, IOptions<KeyCl
          new("grant_type", "password")
       };
 
+      return await GetAuthTokensCommon(authRequestParameters, cancellationToken);
+   }
+
+   internal async Task<AuthTokenWithRefresh> GetAuthTokens(string refreshToken, CancellationToken cancellationToken = default)
+   {
+      var authRequestParameters = new KeyValuePair<string, string>[]
+      {
+         new("client_id", options.Value.PublicClientId),
+         new("refresh_token", refreshToken),
+         new("grant_type", "refresh_token")
+      };
+
+      return await GetAuthTokensCommon(authRequestParameters, cancellationToken);
+   }
+
+   private async Task<AuthTokenWithRefresh> GetAuthTokensCommon(KeyValuePair<string, string>[] authRequestParameters, CancellationToken cancellationToken = default)
+   {
+
       using var authRequestContent = new FormUrlEncodedContent(authRequestParameters);
 
       using var authRequest = new HttpRequestMessage(HttpMethod.Post, new Uri(options.Value.TokenUrl));

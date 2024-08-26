@@ -22,6 +22,7 @@ internal sealed class GetEvents : IEndpoint
          return result.Match(Results.Ok, ApiResults.Problem);
       })
       .WithTags(Tags.Events)
+      .RequireAuthorization("events:read")
       .Produces<Result<IReadOnlyCollection<EventResponse>>>()
       .WithName("GetEvents");
    }

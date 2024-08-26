@@ -1,7 +1,7 @@
 export class AuthenticationService {
   public static authenticate(
     authenticationResult: AuthenticationResult,
-    login: string,
+    login?: string,
   ): void {
     window.localStorage.setItem(
       LoginConsts.ACCESS_TOKEN_KEY,
@@ -11,7 +11,9 @@ export class AuthenticationService {
       LoginConsts.REFRESH_TOKEN_KEY,
       authenticationResult.refresh_token,
     )
-    window.localStorage.setItem(LoginConsts.USERNAME_KEY, login)
+    if (!!login) {
+      window.localStorage.setItem(LoginConsts.USERNAME_KEY, login)
+    }
   }
 
   public static isAuthenticated(): boolean {
@@ -32,6 +34,10 @@ export class AuthenticationService {
 
   public static getRefreshToken(): string | null {
     return window.localStorage.getItem(LoginConsts.REFRESH_TOKEN_KEY)
+  }
+
+  public static getRefreshUrl(): string {
+    return process.env.REACT_APP_REFRESH_URL!
   }
 
   public static logOff(): void {

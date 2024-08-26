@@ -48,4 +48,19 @@ internal sealed class IdentityProviderService(KeyCloakAdminClient keyCloakAdminC
          return Result.Failure<AuthTokenWithRefresh>(IdentityProviderErrors.InvalidCredentials);
       }
    }
+
+   public async Task<Result<AuthTokenWithRefresh>> RefreshToken(string refreshToken, CancellationToken cancellationToken = default)
+   {
+      try
+      {
+         AuthTokenWithRefresh tokens = await keyCloakPublicClient.GetAuthTokens(refreshToken, cancellationToken);
+         return tokens;
+      }
+      catch (HttpRequestException exception)
+      {
+         logger.LogError(exception, "Auth token retrieval failed");
+
+         return Result.Failure<AuthTokenWithRefresh>(IdentityProviderErrors.InvalidCredentials);
+      }
+   }
 }

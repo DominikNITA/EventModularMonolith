@@ -1273,6 +1273,7 @@ export interface IUsersClient {
     postApiUsersModuleInitialize(): Promise<void>;
     getAuthTokens(request: GetAuthTokensRequest): Promise<ResultOfAuthTokenWithRefresh>;
     getApiUsersProfile(): Promise<void>;
+    refreshToken(request: RefreshTokenRequest): Promise<ResultOfAuthTokenWithRefresh>;
     postApiUsersRegister(request: RegisterUserRequest): Promise<void>;
     putApiUsersProfile(id: string, request: UpdateUserProfileRequest): Promise<void>;
 }
@@ -1436,6 +1437,60 @@ export class UsersClient extends ClientBase implements IUsersClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
         return Promise.resolve<void>(null as any);
+    }
+
+    refreshToken(request: RefreshTokenRequest, cancelToken?: CancelToken): Promise<ResultOfAuthTokenWithRefresh> {
+        let url_ = this.baseUrl + "/api/auth/refresh";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.instance.request(transformedOptions_);
+        }).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.transformResult(url_, _response, (_response: AxiosResponse) => this.processRefreshToken(_response));
+        });
+    }
+
+    protected processRefreshToken(response: AxiosResponse): Promise<ResultOfAuthTokenWithRefresh> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = ResultOfAuthTokenWithRefresh.fromJS(resultData200);
+            return Promise.resolve<ResultOfAuthTokenWithRefresh>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ResultOfAuthTokenWithRefresh>(null as any);
     }
 
     postApiUsersRegister(request: RegisterUserRequest, cancelToken?: CancelToken): Promise<void> {
@@ -3216,6 +3271,42 @@ export class GetAuthTokensRequest implements IGetAuthTokensRequest {
 export interface IGetAuthTokensRequest {
     email: string;
     password: string;
+}
+
+export class RefreshTokenRequest implements IRefreshTokenRequest {
+    refreshToken!: string;
+
+    constructor(data?: IRefreshTokenRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.refreshToken = _data["refreshToken"];
+        }
+    }
+
+    static fromJS(data: any): RefreshTokenRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new RefreshTokenRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["refreshToken"] = this.refreshToken;
+        return data;
+    }
+}
+
+export interface IRefreshTokenRequest {
+    refreshToken: string;
 }
 
 export class RegisterUserRequest implements IRegisterUserRequest {

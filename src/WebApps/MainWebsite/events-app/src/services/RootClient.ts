@@ -10,6 +10,7 @@ import {
 } from './EventsClient'
 import axios from 'axios'
 import { AuthenticationService } from './AuthService'
+import { log } from 'console'
 
 export type RootClientArgs = {
   eventsClient?: IEventsClient
@@ -70,16 +71,22 @@ axiosConfig.interceptors.response.use(
     const originalRequest = error.config
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-      const refreshToken = localStorage.getItem('refreshToken')
+      const refreshToken = AuthenticationService.getRefreshToken()
       if (refreshToken) {
         try {
-          const response = await axios.post(`/refreshToken`, { refreshToken })
-          // don't use axious instance that already configured for refresh token api call
-          const newAccessToken = response.data.accessToken
-          localStorage.setItem('accessToken', newAccessToken) //set new access token
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+          const response = await axios.post(
+            AuthenticationService.getRefreshUrl(),
+            { refreshToken },
+          )
+          console.log(response)
+          AuthenticationService.authenticate({
+            access_token: response.data.access_token,
+            refresh_token: response.data.refresh_token,
+          })
+          originalRequest.headers.Authorization = `Bearer ${AuthenticationService.getAccessToken()}`
           return axios(originalRequest) //recall Api with new token
         } catch (error) {
+          console.log('ERRRROR', error)
           // Handle token refresh failure
           // mostly logout the user and re-authenticate by login again
         }

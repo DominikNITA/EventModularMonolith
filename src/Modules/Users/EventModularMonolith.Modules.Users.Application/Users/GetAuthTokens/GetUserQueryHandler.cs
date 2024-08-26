@@ -18,8 +18,8 @@ internal sealed class GetAuthTokensQueryHandler(
    {
       Result<AuthTokenWithRefresh> result =
          await identityProviderService.GetAuthTokens(
-            request.email,
-            request.password,
+            request.Email,
+            request.Password,
             cancellationToken);
 
       if (result.IsFailure)

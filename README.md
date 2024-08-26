@@ -19,7 +19,7 @@ This project is an Event Management System built using C# and React. The system 
 - **Blazor Server** (for administration web app) **Planned**
 - **Aspire Dashborad** **Planned**
 - **Stripe Integration** **Planned**
-- XUnit (for unit testing) **Planned**
+- **XUnit** (for unit testing) **Planned**
 
 ## Concepts
 - **CQRS** (for now single PostgreSQL database with separate schemas per module)
@@ -42,7 +42,8 @@ The project will also have 3 web applications:
 
 ## Roadmap
 - [ ] Complete business logic for exisitng modules and add new Attendance module for managing ongoing events
-- [ ] Add Authentication and Authorization with roles and permissions
+- [x] Add Authentication and Authorization with roles and permissions
+   - [ ] Find a better way to manage user permissions (per module) 
 - [ ] Architecture tests
 - [ ] Unit and integration tests for business logic
 - [ ] Extend client web app

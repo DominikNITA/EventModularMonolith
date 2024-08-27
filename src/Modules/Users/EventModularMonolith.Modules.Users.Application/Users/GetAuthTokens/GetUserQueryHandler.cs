@@ -1,13 +1,8 @@
-﻿using System.Data.Common;
-using Dapper;
-using EventModularMonolith.Modules.Users.Application.Abstractions.Identity;
-using EventModularMonolith.Modules.Users.Application.Users.GetAuthTokens;
-using EventModularMonolith.Modules.Users.Domain.Users;
-using EventModularMonolith.Shared.Application.Data;
+﻿using EventModularMonolith.Modules.Users.Application.Abstractions.Identity;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;
 
-namespace EventModularMonolith.Modules.Users.Application.Users.GetUser;
+namespace EventModularMonolith.Modules.Users.Application.Users.GetAuthTokens;
 
 internal sealed class GetAuthTokensQueryHandler(
    IIdentityProviderService identityProviderService

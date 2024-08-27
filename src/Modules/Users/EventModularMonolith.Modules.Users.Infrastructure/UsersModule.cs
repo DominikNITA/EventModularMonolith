@@ -17,7 +17,6 @@ using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Infrastructure.Database;
 using EventModularMonolith.Shared.Infrastructure.Outbox;
 using EventModularMonolith.Shared.Presentation;
-using MassTransit.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;

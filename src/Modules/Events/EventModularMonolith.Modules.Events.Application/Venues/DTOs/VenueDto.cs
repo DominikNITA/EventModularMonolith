@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EventModularMonolith.Modules.Events.Application.Events.GetEvent;
-
-namespace EventModularMonolith.Modules.Events.Application.Venues.DTOs;
+﻿namespace EventModularMonolith.Modules.Events.Application.Venues.DTOs;
 public sealed record VenueDto(Guid VenueId, string Name, string Description)
 {
 

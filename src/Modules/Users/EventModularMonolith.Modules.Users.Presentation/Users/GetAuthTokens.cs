@@ -1,9 +1,6 @@
-﻿using System.Security.Claims;
-using EventModularMonolith.Modules.Users.Application.Abstractions.Identity;
+﻿using EventModularMonolith.Modules.Users.Application.Abstractions.Identity;
 using EventModularMonolith.Modules.Users.Application.Users.GetAuthTokens;
-using EventModularMonolith.Modules.Users.Application.Users.GetUser;
 using EventModularMonolith.Shared.Domain;
-using EventModularMonolith.Shared.Infrastructure.Authentication;
 using EventModularMonolith.Shared.Presentation;
 using EventModularMonolith.Shared.Presentation.Endpoints;
 using MediatR;

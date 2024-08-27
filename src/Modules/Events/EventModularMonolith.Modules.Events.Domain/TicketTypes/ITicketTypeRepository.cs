@@ -1,6 +1,4 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Categories;
-using EventModularMonolith.Modules.Events.Domain.Events;
-using EventModularMonolith.Shared.Domain;
+﻿using EventModularMonolith.Modules.Events.Domain.Events;
 
 namespace EventModularMonolith.Modules.Events.Domain.TicketTypes;
 

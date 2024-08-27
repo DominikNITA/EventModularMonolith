@@ -1,5 +1,4 @@
 ﻿using EventModularMonolith.Modules.Users.Application.Abstractions.Identity;
-using EventModularMonolith.Modules.Users.Application.Users.GetAuthTokens;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;
 

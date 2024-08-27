@@ -4,7 +4,6 @@ using EventModularMonolith.Shared.Application.Exceptions;
 using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Shared.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EventModularMonolith.Shared.Infrastructure.Authorization;

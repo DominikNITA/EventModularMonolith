@@ -14,7 +14,6 @@ using EventModularMonolith.Modules.Events.Infrastructure.Outbox;
 using EventModularMonolith.Modules.Events.Infrastructure.Speakers;
 using EventModularMonolith.Modules.Events.Infrastructure.TicketTypes;
 using EventModularMonolith.Modules.Events.Infrastructure.Venues;
-using EventModularMonolith.Modules.Events.IntegrationEvents;
 using EventModularMonolith.Modules.Users.IntegrationEvents;
 using EventModularMonolith.Shared.Application.EventBus;
 using EventModularMonolith.Shared.Application.Messaging;

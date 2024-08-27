@@ -1,6 +1,5 @@
 ﻿using EventModularMonolith.Modules.Users.Domain.Users;
 using EventModularMonolith.Modules.Users.Infrastructure.Database;
-using EventModularMonolith.Shared.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventModularMonolith.Modules.Users.Infrastructure.Users;

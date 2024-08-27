@@ -1,7 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Categories;
-using EventModularMonolith.Modules.Events.Domain.Events;
+﻿using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Infrastructure.Database;
-using EventModularMonolith.Shared.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventModularMonolith.Modules.Events.Infrastructure.Events;

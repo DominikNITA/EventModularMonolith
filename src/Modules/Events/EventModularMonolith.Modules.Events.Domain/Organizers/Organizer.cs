@@ -1,11 +1,10 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using EventModularMonolith.Modules.Events.Domain.Categories;
+﻿using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Shared.Domain;
 
-namespace EventModularMonolith.Modules.Events.Application.Organizers;
+namespace EventModularMonolith.Modules.Events.Domain.Organizers;
 
 public sealed class Organizer : Entity
 {

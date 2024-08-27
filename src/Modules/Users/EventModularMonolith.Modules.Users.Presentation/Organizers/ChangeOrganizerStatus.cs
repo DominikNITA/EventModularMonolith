@@ -10,7 +10,6 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using EventModularMonolith.Modules.Users.Application.Users.RegisterUser;
 
 namespace EventModularMonolith.Modules.Users.Presentation.Organizers;
 

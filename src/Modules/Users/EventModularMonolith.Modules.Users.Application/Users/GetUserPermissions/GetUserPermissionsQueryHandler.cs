@@ -1,6 +1,5 @@
 ﻿using System.Data.Common;
 using Dapper;
-using EventModularMonolith.Modules.Users.Domain.Users;
 using EventModularMonolith.Shared.Application.Authorization;
 using EventModularMonolith.Shared.Application.Data;
 using EventModularMonolith.Shared.Application.Messaging;

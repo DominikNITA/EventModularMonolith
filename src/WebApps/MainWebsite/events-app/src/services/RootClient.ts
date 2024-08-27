@@ -69,7 +69,7 @@ axiosConfig.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error?.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
       const refreshToken = AuthenticationService.getRefreshToken()
       if (refreshToken) {
@@ -78,7 +78,6 @@ axiosConfig.interceptors.response.use(
             AuthenticationService.getRefreshUrl(),
             { refreshToken },
           )
-          console.log(response)
           AuthenticationService.authenticate({
             access_token: response.data.access_token,
             refresh_token: response.data.refresh_token,
@@ -86,9 +85,8 @@ axiosConfig.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${AuthenticationService.getAccessToken()}`
           return axios(originalRequest) //recall Api with new token
         } catch (error) {
-          console.log('ERRRROR', error)
-          // Handle token refresh failure
-          // mostly logout the user and re-authenticate by login again
+          AuthenticationService.logOff()
+          //TODO: Redirect to login page
         }
       }
     }

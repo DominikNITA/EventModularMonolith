@@ -4,6 +4,6 @@
 using EventModularMonolith.Modules.Events.Application.Speakers.DTOs;
 using EventModularMonolith.Shared.Application.Messaging;
 
-namespace EventModularMonolith.Modules.Events.Application.Speakers.GetAllSpeakers;
+namespace EventModularMonolith.Modules.Events.Application.Speakers.GetSpeakersForEvent;
 
 public sealed record GetSpeakersForEventQuery(Guid EventId) : IQuery<IReadOnlyCollection<SpeakerDto>>;

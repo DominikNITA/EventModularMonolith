@@ -1,6 +1,5 @@
 ﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Domain.Events;
-using EventModularMonolith.Modules.Events.Domain.TicketTypes;
 using EventModularMonolith.Shared.Application.Clock;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;

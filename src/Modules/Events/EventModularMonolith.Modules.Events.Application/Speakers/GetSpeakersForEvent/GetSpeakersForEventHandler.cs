@@ -8,7 +8,7 @@ using EventModularMonolith.Shared.Application.Data;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;
 
-namespace EventModularMonolith.Modules.Events.Application.Speakers.GetAllSpeakers;
+namespace EventModularMonolith.Modules.Events.Application.Speakers.GetSpeakersForEvent;
 
 public sealed class GetSpeakersForEventHandler(IDbConnectionFactory dbConnectionFactory) :
      IQueryHandler<GetSpeakersForEventQuery, IReadOnlyCollection<SpeakerDto>>

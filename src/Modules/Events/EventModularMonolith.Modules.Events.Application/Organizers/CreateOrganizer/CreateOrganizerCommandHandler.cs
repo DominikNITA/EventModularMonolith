@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
-using EventModularMonolith.Modules.Events.Application.Categories.CreateCategory;
-using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Organizers;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;

@@ -1,6 +1,4 @@
-﻿using System;
-using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
-using EventModularMonolith.Modules.Events.Application.Organizers;
+﻿using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
 using EventModularMonolith.Modules.Events.Domain.Categories;
 using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Domain.Organizers;

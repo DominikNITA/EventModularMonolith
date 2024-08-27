@@ -1,5 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Application.Organizers;
-using EventModularMonolith.Modules.Events.Domain.Categories;
+﻿using EventModularMonolith.Modules.Events.Domain.Categories;
+using EventModularMonolith.Modules.Events.Domain.Organizers;
 using EventModularMonolith.Modules.Events.Domain.Speakers;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Shared.Domain;

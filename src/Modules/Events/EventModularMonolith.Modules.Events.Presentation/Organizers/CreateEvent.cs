@@ -6,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using static EventModularMonolith.Modules.Events.Presentation.Organizers.CreateEvent;
 
 namespace EventModularMonolith.Modules.Events.Presentation.Organizers;
 

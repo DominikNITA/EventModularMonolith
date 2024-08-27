@@ -4,7 +4,6 @@ using EventModularMonolith.Modules.Events.Application.Speakers.CreateSpeaker;
 using EventModularMonolith.Modules.Events.Application.Speakers.DTOs;
 using EventModularMonolith.Modules.Events.Application.Venues.CreateVenue;
 using EventModularMonolith.Modules.Events.Application.Venues.DTOs;
-using EventModularMonolith.Modules.Events.Presentation;
 using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Shared.Presentation;
 using EventModularMonolith.Shared.Presentation.Endpoints;
@@ -13,7 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace EventModularMonolith.Modules.Users.Presentation;
+namespace EventModularMonolith.Modules.Events.Presentation;
 
 internal sealed class InitializeEventsModule : IEndpoint
 {

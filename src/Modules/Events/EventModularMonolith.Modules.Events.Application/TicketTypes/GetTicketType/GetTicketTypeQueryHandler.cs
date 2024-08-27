@@ -3,7 +3,6 @@
 
 using System.Data.Common;
 using Dapper;
-using EventModularMonolith.Modules.Events.Application.Events.GetEvent;
 using EventModularMonolith.Modules.Events.Application.TicketTypes.DTOs;
 using EventModularMonolith.Shared.Application.Data;
 using EventModularMonolith.Shared.Application.Messaging;

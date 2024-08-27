@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using EventModularMonolith.Modules.Users.Application.Abstractions.Data;
-using EventModularMonolith.Modules.Users.Application.Users.RegisterUser;
 using EventModularMonolith.Modules.Users.Domain.Organizers;
 using EventModularMonolith.Modules.Users.Domain.Users;
 using EventModularMonolith.Shared.Application.Messaging;

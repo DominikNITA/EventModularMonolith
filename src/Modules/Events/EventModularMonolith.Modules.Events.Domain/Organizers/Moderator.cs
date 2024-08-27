@@ -1,6 +1,6 @@
 ﻿using EventModularMonolith.Shared.Domain;
 
-namespace EventModularMonolith.Modules.Events.Application.Organizers;
+namespace EventModularMonolith.Modules.Events.Domain.Organizers;
 
 public class Moderator : Entity
 {

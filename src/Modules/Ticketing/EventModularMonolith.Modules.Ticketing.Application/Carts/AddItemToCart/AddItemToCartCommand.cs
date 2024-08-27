@@ -4,7 +4,6 @@ using EventModularMonolith.Modules.Users.PublicApi;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;
 using FluentValidation;
-using MediatR;
 
 namespace EventModularMonolith.Modules.Ticketing.Application.Carts.AddItemToCart;
 

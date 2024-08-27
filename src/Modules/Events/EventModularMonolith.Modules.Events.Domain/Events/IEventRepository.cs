@@ -1,7 +1,4 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Categories;
-using EventModularMonolith.Shared.Domain;
-
-namespace EventModularMonolith.Modules.Events.Domain.Events;
+﻿namespace EventModularMonolith.Modules.Events.Domain.Events;
 
 public interface IEventRepository
 {

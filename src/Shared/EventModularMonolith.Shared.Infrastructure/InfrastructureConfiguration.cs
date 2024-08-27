@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Npgsql;
 using Quartz;
 using StackExchange.Redis;
-using Azure.Storage.Blobs;
 using EventModularMonolith.Shared.Infrastructure.Storage;
 using EventModularMonolith.Shared.Presentation;
 using Microsoft.Extensions.Azure;

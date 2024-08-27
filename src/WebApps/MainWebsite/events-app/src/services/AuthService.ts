@@ -42,6 +42,9 @@ export class AuthenticationService {
 
   public static logOff(): void {
     window.localStorage.removeItem(LoginConsts.ACCESS_TOKEN_KEY)
+    window.localStorage.removeItem(LoginConsts.REFRESH_TOKEN_KEY)
+    window.localStorage.removeItem(LoginConsts.USER_ID)
+    window.localStorage.removeItem(LoginConsts.USERNAME_KEY)
   }
 
   public static setUserId(userId: string): void {

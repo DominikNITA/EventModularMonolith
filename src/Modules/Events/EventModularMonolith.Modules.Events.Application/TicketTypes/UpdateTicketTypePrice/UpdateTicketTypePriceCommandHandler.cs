@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
-using EventModularMonolith.Modules.Events.Application.TicketTypes.CreateTicketType;
-using EventModularMonolith.Modules.Events.Domain.Events;
 using EventModularMonolith.Modules.Events.Domain.TicketTypes;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Domain;

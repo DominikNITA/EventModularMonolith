@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using EventModularMonolith.Shared.Application.Caching;
 
 namespace EventModularMonolith.Modules.Events.Presentation.Speakers;
 
@@ -17,12 +18,7 @@ internal sealed class GetSpeaker : IEndpoint
 {
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
-      app.MapGet("speakers/{id}", async (Guid id, ISender sender) =>
-         {
-            Result<SpeakerDto> result = await sender.Send(new GetSpeakerQuery(id));
-
-            return result.Match(Results.Ok, ApiResults.Problem);
-         })
+      app.MapGet("speakers/{id}", async (Guid id, ISender sender, ICacheService cacheService) => await CacheHelper.QueryWithCache($"getEvent-{id}", cacheService, sender, new GetSpeakerQuery(id)))
       .WithTags(Tags.Speakers)
       .Produces<Result<SpeakerDto>>()
       .WithName("GetSpeaker");

@@ -3,6 +3,7 @@
 
 using EventModularMonolith.Modules.Events.Application.Speakers.DTOs;
 using EventModularMonolith.Modules.Events.Application.Speakers.GetSpeakersForEvent;
+using EventModularMonolith.Shared.Application.Caching;
 using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Shared.Presentation;
 using EventModularMonolith.Shared.Presentation.Endpoints;
@@ -17,12 +18,7 @@ internal sealed class GetAllSpeakersForEvent : IEndpoint
 {
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
-      app.MapGet("events/{id}/speakers", async (Guid id,ISender sender) =>
-         {
-            Result<IReadOnlyCollection<SpeakerDto>> result = await sender.Send(new GetSpeakersForEventQuery(id));
-
-            return result.Match(Results.Ok, ApiResults.Problem);
-         })
+      app.MapGet("events/{id}/speakers", async (Guid id,ISender sender, ICacheService cacheService) =>  await CacheHelper.QueryWithCache($"getEvent-{id}", cacheService, sender, new GetSpeakersForEventQuery(id)))
       .WithTags(Tags.Speakers)
       .Produces<Result<IReadOnlyCollection<SpeakerDto>>>()
       .WithName("GetSpeakersForEvent");

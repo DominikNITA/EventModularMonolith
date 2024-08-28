@@ -22,7 +22,8 @@ export const HeroSection = ({ event }: IProps) => {
           </p>
           <p>
             {event?.venue?.name}
-            {event?.venue.address.streetAndNumber} {event?.venue.address.city}
+            {event?.venue?.address?.streetAndNumber}{' '}
+            {event?.venue?.address?.city}
           </p>
           <div className="">
             <a

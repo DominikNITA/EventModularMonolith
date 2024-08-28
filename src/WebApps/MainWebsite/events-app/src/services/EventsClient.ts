@@ -1050,8 +1050,8 @@ export class SpeakersClient extends ClientBase implements ISpeakersClient {
 
 export interface ICategoriesClient {
     postApiCategories(request: CreateCategoryRequest): Promise<void>;
-    getApiCategories(): Promise<void>;
-    getApiCategories2(id: string): Promise<void>;
+    getCategories(): Promise<CategoryDto[]>;
+    getCategory(id: string): Promise<CategoryDto>;
     putApiCategories(id: string, request: UpdateCategoryRequest): Promise<void>;
 }
 
@@ -1120,7 +1120,7 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
         return Promise.resolve<void>(null as any);
     }
 
-    getApiCategories( cancelToken?: CancelToken): Promise<void> {
+    getCategories( cancelToken?: CancelToken): Promise<CategoryDto[]> {
         let url_ = this.baseUrl + "/api/categories";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1128,6 +1128,7 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
             method: "GET",
             url: url_,
             headers: {
+                "Accept": "application/json"
             },
             cancelToken
         };
@@ -1141,11 +1142,11 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
                 throw _error;
             }
         }).then((_response: AxiosResponse) => {
-            return this.transformResult(url_, _response, (_response: AxiosResponse) => this.processGetApiCategories(_response));
+            return this.transformResult(url_, _response, (_response: AxiosResponse) => this.processGetCategories(_response));
         });
     }
 
-    protected processGetApiCategories(response: AxiosResponse): Promise<void> {
+    protected processGetCategories(response: AxiosResponse): Promise<CategoryDto[]> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -1157,16 +1158,26 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
         }
         if (status === 200) {
             const _responseText = response.data;
-            return Promise.resolve<void>(null as any);
+            let result200: any = null;
+            let resultData200  = _responseText;
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CategoryDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return Promise.resolve<CategoryDto[]>(result200);
 
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<void>(null as any);
+        return Promise.resolve<CategoryDto[]>(null as any);
     }
 
-    getApiCategories2(id: string, cancelToken?: CancelToken): Promise<void> {
+    getCategory(id: string, cancelToken?: CancelToken): Promise<CategoryDto> {
         let url_ = this.baseUrl + "/api/categories/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1177,6 +1188,7 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
             method: "GET",
             url: url_,
             headers: {
+                "Accept": "application/json"
             },
             cancelToken
         };
@@ -1190,11 +1202,11 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
                 throw _error;
             }
         }).then((_response: AxiosResponse) => {
-            return this.transformResult(url_, _response, (_response: AxiosResponse) => this.processGetApiCategories2(_response));
+            return this.transformResult(url_, _response, (_response: AxiosResponse) => this.processGetCategory(_response));
         });
     }
 
-    protected processGetApiCategories2(response: AxiosResponse): Promise<void> {
+    protected processGetCategory(response: AxiosResponse): Promise<CategoryDto> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -1206,13 +1218,16 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
         }
         if (status === 200) {
             const _responseText = response.data;
-            return Promise.resolve<void>(null as any);
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = CategoryDto.fromJS(resultData200);
+            return Promise.resolve<CategoryDto>(result200);
 
         } else if (status !== 200 && status !== 204) {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<void>(null as any);
+        return Promise.resolve<CategoryDto>(null as any);
     }
 
     putApiCategories(id: string, request: UpdateCategoryRequest, cancelToken?: CancelToken): Promise<void> {
@@ -3116,6 +3131,50 @@ export class CreateCategoryRequest implements ICreateCategoryRequest {
 
 export interface ICreateCategoryRequest {
     name: string;
+}
+
+export class CategoryDto implements ICategoryDto {
+    id!: string;
+    name!: string;
+    isArchived!: boolean;
+
+    constructor(data?: ICategoryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.isArchived = _data["isArchived"];
+        }
+    }
+
+    static fromJS(data: any): CategoryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CategoryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["isArchived"] = this.isArchived;
+        return data;
+    }
+}
+
+export interface ICategoryDto {
+    id: string;
+    name: string;
+    isArchived: boolean;
 }
 
 export class UpdateCategoryRequest implements IUpdateCategoryRequest {

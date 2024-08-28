@@ -11,7 +11,7 @@ public sealed record EventResponse(
    DateTime StartsAtUtc,
    DateTime? EndsAtUtc)
 {
-   public List<TicketTypeResponse> TicketTypes { get; internal set; } = [];
-   public VenueDto Venue { get; internal set; }
-   public string BackgroundImage { get; internal set; }
+   public List<TicketTypeResponse> TicketTypes { get; set; } = [];
+   public VenueDto Venue { get; set; }
+   public string BackgroundImage { get; set; }
 };

@@ -3,6 +3,7 @@
 
 using EventModularMonolith.Modules.Events.Application.Categories.GetAllCategories;
 using EventModularMonolith.Modules.Events.Application.Categories.DTOs;
+using EventModularMonolith.Shared.Application.Caching;
 using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Shared.Presentation;
 using EventModularMonolith.Shared.Presentation.Endpoints;
@@ -17,12 +18,9 @@ internal sealed class GetAllCategories : IEndpoint
 {
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
-      app.MapGet("categories", async (ISender sender) =>
-         {
-            Result<IReadOnlyCollection<CategoryDto>> result = await sender.Send(new GetAllCategoriesQuery());
-
-            return result.Match(Results.Ok, ApiResults.Problem);
-         })
-      .WithTags(Tags.Categories);
+      app.MapGet("categories", async (ISender sender, ICacheService cacheService) => await CacheHelper.QueryWithCache($"getCategories", cacheService, sender, new GetAllCategoriesQuery()))
+         .Produces<IReadOnlyCollection<CategoryDto>>()
+         .WithTags(Tags.Categories)
+         .WithName("GetCategories");
    }
 }

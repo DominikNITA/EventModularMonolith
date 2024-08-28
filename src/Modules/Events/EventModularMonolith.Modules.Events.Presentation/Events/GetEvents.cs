@@ -1,5 +1,6 @@
 ﻿using EventModularMonolith.Modules.Events.Application.Events;
 using EventModularMonolith.Modules.Events.Application.Events.GetEvents;
+using EventModularMonolith.Shared.Application.Caching;
 using EventModularMonolith.Shared.Domain;
 using EventModularMonolith.Shared.Presentation;
 using EventModularMonolith.Shared.Presentation.Endpoints;
@@ -15,12 +16,7 @@ internal sealed class GetEvents : IEndpoint
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
 
-      app.MapGet("events", async (ISender sender) =>
-      {
-         Result<IReadOnlyCollection<EventResponse>> result = await sender.Send(new GetEventsQuery());
-
-         return result.Match(Results.Ok, ApiResults.Problem);
-      })
+      app.MapGet("events", async (ISender sender, ICacheService cacheService) => await CacheHelper.QueryWithCache($"getEvents", cacheService, sender, new GetEventsQuery()))
       .WithTags(Tags.Events)
       .Produces<Result<IReadOnlyCollection<EventResponse>>>()
       .WithName("GetEvents");

@@ -7,6 +7,8 @@ namespace EventModularMonolith.Shared.Infrastructure.Caching;
 
 internal sealed class CacheService(IDistributedCache cache) : ICacheService
 {
+
+   private static JsonSerializerOptions _options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
    public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
    {
       byte[]? bytes = await cache.GetAsync(key, cancellationToken);
@@ -30,14 +32,14 @@ internal sealed class CacheService(IDistributedCache cache) : ICacheService
 
    private static T Deserialize<T>(byte[] bytes)
    {
-      return JsonSerializer.Deserialize<T>(bytes)!;
+      return JsonSerializer.Deserialize<T>(bytes, _options)!;
    }
 
    private static byte[] Serialize<T>(T value)
    {
       var buffer = new ArrayBufferWriter<byte>();
       using var writer = new Utf8JsonWriter(buffer);
-      JsonSerializer.Serialize(writer, value);
+      JsonSerializer.Serialize(writer, value, _options);
       return buffer.WrittenSpan.ToArray();
    }
 }

@@ -63,7 +63,7 @@ public sealed class Organizer : Entity
 
    public Result AddModerator(User newModerator)
    {
-      if (Moderators.Any(m => m.IsModerating(newModerator.Id)))
+      if (Moderators.Any(m => m.UserId == newModerator.Id))
       {
          return Result.Failure(OrganizerErrors.UserIsAlreadyAModerator());
       }

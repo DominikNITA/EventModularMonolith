@@ -20,7 +20,16 @@ public static class ClaimsPrincipalExtensions
                throw new GeneralException("User identity is unavailable");
     }
 
-    public static HashSet<string> GetPermissions(this ClaimsPrincipal? principal)
+    public static Guid GetUserOrganizerId(this ClaimsPrincipal? principal)
+    {
+       string? organizerId = principal?.FindFirst(CustomClaims.OrganizerId)?.Value;
+
+       return Guid.TryParse(organizerId, out Guid parsedOrganizerId) ?
+          parsedOrganizerId :
+          throw new GeneralException("User identifier is unavailable");
+   }
+
+   public static HashSet<string> GetPermissions(this ClaimsPrincipal? principal)
     {
         IEnumerable<Claim> permissionClaims = principal?.FindAll(CustomClaims.Permission) ??
                                               throw new GeneralException("Permissions are unavailable");

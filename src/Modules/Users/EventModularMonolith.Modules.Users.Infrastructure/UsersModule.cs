@@ -47,6 +47,7 @@ public static class UsersModule
    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
    {
       services.AddScoped<IPermissionService, PermissionService>();
+      services.AddScoped<IOrganizerService, OrganizerService>();
 
       services.Configure<KeyCloakOptions>(configuration.GetSection("Users:KeyCloak"));
 

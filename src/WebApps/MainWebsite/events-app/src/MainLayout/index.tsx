@@ -1,5 +1,12 @@
 import React from 'react'
-import { Navbar, Nav, NavDropdown, Container, Button } from 'react-bootstrap'
+import {
+  Navbar,
+  Nav,
+  NavDropdown,
+  Container,
+  Button,
+  Row,
+} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 
@@ -47,7 +54,14 @@ export const MainLayout = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <Outlet />
+      <Container>
+        <Row
+          className="justify-content-center align-items-center"
+          style={{ marginTop: '120px' }}
+        >
+          <Outlet />
+        </Row>
+      </Container>
     </>
   )
 }

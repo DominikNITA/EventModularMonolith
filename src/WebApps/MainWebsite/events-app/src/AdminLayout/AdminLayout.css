@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+
+:root {
+  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
+  --default-color: #2f3138; /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #0e1b4d; /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #f82249; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+  --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+}
+
+/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
+:root {
+  --nav-color: rgba(
+    26,
+    12,
+    146,
+    0.65
+  ); /* The default color of the main navmenu links */
+  --nav-hover-color: #ffffff; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
+  --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: #212529; /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #f82249; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+}
+
+.dropdown-item {
+  color: var(--nav-color) !important;
+}
+
+.pageWrapper {
+  min-height: 100vh;
+}
+.contentArea {
+  flex-grow: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.card {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  background-color: #fff;
+}
+.list-group-item {
+  background-color: #fff !important;
+}
+.circle-box {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 100%;
+}
+.circle-box.lg-box {
+  width: 60px;
+  height: 60px;
+  font-size: 21px;
+  line-height: 60px;
+}
+.button-group .btn {
+  margin: 3px;
+}
+table th,
+table td {
+  background-color: #fff !important;
+}
+table th {
+  font-weight: 500;
+}
+.dropdown-menu {
+  background-color: #fff !important;
+}
+.sidebarArea {
+  flex-shrink: 0;
+  width: 260px;
+  background-color: #1e2a35;
+}
+.sidebarArea .nav-link {
+  color: rgba(255, 255, 255, 0.5);
+}
+.sidebarArea .sidenav-bg:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 0.3rem;
+}
+.sidebarArea .sidenav-bg:hover .nav-link {
+  color: white;
+}
+.sidebarArea .sidenav-bg .active {
+  background-color: #2962ff;
+  border-radius: 0.3rem;
+  color: white;
+}
+.sidebarArea {
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  top: 0;
+  z-index: 1;
+  margin-left: -260px;
+  transition: 0.2s ease-in;
+}
+.sidebarArea.showSidebar {
+  margin-left: 0px;
+  margin-top: 50px;
+}

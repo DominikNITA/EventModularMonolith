@@ -21,7 +21,6 @@ export const EventDetails = () => {
       setResult: (r) => {
         const response = getResponse(r)?.value
         setEvent(response)
-        console.log(response, r)
       },
     },
     [],

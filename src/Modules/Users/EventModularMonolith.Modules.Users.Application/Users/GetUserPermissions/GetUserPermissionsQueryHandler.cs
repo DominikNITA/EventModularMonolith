@@ -31,17 +31,17 @@ internal sealed class GetUserPermissionsQueryHandler(IDbConnectionFactory dbConn
 
         if (!permissions.Any())
         {
-           return new PermissionsResponse(Guid.Empty, new HashSet<string>());
+           return new PermissionsResponse(Guid.Empty, new HashSet<string>(), null);
            
         }
 
-        return new PermissionsResponse(permissions[0].UserId, permissions.Select(p => p.Permission).ToHashSet());
+        return new PermissionsResponse(permissions[0].UserId, permissions.Select(p => p.Permission).ToHashSet(), null);
     }
 
     internal sealed class UserPermission
     {
-        internal Guid UserId { get; init; }
+        internal Guid UserId { get; set; }
 
-        internal string Permission { get; init; }
+        internal string Permission { get; set; }
     }
 }

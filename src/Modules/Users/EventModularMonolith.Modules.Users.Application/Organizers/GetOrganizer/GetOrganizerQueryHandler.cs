@@ -21,8 +21,9 @@ public sealed class GetOrganizerQueryHandler(IDbConnectionFactory dbConnectionFa
         const string sql =
             $"""
              SELECT
-                     name AS {nameof(OrganizerDto.Name)}, 
-    description AS {nameof(OrganizerDto.Description)},
+               id AS {nameof(OrganizerDto.Id)},
+               name AS {nameof(OrganizerDto.Name)}, 
+               description AS {nameof(OrganizerDto.Description)},
              FROM users.organizers
              WHERE id = @OrganizerId
 """;

@@ -3,30 +3,35 @@ import { baseAppUrl } from './ClientBase'
 import {
   EventsClient,
   IEventsClient,
+  IOrganizersClient,
   ISpeakersClient,
   IUsersClient,
+  OrganizersClient,
   SpeakersClient,
   UsersClient,
 } from './EventsClient'
 import axios from 'axios'
 import { AuthenticationService } from './AuthService'
-import { log } from 'console'
+import { redirect } from 'react-router-dom'
 
 export type RootClientArgs = {
   eventsClient?: IEventsClient
   usersClient?: IUsersClient
   speakersClient?: ISpeakersClient
+  organizersClient?: IOrganizersClient
 }
 
 export class RootClient {
   eventsClient: IEventsClient
   usersClient: IUsersClient
   speakersClient: ISpeakersClient
+  organizersClient: IOrganizersClient
 
   constructor(args: RootClientArgs) {
     this.eventsClient = args.eventsClient!
     this.usersClient = args.usersClient!
     this.speakersClient = args.speakersClient!
+    this.organizersClient = args.organizersClient!
   }
 }
 
@@ -81,12 +86,15 @@ axiosConfig.interceptors.response.use(
           AuthenticationService.authenticate({
             access_token: response.data.access_token,
             refresh_token: response.data.refresh_token,
+            organizer_id: response.data.organizer_id,
           })
           originalRequest.headers.Authorization = `Bearer ${AuthenticationService.getAccessToken()}`
           return axios(originalRequest) //recall Api with new token
         } catch (error) {
+          const redirectToOrganizerLogin =
+            !!AuthenticationService.getOrganizerId()
           AuthenticationService.logOff()
-          //TODO: Redirect to login page
+          redirect(redirectToOrganizerLogin ? '/organizer/login' : '/login')
         }
       }
     }
@@ -101,5 +109,6 @@ export function createRootClient(): RootClient {
     eventsClient: new EventsClient(undefined, axiosConfig),
     usersClient: new UsersClient(undefined, axiosConfig),
     speakersClient: new SpeakersClient(undefined, axiosConfig),
+    organizersClient: new OrganizersClient(undefined, axiosConfig),
   })
 }

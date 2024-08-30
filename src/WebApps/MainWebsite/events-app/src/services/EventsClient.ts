@@ -48,9 +48,7 @@ export class FilesClient extends ClientBase implements IFilesClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -120,9 +118,7 @@ export class EventsClient extends ClientBase implements IEventsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -174,9 +170,7 @@ export class EventsClient extends ClientBase implements IEventsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -226,9 +220,7 @@ export class EventsClient extends ClientBase implements IEventsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -276,9 +268,7 @@ export class EventsClient extends ClientBase implements IEventsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -326,9 +316,7 @@ export class EventsClient extends ClientBase implements IEventsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -378,9 +366,7 @@ export class EventsClient extends ClientBase implements IEventsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -431,9 +417,7 @@ export class EventsClient extends ClientBase implements IEventsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -504,9 +488,7 @@ export class VenuesClient extends ClientBase implements IVenuesClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -554,9 +536,7 @@ export class VenuesClient extends ClientBase implements IVenuesClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -607,9 +587,7 @@ export class VenuesClient extends ClientBase implements IVenuesClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -683,9 +661,7 @@ export class TicketTypesClient extends ClientBase implements ITicketTypesClient 
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -729,9 +705,7 @@ export class TicketTypesClient extends ClientBase implements ITicketTypesClient 
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -778,9 +752,7 @@ export class TicketTypesClient extends ClientBase implements ITicketTypesClient 
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -831,9 +803,7 @@ export class TicketTypesClient extends ClientBase implements ITicketTypesClient 
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -904,9 +874,7 @@ export class SpeakersClient extends ClientBase implements ISpeakersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -957,9 +925,7 @@ export class SpeakersClient extends ClientBase implements ISpeakersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1010,9 +976,7 @@ export class SpeakersClient extends ClientBase implements ISpeakersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1086,9 +1050,7 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1133,9 +1095,7 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1193,9 +1153,7 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1249,9 +1207,7 @@ export class CategoriesClient extends ClientBase implements ICategoriesClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1291,6 +1247,7 @@ export interface IUsersClient {
     refreshToken(request: RefreshTokenRequest): Promise<ResultOfAuthTokenWithRefresh>;
     postApiUsersRegister(request: RegisterUserRequest): Promise<void>;
     putApiUsersProfile(id: string, request: UpdateUserProfileRequest): Promise<void>;
+    getAuthTokensForOrganizer(request: GetAuthTokensRequest2): Promise<ResultOfAuthTokenWithRefresh>;
 }
 
 export class UsersClient extends ClientBase implements IUsersClient {
@@ -1320,9 +1277,7 @@ export class UsersClient extends ClientBase implements IUsersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1371,9 +1326,7 @@ export class UsersClient extends ClientBase implements IUsersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1420,9 +1373,7 @@ export class UsersClient extends ClientBase implements IUsersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1471,9 +1422,7 @@ export class UsersClient extends ClientBase implements IUsersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1524,9 +1473,7 @@ export class UsersClient extends ClientBase implements IUsersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1577,9 +1524,7 @@ export class UsersClient extends ClientBase implements IUsersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1610,12 +1555,65 @@ export class UsersClient extends ClientBase implements IUsersClient {
         }
         return Promise.resolve<void>(null as any);
     }
+
+    getAuthTokensForOrganizer(request: GetAuthTokensRequest2, cancelToken?: CancelToken): Promise<ResultOfAuthTokenWithRefresh> {
+        let url_ = this.baseUrl + "/api/auth/organizer/login";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(request);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.transformResult(url_, _response, (_response: AxiosResponse) => this.processGetAuthTokensForOrganizer(_response));
+        });
+    }
+
+    protected processGetAuthTokensForOrganizer(response: AxiosResponse): Promise<ResultOfAuthTokenWithRefresh> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = ResultOfAuthTokenWithRefresh.fromJS(resultData200);
+            return Promise.resolve<ResultOfAuthTokenWithRefresh>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ResultOfAuthTokenWithRefresh>(null as any);
+    }
 }
 
 export interface IOrganizersClient {
     changeOrganizerStatus(id: string): Promise<ResultOfOrganizerDto>;
     postApiOrganizers(request: CreateOrganizerRequest): Promise<ResultOfGuid>;
     getOrganizers(): Promise<ResultOfIReadOnlyCollectionOfOrganizerDto>;
+    getModerators(organizerId: string): Promise<ResultOfIReadOnlyCollectionOfModeratorDto>;
     getOrganizer(id: string): Promise<ResultOfOrganizerDto>;
 }
 
@@ -1650,9 +1648,7 @@ export class OrganizersClient extends ClientBase implements IOrganizersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1704,9 +1700,7 @@ export class OrganizersClient extends ClientBase implements IOrganizersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1754,9 +1748,7 @@ export class OrganizersClient extends ClientBase implements IOrganizersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1791,6 +1783,57 @@ export class OrganizersClient extends ClientBase implements IOrganizersClient {
         return Promise.resolve<ResultOfIReadOnlyCollectionOfOrganizerDto>(null as any);
     }
 
+    getModerators(organizerId: string, cancelToken?: CancelToken): Promise<ResultOfIReadOnlyCollectionOfModeratorDto> {
+        let url_ = this.baseUrl + "/api/organizers/{organizerId}/moderators";
+        if (organizerId === undefined || organizerId === null)
+            throw new Error("The parameter 'organizerId' must be defined.");
+        url_ = url_.replace("{organizerId}", encodeURIComponent("" + organizerId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.transformResult(url_, _response, (_response: AxiosResponse) => this.processGetModerators(_response));
+        });
+    }
+
+    protected processGetModerators(response: AxiosResponse): Promise<ResultOfIReadOnlyCollectionOfModeratorDto> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = ResultOfIReadOnlyCollectionOfModeratorDto.fromJS(resultData200);
+            return Promise.resolve<ResultOfIReadOnlyCollectionOfModeratorDto>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<ResultOfIReadOnlyCollectionOfModeratorDto>(null as any);
+    }
+
     getOrganizer(id: string, cancelToken?: CancelToken): Promise<ResultOfOrganizerDto> {
         let url_ = this.baseUrl + "/api/organizers/{id}";
         if (id === undefined || id === null)
@@ -1807,9 +1850,7 @@ export class OrganizersClient extends ClientBase implements IOrganizersClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1883,9 +1924,7 @@ export class CartsClient extends ClientBase implements ICartsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1929,9 +1968,7 @@ export class CartsClient extends ClientBase implements ICartsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -1975,9 +2012,7 @@ export class CartsClient extends ClientBase implements ICartsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -2025,9 +2060,7 @@ export class CartsClient extends ClientBase implements ICartsClient {
             cancelToken
         };
 
-        return this.transformOptions(options_).then(transformedOptions_ => {
-            return this.instance.request(transformedOptions_);
-        }).catch((_error: any) => {
+        return this.instance.request(options_).catch((_error: any) => {
             if (isAxiosError(_error) && _error.response) {
                 return _error.response;
             } else {
@@ -3255,6 +3288,7 @@ export interface IResultOfAuthTokenWithRefresh extends IResult {
 export class AuthTokenWithRefresh implements IAuthTokenWithRefresh {
     access_token!: string;
     refresh_token!: string;
+    organizer_id!: string;
 
     constructor(data?: IAuthTokenWithRefresh) {
         if (data) {
@@ -3269,6 +3303,7 @@ export class AuthTokenWithRefresh implements IAuthTokenWithRefresh {
         if (_data) {
             this.access_token = _data["access_token"];
             this.refresh_token = _data["refresh_token"];
+            this.organizer_id = _data["organizer_id"];
         }
     }
 
@@ -3283,6 +3318,7 @@ export class AuthTokenWithRefresh implements IAuthTokenWithRefresh {
         data = typeof data === 'object' ? data : {};
         data["access_token"] = this.access_token;
         data["refresh_token"] = this.refresh_token;
+        data["organizer_id"] = this.organizer_id;
         return data;
     }
 }
@@ -3290,6 +3326,7 @@ export class AuthTokenWithRefresh implements IAuthTokenWithRefresh {
 export interface IAuthTokenWithRefresh {
     access_token: string;
     refresh_token: string;
+    organizer_id: string;
 }
 
 export class GetAuthTokensRequest implements IGetAuthTokensRequest {
@@ -3676,6 +3713,141 @@ export class ResultOfIReadOnlyCollectionOfOrganizerDto extends Result implements
 
 export interface IResultOfIReadOnlyCollectionOfOrganizerDto extends IResult {
     value: OrganizerDto[] | undefined;
+}
+
+export class GetAuthTokensRequest2 implements IGetAuthTokensRequest2 {
+    email!: string;
+    password!: string;
+
+    constructor(data?: IGetAuthTokensRequest2) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"];
+            this.password = _data["password"];
+        }
+    }
+
+    static fromJS(data: any): GetAuthTokensRequest2 {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetAuthTokensRequest2();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email;
+        data["password"] = this.password;
+        return data;
+    }
+}
+
+export interface IGetAuthTokensRequest2 {
+    email: string;
+    password: string;
+}
+
+export class ResultOfIReadOnlyCollectionOfModeratorDto extends Result implements IResultOfIReadOnlyCollectionOfModeratorDto {
+    value!: ModeratorDto[] | undefined;
+
+    constructor(data?: IResultOfIReadOnlyCollectionOfModeratorDto) {
+        super(undefined);
+		if (data) {
+			for (var property in data) {
+				if (data.hasOwnProperty(property))
+					(<any>this)[property] = (<any>data)[property];
+			}
+		}
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (Array.isArray(_data["value"])) {
+                this.value = [] as any;
+                for (let item of _data["value"])
+                    this.value!.push(ModeratorDto.fromJS(item));
+            }
+        }
+    }
+
+    static override fromJS(data: any): ResultOfIReadOnlyCollectionOfModeratorDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResultOfIReadOnlyCollectionOfModeratorDto();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.value)) {
+            data["value"] = [];
+            for (let item of this.value)
+                data["value"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IResultOfIReadOnlyCollectionOfModeratorDto extends IResult {
+    value: ModeratorDto[] | undefined;
+}
+
+export class ModeratorDto implements IModeratorDto {
+    userId!: string;
+    firstName!: string;
+    lastName!: string;
+    isActive!: boolean;
+
+    constructor(data?: IModeratorDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userId = _data["userId"];
+            this.firstName = _data["firstName"];
+            this.lastName = _data["lastName"];
+            this.isActive = _data["isActive"];
+        }
+    }
+
+    static fromJS(data: any): ModeratorDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModeratorDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["firstName"] = this.firstName;
+        data["lastName"] = this.lastName;
+        data["isActive"] = this.isActive;
+        return data;
+    }
+}
+
+export interface IModeratorDto {
+    userId: string;
+    firstName: string;
+    lastName: string;
+    isActive: boolean;
 }
 
 export class Request2 implements IRequest2 {

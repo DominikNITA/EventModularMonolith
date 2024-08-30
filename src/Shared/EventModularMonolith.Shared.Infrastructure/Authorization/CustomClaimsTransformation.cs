@@ -47,6 +47,12 @@ internal sealed class CustomClaimsTransformation(IServiceScopeFactory serviceSco
          }
       }
 
+      if (result.Value.OrganizerId is not null)
+      {
+         string organizerId = result.Value.OrganizerId.ToString() ?? string.Empty;
+         claimsIdentity.AddClaim(new Claim(CustomClaims.OrganizerId, organizerId));
+      }
+
       principal.AddIdentity(claimsIdentity);
 
       return principal;

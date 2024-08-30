@@ -9,24 +9,36 @@ import {
   ResultOfAuthTokenWithRefresh,
 } from '../../services/EventsClient'
 import { ajax, NetworkState } from '../../services/ApiHelper'
+import { Row, Col, Form, Container, Button } from 'react-bootstrap'
+import { redirect, useNavigate } from 'react-router-dom'
 
-export const Login = () => {
+interface IProps {
+  getAuthTokensRequest: (
+    request: GetAuthTokensRequest,
+  ) => Promise<ResultOfAuthTokenWithRefresh>
+  onSuccessfulLogin: () => void
+}
+
+export const CommonLogin = (props: IProps) => {
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-
+  const navigate = useNavigate()
   const { usersClient } = useClient()
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     ajax({
       request: () =>
-        usersClient.getAuthTokens(
+        props.getAuthTokensRequest(
           new GetAuthTokensRequest({ email: login, password: password }),
         ),
       setResult: (result: NetworkState<ResultOfAuthTokenWithRefresh>) => {
         console.log(result)
         if (result.state === 'success') {
           AuthenticationService.authenticate(result.response.value!, login)
+          const redirectToOrganizerDashboard =
+            !!AuthenticationService.getOrganizerId()
+          navigate(redirectToOrganizerDashboard ? '/organizer/dashboard' : '/')
         } else if (result.state === 'failed') {
           setErrorMessage('Invalid username or password')
           setPassword('')
@@ -47,29 +59,36 @@ export const Login = () => {
   }
 
   return (
-    <div style={{ marginTop: '150px', marginLeft: '150px' }}>
-      {errorMessage !== null && <div>{errorMessage}</div>}
+    <Col lg={2}>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="name@example.com"
+            value={login}
+            onChange={handleLoginChange}
+          />
+        </Form.Group>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <div>Login: </div>
-          <div>
-            <input type="text" value={login} onChange={handleLoginChange} />
-          </div>
-          <div>Password: </div>
-          <div>
-            <input
+        <Form.Group className="mb-3">
+          <Form.Label>Password</Form.Label>
+          <Col>
+            <Form.Control
               type="password"
               autoComplete="password"
+              placeholder="Password"
               value={password}
               onChange={handlePasswordChange}
             />
-          </div>
-          <div>
-            <input type="submit" value="Log in" />
-          </div>
-        </div>
-      </form>
-    </div>
+          </Col>
+        </Form.Group>
+        {errorMessage !== null && <div>{errorMessage}</div>}
+
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+    </Col>
   )
 }

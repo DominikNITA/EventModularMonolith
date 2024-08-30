@@ -64,7 +64,7 @@ services:
   eventmodularmonolith.identity:
      image: quay.io/keycloak/keycloak:latest
      container_name: EMM.Identity
-     command: start-dev #--import-realm
+     command: start-dev --import-realm
      environment:
         - KC_HEALTH_ENABLED=true
         - KEYCLOAK_ADMIN=admin

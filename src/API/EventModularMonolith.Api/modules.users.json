@@ -9,11 +9,11 @@
       "BatchSize": 50
     },
     "KeyCloak": {
-      "AdminUrl": "",
-      "TokenUrl": "",
-      "ConfidentialClientId": "",
-      "ConfidentialClientSecret": "",
-      "PublicClientId" : ""
+      "AdminUrl": "http://eventmodularmonolith.identity:8080/admin/realms/EMM/",
+      "TokenUrl": "http://eventmodularmonolith.identity:8080/realms/EMM/protocol/openid-connect/token",
+      "ConfidentialClientId": "emm-confidential-client",
+      "ConfidentialClientSecret": "kgemHe7B435f7j7j1Dvc1TbnOSr24G2d",
+      "PublicClientId" : "emm-public-client"
     }
   }
 }

@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import './main.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-notifications-component/dist/theme.css'
+import theme from './theme'
 import reportWebVitals from './reportWebVitals'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { MainLayout } from './MainLayout'
@@ -15,6 +15,8 @@ import { AdminLayout } from './AdminLayout'
 import { GeneralLogin } from './Pages/Login/GeneralLogin'
 import { AdminLogin } from './Pages/Login/AdminLogin'
 import { Moderators } from './AdminPages/Moderators'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -65,7 +67,10 @@ const rootClient = createRootClient()
 root.render(
   <React.StrictMode>
     <ClientContext.Provider value={rootClient}>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </ClientContext.Provider>
     <ReactNotifications />
   </React.StrictMode>,

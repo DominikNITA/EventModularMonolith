@@ -1,12 +1,4 @@
 import React from 'react'
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  Container,
-  Button,
-  Row,
-} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Outlet } from 'react-router-dom'
 

@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   ModeratorDto,
-  OrganizersClient,
   ResultOfIReadOnlyCollectionOfModeratorDto,
 } from '../../services/EventsClient'
 import { ajax, NetworkState } from '../../services/ApiHelper'
@@ -17,7 +16,6 @@ export const Moderators = () => {
     setResult: (
       result: NetworkState<ResultOfIReadOnlyCollectionOfModeratorDto>,
     ) => {
-      console.log(result)
       if (result.state === 'success') {
         setModerators(result.response.value!)
       }
@@ -28,12 +26,36 @@ export const Moderators = () => {
   return (
     <>
       <h1>Moderators</h1>
-      {moderators.map((moderator) => (
-        <div key={moderator.userId}>
-          {moderator.firstName}
-          {moderator.lastName}
-        </div>
-      ))}
+      <Table striped bordered hover variant="light">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Is active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {moderators.map((moderator, index) => (
+            <tr>
+              <td>{index + 1}</td>
+              <td>{moderator.firstName}</td>
+              <td>{moderator.lastName}</td>
+              <td>TODO@todo.com</td>
+              <td>
+                {moderator.isActive ? (
+                  <Check size={25} color="green" />
+                ) : (
+                  <Crosshair size={25} color="red" />
+                )}
+              </td>
+              <td></td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </>
   )
 }

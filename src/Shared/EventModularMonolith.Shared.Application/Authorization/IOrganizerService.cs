@@ -4,5 +4,5 @@ namespace EventModularMonolith.Shared.Application.Authorization;
 
 public interface IOrganizerService
 {
-    Task<Result<Guid>> GetUserOrganizer(Guid UserId, CancellationToken cancellationToken = default);
+    Task<Result<Guid>> GetUserOrganizer(Guid userId, CancellationToken cancellationToken = default);
 }

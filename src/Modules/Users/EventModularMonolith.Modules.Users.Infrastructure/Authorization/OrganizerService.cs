@@ -11,9 +11,9 @@ namespace EventModularMonolith.Modules.Users.Infrastructure.Authorization;
 
 internal sealed class OrganizerService(ISender sender, ICacheService cacheService) : IOrganizerService
 {
-   public async Task<Result<Guid>> GetUserOrganizer(Guid UserId, CancellationToken cancellationToken = default)
+   public async Task<Result<Guid>> GetUserOrganizer(Guid userId, CancellationToken cancellationToken = default)
    {
-      string cacheKey = $"user-organizer-{UserId}";
+      string cacheKey = $"user-organizer-{userId}";
       Guid? response = await cacheService.GetAsync<Guid?>(cacheKey, cancellationToken);
 
       if (response is not null)
@@ -21,7 +21,7 @@ internal sealed class OrganizerService(ISender sender, ICacheService cacheServic
          return response;
       }
 
-      Result<OrganizerDto> result = await sender.Send(new GetOrganizerForModeratorQuery(UserId), cancellationToken);
+      Result<OrganizerDto> result = await sender.Send(new GetOrganizerForModeratorQuery(userId), cancellationToken);
 
       if (result.IsSuccess)
       {

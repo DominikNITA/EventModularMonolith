@@ -6,17 +6,18 @@ import 'react-notifications-component/dist/theme.css'
 import theme from './theme'
 import reportWebVitals from './reportWebVitals'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { MainLayout } from './MainLayout'
+import { MainLayout } from './layouts/MainLayout'
 import { EventDetails } from './Pages/EventDetails'
 import { ClientContext, createRootClient } from './services/RootClient'
 import { ReactNotifications } from 'react-notifications-component'
 import { LandingPage } from './Pages/LandingPage'
-import { AdminLayout } from './AdminLayout'
+import { AdminLayout } from './layouts/AdminLayout'
 import { GeneralLogin } from './Pages/Login/GeneralLogin'
 import { AdminLogin } from './Pages/Login/AdminLogin'
 import { Moderators } from './AdminPages/Moderators'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import NavigationScroll from './layouts/NavigationScroll'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -69,7 +70,9 @@ root.render(
     <ClientContext.Provider value={rootClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <RouterProvider router={router} />
+        <NavigationScroll>
+          <RouterProvider router={router} />
+        </NavigationScroll>
       </ThemeProvider>
     </ClientContext.Provider>
     <ReactNotifications />

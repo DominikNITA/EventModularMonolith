@@ -529,7 +529,7 @@ namespace EventModularMonolith.Modules.Users.Infrastructure.Database.Migrations
                                     b2.Property<string>("Value")
                                         .IsRequired()
                                         .HasColumnType("text")
-                                        .HasColumnName("Role");
+                                        .HasColumnName("role");
 
                                     b2.HasKey("ModeratorUserId", "ModeratorOrganizerId");
 

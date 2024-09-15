@@ -39,7 +39,7 @@ namespace EventModularMonolith.Modules.Users.Infrastructure.Database.Migrations
                 {
                     organizer_id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Role = table.Column<string>(type: "text", nullable: false)
+                    role = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

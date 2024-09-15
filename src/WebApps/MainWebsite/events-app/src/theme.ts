@@ -4,7 +4,7 @@ import { red } from '@mui/material/colors'
 //https://mui.com/material-ui/react-container/
 
 // A custom theme for this app
-const theme = createTheme({
+const DefaultTheme = createTheme({
   palette: {
     primary: {
       main: '#556cd6',
@@ -18,4 +18,4 @@ const theme = createTheme({
   },
 })
 
-export default theme
+export default DefaultTheme

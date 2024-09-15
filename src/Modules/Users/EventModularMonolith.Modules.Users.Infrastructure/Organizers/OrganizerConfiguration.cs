@@ -27,7 +27,7 @@ public class OrganizerConfiguration : IEntityTypeConfiguration<Organizer>
 
          y.OwnsOne<ModeratorRole>("Role", b =>
          {
-            b.Property<string>(x => x.Value).HasColumnName("Role");
+            b.Property<string>(x => x.Value).HasColumnName("role");
          });
       });
    }

@@ -19,7 +19,7 @@ internal sealed class GetAllCategories : IEndpoint
    public void MapEndpoint(IEndpointRouteBuilder app)
    {
       app.MapGet("categories", async (ISender sender, ICacheService cacheService) => await CacheHelper.QueryWithCache($"getCategories", cacheService, sender, new GetAllCategoriesQuery()))
-         .Produces<IReadOnlyCollection<CategoryDto>>()
+         .Produces<Result<IReadOnlyCollection<CategoryDto>>>()
          .WithTags(Tags.Categories)
          .WithName("GetCategories");
    }

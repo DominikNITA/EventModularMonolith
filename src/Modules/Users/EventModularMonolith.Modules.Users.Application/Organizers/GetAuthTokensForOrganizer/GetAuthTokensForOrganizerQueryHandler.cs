@@ -31,7 +31,6 @@ internal sealed class GetAuthTokensForOrganizerQueryHandler(
 
       User user = await userRepository.GetByEmailAsync(request.Email,cancellationToken);
 
-      //bool isUserModerating = await organizerRepository.IsUserModeratingAnyOrganizerAsync(user.Id, cancellationToken);
       Result<OrganizerDto> organizer = await sender.Send(new GetOrganizerForModeratorQuery(user.Id.Value), cancellationToken);
 
       if (organizer.IsFailure)

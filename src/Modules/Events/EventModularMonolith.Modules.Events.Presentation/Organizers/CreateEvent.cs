@@ -29,7 +29,7 @@ internal sealed class CreateEvent : IEndpoint
 
             return result.Match(Results.Ok, ApiResults.Problem);
          })
-      .WithTags(Tags.Events)
+      .WithTags(Tags.Organizers)
       .Produces<Result<Guid>>();
    }
 

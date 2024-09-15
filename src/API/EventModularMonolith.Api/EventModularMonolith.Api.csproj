@@ -50,8 +50,8 @@
 	<Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
 		<Message Importance="High" Text="$(NSwagExe_Net80) run nswag.json /variables:Configuration=$(Configuration)" />
 
-		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net80) run nswag.json /variables:Configuration=$(Configuration),OutDir=$(OutDir),assemblyPath=$(OutDir)EventModularMonolith.Api.dll,clientOutput=../../WebApps/MainWebsite/events-app/src/services/EventsClient.ts" />
-		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="powershell -ep Bypass -file $(ProjectDir)fixNSwagConstructors.ps1 $(ProjectDir)../../WebApps/MainWebsite/events-app/src/services/EventsClient.ts" />
+		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net80) run nswag.json /variables:Configuration=$(Configuration),OutDir=$(OutDir),assemblyPath=$(OutDir)EventModularMonolith.Api.dll,clientOutput=../../WebApps/MainWebsite/events-app-vite/src/services/EventsClient.ts" />
+		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="powershell -ep Bypass -file $(ProjectDir)fixNSwagConstructors.ps1 $(ProjectDir)../../WebApps/MainWebsite/events-app-vite/src/services/EventsClient.ts" />
 
 		<Delete Files="$(ProjectDir)\obj\$(MSBuildProjectFile).NSwag.targets" />
 		<!-- This thingy trigger project rebuild -->

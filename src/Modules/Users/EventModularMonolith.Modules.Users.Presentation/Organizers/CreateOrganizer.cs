@@ -30,7 +30,8 @@ internal sealed class CreateOrganizer : IEndpoint
             return result.Match(Results.Ok, ApiResults.Problem);
          })
       .WithTags(Tags.Organizers)
-      .Produces<Result<Guid>>();
+      .Produces<Result<Guid>>()
+      .WithName("CreateOrganizer");
    }
 
    internal sealed class CreateOrganizerRequest

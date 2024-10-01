@@ -7,6 +7,7 @@ using EventModularMonolith.Shared.Application.Messaging;
 namespace EventModularMonolith.Modules.Events.Application.Venues.CreateVenue;
 
 public sealed record CreateVenueCommand(
+   Guid OrganizerId,
    string Name,
    string Description,
    AddressDto Address

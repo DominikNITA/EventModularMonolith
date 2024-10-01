@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using EventModularMonolith.Modules.Events.Application.Abstractions.Data;
+using EventModularMonolith.Modules.Events.Domain.Organizers;
 using EventModularMonolith.Modules.Events.Domain.Venues;
 using EventModularMonolith.Shared.Application.Messaging;
 using EventModularMonolith.Shared.Application.Storage;
@@ -28,6 +29,7 @@ public class CreateVenueCommandHandler(
          );
 
       Result<Venue> venue = Venue.Create(
+            new OrganizerId(request.OrganizerId),
             request.Name,
             request.Description,
             address

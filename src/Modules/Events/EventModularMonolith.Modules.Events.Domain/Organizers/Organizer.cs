@@ -35,11 +35,18 @@ public sealed class Organizer : Entity
    }
 
    public Result<Event> CreateEvent(
-      Category category, string title, string description, VenueId venueId, DateTime startsAtUtc, DateTime? endsAtUtc,
+      Category category, string title, string description, Venue venue, DateTime startsAtUtc, DateTime? endsAtUtc,
       List<Speaker> speakers
    )
    {
-      Result<Event> @event = Event.Create(Id, category, title, description, venueId, startsAtUtc, endsAtUtc, speakers);
+      if (venue.OrganizerId != Id)
+      {
+         return Result.Failure<Event>(VenueErrors.NotLinkedToOrganizer(venue.Id.Value, Id.Value));
+      }
+
+      //TODO: add checks for speakers
+
+      Result<Event> @event = Event.Create(Id, category, title, description, venue, startsAtUtc, endsAtUtc, speakers);
 
       if (@event.IsFailure)
       {

@@ -17,6 +17,7 @@ internal sealed class CreateEventCommandHandler(
    ICategoryRepository categoryRepository,
    ISpeakerRepository speakerRepository,
    IOrganizerRepository organizerRepository,
+   IVenueRepository venueRepository,
    IBlobService blobService,
    IUnitOfWork unitOfWork) : ICommandHandler<CreateEventCommand, Guid>
 {
@@ -44,11 +45,18 @@ internal sealed class CreateEventCommandHandler(
          return Result.Failure<Guid>(OrganizerErrors.NotFound(request.OrganizerId));
       }
 
+      Venue venue = await venueRepository.GetByIdAsync(new VenueId(request.VenueId), cancellationToken);
+
+      if (venue is null)
+      {
+         return Result.Failure<Guid>(VenueErrors.NotFound(request.VenueId));
+      }
+
       Result<Event> result = organizer.CreateEvent(
          category,
          request.Title,
          request.Description,
-         new VenueId(request.VenueId),
+         venue,
          request.StartsAtUtc,
          request.EndsAtUtc,
          speakers.ToList());

@@ -3,6 +3,7 @@ import { Moderators } from '@/pages/organizer/Moderators'
 import { RouteObject } from 'react-router-dom'
 import ProtectedRoute from './private-route'
 import { OrganizerEventsPage } from '@/pages/organizer/Events'
+import { OrganizerVenuesPage } from '@/pages/organizer/Venues'
 
 const OrganizerRoutes: RouteObject[] = [
   {
@@ -24,6 +25,10 @@ const OrganizerRoutes: RouteObject[] = [
       {
         path: 'moderators',
         element: <Moderators />,
+      },
+      {
+        path: 'venues',
+        element: <OrganizerVenuesPage />,
       },
     ],
   },

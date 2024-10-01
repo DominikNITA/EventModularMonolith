@@ -7,5 +7,5 @@ public interface IVenueRepository
 {
    Task InsertAsync(Venue venue, CancellationToken cancellationToken = default);
 
-   Task<Venue> GetByIdAsync(VenueId id, CancellationToken cancellationToken = default);
+   Task<Venue?> GetByIdAsync(VenueId id, CancellationToken cancellationToken = default);
 }

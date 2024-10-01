@@ -31,16 +31,22 @@ import {
 import { CheckIcon } from 'lucide-react'
 import {
   CategoryDto,
+  CreateEventRequest,
+  ResultOfGuid,
   ResultOfIReadOnlyCollectionOfCategoryDto,
+  ResultOfIReadOnlyCollectionOfVenueGridDto,
+  VenueGridDto,
 } from '@/services/EventsClient'
 import { useClient } from '@/services/RootClient'
 import { ajax, NetworkState } from '@/services/ApiHelper'
 import { Command } from '@/components/ui/command'
 import { Textarea } from '@/components/ui/textarea'
+import { AuthenticationService } from '@/services/AuthService'
 
 const EventForm = ({ form }: { form: UseFormReturn<EventFormValues> }) => {
   const [categories, setCategories] = useState<CategoryDto[]>([])
-  const { categoriesClient } = useClient()
+  const [venues, setVenues] = useState<VenueGridDto[]>([])
+  const { categoriesClient, organizersClient } = useClient()
   useEffect(() => {
     ajax({
       request: () => categoriesClient.getCategories(),
@@ -51,7 +57,19 @@ const EventForm = ({ form }: { form: UseFormReturn<EventFormValues> }) => {
           setCategories(result.response.value!)
         }
       },
-      showSuccessNotification: true,
+    })
+    ajax({
+      request: () =>
+        organizersClient.getVenuesForOrganizer(
+          AuthenticationService.getOrganizerId() ?? '',
+        ),
+      setResult: (
+        result: NetworkState<ResultOfIReadOnlyCollectionOfVenueGridDto>,
+      ) => {
+        if (result.state === 'success') {
+          setVenues(result.response.value!)
+        }
+      },
     })
   }, [])
 
@@ -157,9 +175,12 @@ const EventForm = ({ form }: { form: UseFormReturn<EventFormValues> }) => {
               </PopoverTrigger>
               <PopoverContent className="w-[200px] p-0">
                 <Command>
-                  <CommandInput placeholder="Search language..." />
+                  <CommandInput
+                    placeholder="Search category..."
+                    className="bg-accent"
+                  />
                   <CommandList>
-                    <CommandEmpty>No category found found.</CommandEmpty>
+                    <CommandEmpty>No category found.</CommandEmpty>
                     <CommandGroup>
                       {categories.map((category) => (
                         <CommandItem
@@ -169,7 +190,7 @@ const EventForm = ({ form }: { form: UseFormReturn<EventFormValues> }) => {
                             form.setValue('categoryId', category.id)
                           }}
                         >
-                          <div className="flex ">
+                          <div className="flex items-center">
                             <CheckIcon
                               className={cn(
                                 'mr-2 h-4 w-4',
@@ -194,6 +215,71 @@ const EventForm = ({ form }: { form: UseFormReturn<EventFormValues> }) => {
           </FormItem>
         )}
       />
+      <FormField
+        control={form.control}
+        name="venueId"
+        render={({ field }) => (
+          <FormItem className="flex flex-col">
+            <FormLabel>Venue</FormLabel>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    className={cn(
+                      'w-[350px] justify-between',
+                      !field.value && 'text-muted-foreground',
+                    )}
+                  >
+                    {field.value
+                      ? venues.find((venue) => venue.venueId === field.value)
+                          ?.name
+                      : 'Select Venue'}
+                    <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-[350px] p-0">
+                <Command>
+                  <CommandInput
+                    placeholder="Search venue..."
+                    className="bg-accent"
+                  />
+                  <CommandList>
+                    <CommandEmpty>No venue found.</CommandEmpty>
+                    <CommandGroup>
+                      {venues.map((venue) => (
+                        <CommandItem
+                          value={venue.name}
+                          key={venue.venueId}
+                          onSelect={() => {
+                            form.setValue('venueId', venue.venueId)
+                          }}
+                        >
+                          <div className="flex">
+                            <CheckIcon
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                venue.venueId === field.value
+                                  ? 'opacity-100'
+                                  : 'opacity-0',
+                              )}
+                            />
+                            {venue.name}, {venue.shortAddress}
+                          </div>
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+            <FormDescription>This is the venue of the event.</FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
     </div>
   )
 }
@@ -203,8 +289,8 @@ export const createEventSchema = z
     categoryId: z.string().uuid(),
     title: z.string().min(3).max(100),
     description: z.string().min(10).max(1000),
-    //   venueId: z.string().uuid(),
-    startsAtUtc: z.custom<Dayjs>((val) => val instanceof dayjs, 'Invalid date'),
+    venueId: z.string().uuid().optional(),
+    startsAtUtc: z.instanceof(dayjs as unknown as typeof Dayjs),
     endsAtUtc: z.instanceof(dayjs as unknown as typeof Dayjs).optional(),
     //   speakersIds: z.array(z.string().uuid()),
   })
@@ -224,10 +310,12 @@ const defaultValues: Partial<EventFormValues> = {
   description: '',
   startsAtUtc: undefined,
   endsAtUtc: undefined,
+  venueId: undefined,
 }
 
 export const EventModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { categoriesClient, organizersClient } = useClient()
 
   //   const initialValues: EventFormValues = {
   //     categoryId: '',
@@ -247,7 +335,20 @@ export const EventModal = () => {
 
   const handleSubmit = (values: EventFormValues) => {
     console.log(values)
-    setIsModalOpen(false)
+    ajax({
+      request: () =>
+        organizersClient.postApiOrganizerEvents(
+          AuthenticationService.getOrganizerId() ?? '',
+          CreateEventRequest.fromJS(values),
+        ),
+      setResult: (result: NetworkState<ResultOfGuid>) => {
+        if (result.state === 'success') {
+          setIsModalOpen(false)
+        }
+      },
+      showErrorNotification: true,
+      showSuccessNotification: true,
+    })
   }
 
   const handleClose = () => {

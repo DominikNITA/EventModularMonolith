@@ -1,7 +1,14 @@
 'use client'
 
 import { ThemeToggle } from '@/components/theme-toggle'
-import { Users, Home, Settings, BarChart, FileText } from 'lucide-react'
+import {
+  Users,
+  Home,
+  Settings,
+  BarChart,
+  FileText,
+  Building2,
+} from 'lucide-react'
 import { Link, Outlet } from 'react-router-dom'
 
 export function OrganizerLayout() {
@@ -32,11 +39,11 @@ export function OrganizerLayout() {
             Events
           </Link>
           <Link
-            to="documents"
+            to="venues"
             className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200"
           >
-            <FileText className="mr-3 h-5 w-5" />
-            Documents
+            <Building2 className="mr-3 h-5 w-5" />
+            Venues
           </Link>
           <Link
             to="settings"

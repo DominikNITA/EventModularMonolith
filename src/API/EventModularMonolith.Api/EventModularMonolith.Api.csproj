@@ -63,4 +63,9 @@
 		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="powershell -ep Bypass -file $(ProjectDir)fixNSwagJson.ps1" />
 	</Target>
 
+	<Target Name="FixNSwagJson" BeforeTargets="NSwag" Condition=" '$(Configuration)' == 'Debug' ">
+		<Message Importance="High" Text="Fixing nswag.json" />
+		<Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="powershell -ep Bypass -file $(ProjectDir)fixNSwagJson.ps1" />
+	</Target>
+
 </Project>

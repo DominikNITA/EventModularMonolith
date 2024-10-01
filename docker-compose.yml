@@ -59,7 +59,7 @@ services:
         - ./.containers/blob_storage/data:/data
      ports:
         - "10000:10000"
-     command: "azurite-blob --blobHost 0.0.0.0 -l /data --debug /debug.log"
+     command: "azurite --loose --blobHost 0.0.0.0 -l /data --debug /debug.log"
 
   eventmodularmonolith.identity:
      image: quay.io/keycloak/keycloak:latest

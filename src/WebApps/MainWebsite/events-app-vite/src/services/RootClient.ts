@@ -3,14 +3,18 @@ import { baseAppUrl } from './ClientBase'
 import {
   CategoriesClient,
   EventsClient,
+  FilesClient,
   ICategoriesClient,
   IEventsClient,
+  IFilesClient,
   IOrganizersClient,
   ISpeakersClient,
   IUsersClient,
+  IVenuesClient,
   OrganizersClient,
   SpeakersClient,
   UsersClient,
+  VenuesClient,
 } from './EventsClient'
 import axios from 'axios'
 import { AuthenticationService } from './AuthService'
@@ -22,6 +26,8 @@ export type RootClientArgs = {
   speakersClient?: ISpeakersClient
   organizersClient?: IOrganizersClient
   categoriesClient?: ICategoriesClient
+  venuesClient?: IVenuesClient
+  filesClient?: IFilesClient
 }
 
 export class RootClient {
@@ -30,6 +36,8 @@ export class RootClient {
   speakersClient: ISpeakersClient
   organizersClient: IOrganizersClient
   categoriesClient: ICategoriesClient
+  venuesClient: IVenuesClient
+  filesClient: IFilesClient
 
   constructor(args: RootClientArgs) {
     this.eventsClient = args.eventsClient!
@@ -37,6 +45,8 @@ export class RootClient {
     this.speakersClient = args.speakersClient!
     this.organizersClient = args.organizersClient!
     this.categoriesClient = args.categoriesClient!
+    this.venuesClient= args.venuesClient!
+    this.filesClient = args.filesClient!
   }
 }
 
@@ -47,7 +57,7 @@ export const ClientContext = React.createContext<RootClient | undefined>(
 export function useClient(): RootClient {
   const rootClient = useContext(ClientContext)
   if (!rootClient) {
-    throw new Error('RootClient nie został zainicjowany!')
+    throw new Error('RootClient is not initialized!')
   }
 
   return rootClient
@@ -116,5 +126,7 @@ export function createRootClient(): RootClient {
     speakersClient: new SpeakersClient(undefined, axiosConfig),
     organizersClient: new OrganizersClient(undefined, axiosConfig),
     categoriesClient: new CategoriesClient(undefined, axiosConfig),
+    venuesClient: new VenuesClient(undefined, axiosConfig),
+    filesClient: new FilesClient(undefined, axiosConfig),
   })
 }

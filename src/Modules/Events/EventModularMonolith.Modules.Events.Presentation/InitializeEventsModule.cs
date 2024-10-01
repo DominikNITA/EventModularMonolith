@@ -33,30 +33,30 @@ internal sealed class InitializeEventsModule : IEndpoint
                "Politics"));
 
             // Venues
-            Result<Guid> venue1 = await sender.Send(new CreateVenueCommand(
-               "National Stadium", "Beautiful stadium next to the Vistula river.", new AddressDto("Rondo Waszyngtona 1", "Warsaw", "Mazowieckie", "Poland", 21.045556, 52.239444)));
+            //Result<Guid> venue1 = await sender.Send(new CreateVenueCommand(
+            //   "National Stadium", "Beautiful stadium next to the Vistula river.", new AddressDto("Rondo Waszyngtona 1", "Warsaw", "Mazowieckie", "Poland", 21.045556, 52.239444)));
 
-            await sender.Send(new CreateVenueCommand(
-               "Grand Venue", "Lorem ipsum", new AddressDto("Something Streer 12", "Paris", "Ile-de-France", "France", 5.045556, 45.239444)));
+            //await sender.Send(new CreateVenueCommand(
+            //   "Grand Venue", "Lorem ipsum", new AddressDto("Something Streer 12", "Paris", "Ile-de-France", "France", 5.045556, 45.239444)));
 
-            // Speakers
-            Result<Guid> speaker1 = await sender.Send(new CreateSpeakerCommand(
-               "Jack Greenhill", "IT contractor", [new SpeakerLinkDto("https://x.com")]));
+            //// Speakers
+            //Result<Guid> speaker1 = await sender.Send(new CreateSpeakerCommand(
+            //   "Jack Greenhill", "IT contractor", [new SpeakerLinkDto("https://x.com")]));
 
-            Result<Guid> speaker2 = await sender.Send(new CreateSpeakerCommand(
-               "Mike Krolowicz", "CTO Veolia", [new SpeakerLinkDto("https://x.com/mike")]));
+            //Result<Guid> speaker2 = await sender.Send(new CreateSpeakerCommand(
+            //   "Mike Krolowicz", "CTO Veolia", [new SpeakerLinkDto("https://x.com/mike")]));
 
-            // Events
-            await sender.Send(new CreateEventCommand(
-               Guid.NewGuid(),
-               businessCategory.Value,
-               "Example Event",
-               "Some generic description with long epithets etc...",
-               venue1.Value,
-               DateTime.Now.AddDays(2).ToUniversalTime(),
-               DateTime.Now.AddDays(2).AddHours(5).ToUniversalTime(),
-               new List<Guid>() {speaker1.Value, speaker2.Value}
-            ));
+            ////// Events
+            //await sender.Send(new CreateEventCommand(
+            //   Guid.NewGuid(),
+            //   businessCategory.Value,
+            //   "Example Event",
+            //   "Some generic description with long epithets etc...",
+            //   venue1.Value,
+            //   DateTime.Now.AddDays(2).ToUniversalTime(),
+            //   DateTime.Now.AddDays(2).AddHours(5).ToUniversalTime(),
+            //   new List<Guid>() {speaker1.Value, speaker2.Value}
+            //));
 
             // Ticket types
 

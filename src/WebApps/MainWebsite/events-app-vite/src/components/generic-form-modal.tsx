@@ -16,7 +16,6 @@ interface GenericModalProps<T extends FieldValues> {
   onClose: () => void
   title: string
   FormComponent: React.ComponentType<{ form: UseFormReturn<T> }>
-  //   schema: z.ZodType<T>
   onSubmit: (values: T) => void
   cancelButtonText?: string
   saveButtonText?: string
@@ -28,7 +27,6 @@ export function GenericModal<T extends FieldValues>({
   onClose,
   title,
   FormComponent,
-  //   schema,
   onSubmit,
   cancelButtonText = 'Cancel',
   saveButtonText = 'Save',
@@ -36,14 +34,19 @@ export function GenericModal<T extends FieldValues>({
 }: GenericModalProps<T>) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
-        <DialogHeader>
+      <DialogContent className="max-h-[80vh] flex flex-col">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormComponent form={form} />
-            <DialogFooter>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col flex-grow overflow-hidden"
+          >
+            <div className="flex-grow overflow-y-auto pr-4 -mr-4">
+              <FormComponent form={form} />
+            </div>
+            <DialogFooter className="flex-shrink-0 mt-4">
               <Button type="button" variant="outline" onClick={onClose}>
                 {cancelButtonText}
               </Button>

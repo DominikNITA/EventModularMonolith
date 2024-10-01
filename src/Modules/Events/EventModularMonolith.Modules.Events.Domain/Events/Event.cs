@@ -21,7 +21,7 @@ public sealed class Event : Entity
    public EventStatus Status { get; private set; }
    public List<Speaker> Speakers { get; set; } = [];
 
-   internal static Result<Event> Create(OrganizerId organizerId, Category category, string title, string description, VenueId venueId, DateTime startsAtUtc, DateTime? endsAtUtc, List<Speaker> speakers)
+   internal static Result<Event> Create(OrganizerId organizerId, Category category, string title, string description, Venue venue, DateTime startsAtUtc, DateTime? endsAtUtc, List<Speaker> speakers)
    {
       if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
       {
@@ -35,7 +35,7 @@ public sealed class Event : Entity
          CategoryId = category.Id,
          Title = title,
          Description = description,
-         VenueId = venueId,
+         VenueId = venue.Id,
          StartsAtUtc = startsAtUtc,
          EndsAtUtc = endsAtUtc,
          Status = EventStatus.Draft,

@@ -118,6 +118,20 @@ export async function ajax<T extends Result>({
       return networkFailed
     }
 
+    if (showErrorNotification) {
+      NotificationStore.addNotification({
+        title: 'Unknown Error',
+        message: 'Something went wrong. Try again later.',
+        type: 'error',
+        container: 'top-right',
+        insert: 'top',
+        dismiss: {
+          duration: 5000,
+          pauseOnHover: true,
+        },
+      })
+    }
+
     return Promise.reject(err)
   }
 }

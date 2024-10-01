@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
 using EventModularMonolith.Shared.Application.Storage;
 
 namespace EventModularMonolith.Shared.Infrastructure.Storage;
@@ -27,7 +28,7 @@ internal sealed class BlobService(BlobServiceClient blobServiceClient) : IBlobSe
          cancellationToken: cancellationToken
       );
 
-      return containerClient.Name;
+      return $"{containerClient.Name}/{blobClient.Name}";
    }
 
    public async Task<IReadOnlyCollection<string>> GetUrlsFromContainerAsync(string containerType, Guid id, CancellationToken cancellationToken = default)
@@ -50,6 +51,40 @@ internal sealed class BlobService(BlobServiceClient blobServiceClient) : IBlobSe
 
       return urls;
    }
+
+   //public Uri GetSasTokenForUploadFolder(CancellationToken cancellationToken = default)
+   //{
+   //   BlobContainerClient? containerClient = blobServiceClient.GetBlobContainerClient("upload");
+
+   //   containerClient.GenerateSasUri(
+   //      BlobContainerSasPermissions.Add | BlobContainerSasPermissions.Create | BlobContainerSasPermissions.Delete,
+   //      DateTimeOffset.UtcNow.AddMinutes(20));
+
+   //   //AccountSasBuilder sasBuilder = new AccountSasBuilder()
+   //   //{
+   //   //   StartsOn = DateTimeOffset.UtcNow,
+   //   //   ExpiresOn = DateTimeOffset.UtcNow.AddMinutes(20),
+   //   //   Services = AccountSasServices.Blobs,
+   //   //   ResourceTypes = AccountSasResourceTypes.All,
+   //   //   Protocol = 
+   //   //}
+
+   //   //   BlobClient blobClient = containerClient.GetBlobClient(blobItem.Name);
+   //   //var urls = new List<string>();
+
+   //   //Response<bool>? containerExists = await containerClient.ExistsAsync(cancellationToken);
+   //   //if (!containerExists.Value)
+   //   //{
+   //   //   return urls;
+   //   //}
+
+   //   //await foreach (BlobItem blobItem in containerClient.GetBlobsAsync(cancellationToken: cancellationToken))
+   //   //{
+   //   //   urls.Add(ReplaceHost(blobClient.Uri.AbsoluteUri));
+   //   //}
+
+   //   //return urls;
+   //}
 
    public Task<FileResponse> DownloadAsync(Guid fileId, CancellationToken cancellationToken = default)
    {

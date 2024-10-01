@@ -8,6 +8,15 @@ export class ClientBase {
   public archive = false
 
   protected transformOptions(options: any) {
+
+    if(options.method === "POST" && options.url.includes('upload')){
+      return Promise.resolve({...options, headers: {
+        ...options.headers,
+        'Content-Type': 'multipart/form-data'
+      }
+})
+    }
+
     return Promise.resolve(options)
   }
 

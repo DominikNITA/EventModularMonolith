@@ -1,4 +1,5 @@
-﻿using EventModularMonolith.Modules.Events.Domain.Venues.Events;
+﻿using EventModularMonolith.Modules.Events.Domain.Organizers;
+using EventModularMonolith.Modules.Events.Domain.Venues.Events;
 using EventModularMonolith.Shared.Domain;
 
 namespace EventModularMonolith.Modules.Events.Domain.Venues;
@@ -10,8 +11,9 @@ public sealed class Venue : Entity
    public string Name { get; private set; }
    public string Description { get; private set; }
    public Address Address { get; private set; }
+   public OrganizerId OrganizerId { get; private set; }
 
-   public static Result<Venue> Create(string name, string description, Address address)
+   public static Result<Venue> Create(OrganizerId organizerId, string name, string description, Address address)
    {
       var venue = new Venue()
       {
@@ -19,6 +21,7 @@ public sealed class Venue : Entity
          Name = name,
          Description = description,
          Address = address,
+         OrganizerId = organizerId
       };
 
       venue.Raise(new VenueCreatedDomainEvent(venue.Id));

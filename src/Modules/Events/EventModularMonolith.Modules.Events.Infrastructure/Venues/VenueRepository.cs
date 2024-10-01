@@ -10,7 +10,7 @@ namespace EventModularMonolith.Modules.Events.Infrastructure.Venues;
 
 internal sealed class VenueRepository(EventsDbContext context) : IVenueRepository
 {
-   public async Task<Venue> GetByIdAsync(VenueId id, CancellationToken cancellationToken = default)
+   public async Task<Venue?> GetByIdAsync(VenueId id, CancellationToken cancellationToken = default)
    {
       return await context.Venues.SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
    }
